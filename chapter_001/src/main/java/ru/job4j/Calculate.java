@@ -1,14 +1,18 @@
 package ru.job4j;
 
 /**
-*Class Calculate решение задачи #144
-*@autor mivanov
-*@since 30.08.2017
+*Class Calculate решение задачи #144.
+*@author mivanov
+*@since 0.1
 */
 
 
-class Calculate{
-	public static void main (String[] args){
+class Calculate {
+	/**
+	* main метод.
+	* @param args args.
+	*/
+	public static void main(String[] args) {
 		System.out.println("Hello world.");
 	}
 
