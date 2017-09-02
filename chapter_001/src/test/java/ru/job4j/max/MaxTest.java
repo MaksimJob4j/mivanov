@@ -42,4 +42,15 @@ public class MaxTest {
         assertThat(result, is(expected));
     }
 
+    /**
+     * Test.
+     */
+    @Test
+    public void whenCompareOneAndTwoAndThreeThenThree() {
+        Max maximum = new Max();
+        int result = maximum.max(1, 2, 3);
+        int expected = 3;
+        assertThat(result, is(expected));
+    }
+
 }
