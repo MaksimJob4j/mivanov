@@ -46,6 +46,6 @@ public class Point {
      * @return is point on line.
      */
     public boolean isPointOnLine(int a, int b) {
-        return getY() == a * getX() + b ? true : false;
+        return this.y == a * this.x + b ? true : false;
     }
 }
