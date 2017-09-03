@@ -46,7 +46,8 @@ public class Triangle {
      * @return расстояние между точками left и right.
      */
     public double distance(Point left, Point right) {
-        return Math.sqrt((left.getX() - right.getX()) ^ 2 + (left.getY() - right.getY()) ^ 2);
+        return Math.sqrt(Math.pow(left.getX() - right.getX(), 2)
+                + Math.pow(left.getY() - right.getY(), 2));
     }
 
     /**
@@ -100,6 +101,6 @@ public class Triangle {
      * @return можно ли построить треугольник с такими длинами сторон.
      */
     private boolean exist(double ab, double ac, double bc) {
-        return (ab * bc * ac) > 0 && Math.max(bc, Math.max(ab, bc)) < period(ab, bc, ac);
+        return (ab * bc * ac) > 0 && Math.max(ac, Math.max(ab, bc)) < period(ab, bc, ac);
     }
 }
