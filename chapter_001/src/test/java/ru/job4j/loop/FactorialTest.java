@@ -5,9 +5,9 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * FacyorialTest.
+ * FactorialTest.
  */
-public class FacyorialTest {
+public class FactorialTest {
     /**
      * Test.
      */
