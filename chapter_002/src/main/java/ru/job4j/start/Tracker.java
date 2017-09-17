@@ -43,12 +43,14 @@ public class Tracker {
      * @param item item.
      */
     public void delete(Item item) {
-        for (int i = 0; i < this.position; i++) {
-            if (item.getId().equals(this.items[i].getId())) {
-                System.arraycopy(this.items, i + 1, this.items, i, this.position - i - 1);
-                i--;
-                this.position--;
-                this.items[this.position] = null;
+        if (item != null) {
+            for (int i = 0; i < this.position; i++) {
+                if (item.getId().equals(this.items[i].getId())) {
+                    System.arraycopy(this.items, i + 1, this.items, i, this.position - i - 1);
+                    i--;
+                    this.position--;
+                    this.items[this.position] = null;
+                }
             }
         }
     }
@@ -84,11 +86,24 @@ public class Tracker {
      * @return item.
      */
     public Item findById(String id) {
-        for (Item item: this.items) {
-            if (id.equals(item.getId())) {
-                return item;
+        for (int i = 0; i < position; i++) {
+            if (id.equals(items[i].getId())) {
+                return items[i];
             }
+
         }
         return null;
+    }
+
+    /**
+     *
+     * @return string.
+     */
+    public String toString() {
+        String string = "";
+        for (Item item: findAll()) {
+            string += item;
+        }
+        return string;
     }
 }

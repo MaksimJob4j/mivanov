@@ -7,6 +7,10 @@ import java.util.Random;
  */
 public class Item {
     /**
+     * random.
+     */
+    private static final Random RANDOM = new Random();
+    /**
      * id.
      */
     private final String id;
@@ -15,9 +19,9 @@ public class Item {
      */
     private String name;
     /**
-     * desc.
+     * task.
      */
-    private String desc;
+    private String task;
     /**
      * created.
      */
@@ -30,14 +34,13 @@ public class Item {
     /**
      *
      * @param name name.
-     * @param desc desc.
+     * @param task task.
      * @param created created.
      */
-    public Item(String name, String desc, long created) {
-        Random random = new Random();
-        this.id = Long.toString(System.currentTimeMillis() + random.nextInt());
+    public Item(String name, String task, long created) {
+        this.id = Long.toString(System.currentTimeMillis() + Item.RANDOM.nextInt());
         this.name = name;
-        this.desc = desc;
+        this.task = task;
         this.created = created;
     }
 
@@ -68,18 +71,18 @@ public class Item {
 
     /**
      *
-     * @return desc.
+     * @return task.
      */
-    public String getDesc() {
-        return desc;
+    public String getTask() {
+        return task;
     }
 
     /**
      *
-     * @param desc desc.
+     * @param task task.
      */
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setTask(String task) {
+        this.task = task;
     }
 
     /**
@@ -112,6 +115,18 @@ public class Item {
      */
     public void setComments(String[] comments) {
         this.comments = comments;
+    }
+
+    /**
+     *
+     * @return toString.
+     */
+    public String toString() {
+        return "ID: " + this.id + System.getProperty("line.separator")
+                + "name: " + this.name + System.getProperty("line.separator")
+                + "task: " + this.task + System.getProperty("line.separator")
+                + "created: " + this.created + System.getProperty("line.separator")
+                + "comments: " + this.comments + System.getProperty("line.separator");
     }
 }
 
