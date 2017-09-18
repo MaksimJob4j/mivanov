@@ -13,7 +13,7 @@ public class Item {
     /**
      * id.
      */
-    private final String id;
+    private final String id = Long.toString(System.currentTimeMillis() + Item.RANDOM.nextInt());
     /**
      * name.
      */
@@ -38,7 +38,6 @@ public class Item {
      * @param created created.
      */
     public Item(String name, String task, long created) {
-        this.id = Long.toString(System.currentTimeMillis() + Item.RANDOM.nextInt());
         this.name = name;
         this.task = task;
         this.created = created;
