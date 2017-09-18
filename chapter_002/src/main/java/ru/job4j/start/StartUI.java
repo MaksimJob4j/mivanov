@@ -51,11 +51,18 @@ public class StartUI {
     private Input input;
 
     /**
+     * Tracker.
+     */
+    private Tracker tracker;
+
+    /**
      *
      * @param input input.
+     * @param tracker tracker.
      */
-    public StartUI(Input input) {
+    public StartUI(Input input, Tracker tracker) {
         this.input = input;
+        this.tracker = tracker;
     }
 
     /**
@@ -63,22 +70,21 @@ public class StartUI {
      */
     public void init() {
 
-        Tracker tracker = new Tracker();
         String menuChoice;
         do {
             menuChoice = input.ask(MENU);
             if (ADD.equals(menuChoice)) {
-                this.add(tracker);
+                this.add(this.tracker);
             } else if (SHOW_ALL.equals(menuChoice)) {
-                this.showAll(tracker);
+                this.showAll(this.tracker);
             } else if (EDIT.equals(menuChoice)) {
-                this.edit(tracker);
+                this.edit(this.tracker);
             } else if (DELETE.equals(menuChoice)) {
-                this.delete(tracker);
+                this.delete(this.tracker);
             } else if (FIND_BY_ID.equals(menuChoice)) {
-                this.findById(tracker);
+                this.findById(this.tracker);
             } else if (FIND_BY_NAME.equals(menuChoice)) {
-                this.findByName(tracker);
+                this.findByName(this.tracker);
             }
         } while (!EXIT.equals(menuChoice));
     }
@@ -133,7 +139,7 @@ public class StartUI {
         String id;
         do {
             id = input.ask("Enter task's ID for delete or 0 to exit: ");
-            if (tracker.findById(id) != null){
+            if (tracker.findById(id) != null) {
                 tracker.delete(tracker.findById(id));
                 System.out.println("Task deleted.");
             }
@@ -174,7 +180,7 @@ public class StartUI {
      * @param args args.
      */
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput()).init();
+        new StartUI(new ConsoleInput(), new Tracker()).init();
 
     }
 }
