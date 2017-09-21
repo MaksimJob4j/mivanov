@@ -28,6 +28,18 @@ public class MenuTracker {
     }
 
     /**
+     *
+     * @return range.
+     */
+    public int[] getRange() {
+        int[] range = new int[this.actions.length];
+        for (int i = 0; i < this.actions.length; i++) {
+            range[i] = this.actions[i].key();
+        }
+        return range;
+    }
+
+    /**
      * fillActions.
      */
     public void fillActions() {
