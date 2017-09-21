@@ -70,108 +70,13 @@ public class StartUI {
      */
     public void init() {
 
-        String menuChoice;
+        MenuTracker menuTracker = new MenuTracker(this.input, this.tracker);
+        menuTracker.fillActions();
         do {
-            menuChoice = input.ask(MENU);
-            if (ADD.equals(menuChoice)) {
-                this.add(this.tracker);
-            } else if (SHOW_ALL.equals(menuChoice)) {
-                this.showAll(this.tracker);
-            } else if (EDIT.equals(menuChoice)) {
-                this.edit(this.tracker);
-            } else if (DELETE.equals(menuChoice)) {
-                this.delete(this.tracker);
-            } else if (FIND_BY_ID.equals(menuChoice)) {
-                this.findById(this.tracker);
-            } else if (FIND_BY_NAME.equals(menuChoice)) {
-                this.findByName(this.tracker);
-            }
-        } while (!EXIT.equals(menuChoice));
-    }
+            menuTracker.show();
+            menuTracker.select(Integer.parseInt(input.ask("Select:")));
 
-
-    /**
-     *
-     * @param tracker tracker.
-     */
-    private void add(Tracker tracker) {
-        String name = this.input.ask("Enter name: ");
-        String task = this.input.ask("Enter task: ");
-        tracker.add(new Item(name, task, System.currentTimeMillis()));
-
-    }
-
-
-    /**
-     *
-     * @param tracker tracker.
-     */
-    private void showAll(Tracker tracker) {
-        for (Item item : tracker.findAll()) {
-            System.out.println(item);
-        }
-    }
-
-    /**
-     *
-     * @param tracker tracker.
-     */
-    private void edit(Tracker tracker) {
-
-        String id;
-        Item item;
-        do {
-            id = input.ask("Enter task's ID for update or 0 to exit: ");
-            item = tracker.findById(id);
-            if (item != null) {
-                System.out.println(item);
-                item.setTask(input.ask("Change task: "));
-            }
-        } while (!"0".equals(id));
-
-    }
-
-    /**
-     *
-     * @param tracker tracker.
-     */
-    private void delete(Tracker tracker) {
-        String id;
-        do {
-            id = input.ask("Enter task's ID for delete or 0 to exit: ");
-            if (tracker.findById(id) != null) {
-                tracker.delete(tracker.findById(id));
-                System.out.println("Task deleted.");
-            }
-        } while (!"0".equals(id));
-
-    }
-
-    /**
-     *
-     * @param tracker tracker.
-     */
-    private void findById(Tracker tracker) {
-        String id;
-        do {
-            id = input.ask("Enter task's ID for find or 0 to exit: ");
-            System.out.println(tracker.findById(id) != null ? tracker.findById(id) : "Ничего не найдено");
-        } while (!"0".equals(id));
-
-    }
-
-    /**
-     *
-     * @param tracker tracker.
-     */
-    private void findByName(Tracker tracker) {
-        String name;
-        do {
-            name = input.ask("Enter name for find or 0 to exit: ");
-            for (Item item : tracker.findByName(name)) {
-                System.out.println(item);
-            }
-        } while (!"0".equals(name));
+        } while (!"y".equals(this.input.ask("Exit? (y):")));
 
     }
 
@@ -184,3 +89,5 @@ public class StartUI {
 
     }
 }
+
+

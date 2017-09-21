@@ -16,7 +16,7 @@ public class StartUiTest {
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         Tracker tracker = new Tracker();
-        Input input = new StubInput(new String[]{"0", "TestName", "TestTask", "6"});
+        Input input = new StubInput(new String[]{"1", "TestName", "TestTask", "y"});
         new StartUI(input, tracker).init();
         assertThat(tracker.findAll()[0].getName(), is("TestName"));
     }
@@ -30,8 +30,7 @@ public class StartUiTest {
         Item item = new Item("TestName", "TestTask", 111L);
         tracker.add(item);
         Input input = new StubInput(new String[] {
-                "2", item.getId(), "ChangedTask",
-                "0", "6"});
+                "3", item.getId(), "ChangedTask", "y"});
         new StartUI(input, tracker).init();
         assertThat(tracker.findAll()[0].getTask(), is("ChangedTask"));
 
@@ -41,15 +40,14 @@ public class StartUiTest {
      * Delete.
      */
     @Test
-    public void whenUserDeleteItemThenTreckerHasNoThisItem() {
+    public void whenUserDeleteItemThenTrackerHasNoThisItem() {
         Tracker tracker = new Tracker();
         Item first = new Item("First", "FirstTestTask", 111L);
         Item second = new Item("Second", "SecondTestTask", 222L);
         tracker.add(first);
         tracker.add(second);
         Input input = new StubInput(new String[] {
-                "3", first.getId(),
-                "0", "6"});
+                "4", first.getId(), "y"});
         new StartUI(input, tracker).init();
         assertThat(tracker.toString(), is(second.toString()));
     }
