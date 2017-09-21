@@ -33,7 +33,6 @@ public class StartUiTest {
                 "3", item.getId(), "ChangedTask", "y"});
         new StartUI(input, tracker).init();
         assertThat(tracker.findAll()[0].getTask(), is("ChangedTask"));
-
     }
 
     /**
