@@ -13,7 +13,7 @@ public class ShapeTest {
 
     /**
      * Triangle test.
-      */
+     */
     public void whenPaintTriangleThenGetTriangle() {
         Paint paint = new Paint();
         System.setOut(new PrintStream(out));
