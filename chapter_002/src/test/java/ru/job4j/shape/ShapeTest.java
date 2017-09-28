@@ -1,8 +1,9 @@
 package ru.job4j.shape;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static java.lang.System.out;
+import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -14,10 +15,13 @@ public class ShapeTest {
     /**
      * Triangle test.
      */
+    @Test
     public void whenPaintTriangleThenGetTriangle() {
         Paint paint = new Paint();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         paint.draw(new Triangle());
+
         String result = out.toString();
         StringBuilder stringBuilder = new StringBuilder();
         int length = 4;
@@ -35,8 +39,10 @@ public class ShapeTest {
     /**
      * Square test.
       */
+    @Test
     public void whenPaintSquareThenGetSquare() {
         Paint paint = new Paint();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         paint.draw(new Square());
         String result = out.toString();

@@ -9,7 +9,8 @@ public class Paint {
      * @param shape shape.
      */
     public void draw(Shape shape) {
-        System.out.println(shape.pic());
+        System.out.print(shape.pic());
     }
 
 }
+
