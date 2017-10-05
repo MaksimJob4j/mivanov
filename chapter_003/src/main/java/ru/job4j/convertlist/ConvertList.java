@@ -59,6 +59,7 @@ public class ConvertList {
         ints[row] = new int[columns];
 
         for (Integer item: list) {
+            item = item == null ? 0 : item;
             if (column < columns) {
                 ints[row][column++] = item;
             } else {

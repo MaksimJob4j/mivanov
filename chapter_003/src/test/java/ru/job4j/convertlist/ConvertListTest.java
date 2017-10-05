@@ -64,4 +64,21 @@ public class ConvertListTest {
         assertThat(result, is(expected));
     }
 
+
+    /**
+     * .
+     */
+    @Test
+    public void whenSetListWithNullThenArray() {
+        ConvertList convertList = new ConvertList();
+        List<Integer> list = new ArrayList<>(
+                Arrays.asList(new Integer[]{1, 2, 3, null, 4})
+        );
+
+        int[][] result = convertList.toArray(list, 3);
+        int[][] expected = {{1, 2}, {3, 0}, {4, 0}};
+
+        assertThat(result, is(expected));
+    }
+
 }
