@@ -1,5 +1,6 @@
 package ru.job4j.start;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -29,7 +30,7 @@ public class Item {
     /**
      * comments.
      */
-    private String[] comments;
+    private ArrayList<String> comments;
 
     /**
      *
@@ -104,7 +105,7 @@ public class Item {
      *
      * @return comments.
      */
-    public String[] getComments() {
+    public ArrayList<String> getComments() {
         return comments;
     }
 
@@ -112,7 +113,7 @@ public class Item {
      *
      * @param comments comments.
      */
-    public void setComments(String[] comments) {
+    public void setComments(ArrayList<String> comments) {
         this.comments = comments;
     }
 
@@ -126,6 +127,25 @@ public class Item {
                 + "task: " + this.task + System.getProperty("line.separator")
                 + "created: " + this.created + System.getProperty("line.separator")
                 + "comments: " + this.comments + System.getProperty("line.separator");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Item item = (Item) o;
+
+        return id.equals(item.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }
 

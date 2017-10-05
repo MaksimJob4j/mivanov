@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import java.util.ArrayList;
+
 /**
  * ValidateInput.
  */
@@ -12,7 +14,7 @@ public class ValidateInput extends ConsoleInput {
      * @return int
      */
     @Override
-    public int ask(String question, int[] range) {
+    public int ask(String question, ArrayList<Integer> range) {
 
         int key = -1;
         boolean isCorrect = false;
@@ -20,13 +22,10 @@ public class ValidateInput extends ConsoleInput {
         while (!isCorrect) {
             try {
                 key = super.ask(question, range);
-
                 isCorrect = true;
             } catch (MenuOutException moe) {
-//                moe.printStackTrace();
                 System.out.println("Введите значение из диапазона меню.");
             } catch (NumberFormatException nfe) {
-//                nfe.printStackTrace();
                 System.out.println("Введите корректное значение.");
             }
         }

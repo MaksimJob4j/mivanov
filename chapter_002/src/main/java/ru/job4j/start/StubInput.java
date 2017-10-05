@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import java.util.ArrayList;
+
 /**
  * StubInput.
  */
@@ -7,7 +9,7 @@ public class StubInput implements Input {
     /**
      * Ответы.
      */
-    private String[] answers;
+    private ArrayList<String> answers;
     /**
      * Номер ответа.
      */
@@ -17,16 +19,16 @@ public class StubInput implements Input {
      *
      * @param answers ответы.
      */
-    public StubInput(String[] answers) {
+    public StubInput(ArrayList<String> answers) {
         this.answers = answers;
     }
     @Override
     public String ask(String question) {
-        return answers[position++];
+        return answers.get(position++);
     }
 
     @Override
-    public int ask(String question, int[] range) {
-        return Integer.parseInt(answers[position++]);
+    public int ask(String question, ArrayList<Integer> range) {
+        return Integer.parseInt(answers.get(position++));
     }
 }

@@ -2,6 +2,10 @@ package ru.job4j.start;
 
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -16,9 +20,16 @@ public class StartUiTest {
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         Tracker tracker = new Tracker();
-        Input input = new StubInput(new String[]{"1", "TestName", "TestTask", "y"});
+        ArrayList<String> commands = new ArrayList<>(
+                Arrays.asList(new String[]{
+                        "1",
+                        "TestName",
+                        "TestTask",
+                        "y"})
+        );
+        Input input = new StubInput(commands);
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getName(), is("TestName"));
+        assertThat(tracker.findAll().get(0).getName(), is("TestName"));
     }
 
     /**
@@ -29,10 +40,16 @@ public class StartUiTest {
         Tracker tracker = new Tracker();
         Item item = new Item("TestName", "TestTask", 111L);
         tracker.add(item);
-        Input input = new StubInput(new String[] {
-                "3", item.getId(), "ChangedTask", "y"});
+        ArrayList<String> commands = new ArrayList<>(
+                Arrays.asList(new String[]{
+                        "3",
+                        item.getId(),
+                        "ChangedTask",
+                        "y"})
+        );
+        Input input = new StubInput(commands);
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getTask(), is("ChangedTask"));
+        assertThat(tracker.findAll().get(0).getTask(), is("ChangedTask"));
     }
 
     /**
@@ -45,8 +62,13 @@ public class StartUiTest {
         Item second = new Item("Second", "SecondTestTask", 222L);
         tracker.add(first);
         tracker.add(second);
-        Input input = new StubInput(new String[] {
-                "4", first.getId(), "y"});
+        ArrayList<String> commands = new ArrayList<>(
+                Arrays.asList(new String[]{
+                        "4",
+                        first.getId(),
+                        "y"})
+        );
+        Input input = new StubInput(commands);
         new StartUI(input, tracker).init();
         assertThat(tracker.toString(), is(second.toString()));
     }

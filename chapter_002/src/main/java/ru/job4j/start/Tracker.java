@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import java.util.ArrayList;
+
 /**
  * Tracker.
  */
@@ -7,11 +9,7 @@ public class Tracker {
     /**
      * Заявки.
      */
-    private Item[] items = new Item[100];
-    /**
-     * Количество заявок.
-     */
-    private int position = 0;
+    private ArrayList<Item> items = new ArrayList<>();
 
     /**
      * добавление заявок.
@@ -20,22 +18,9 @@ public class Tracker {
      */
     public Item add(Item item) {
         if (item != null) {
-            this.items[this.position++] = item;
+            this.items.add(item);
         }
         return item;
-    }
-
-    /**
-     * Редактирование заявок.
-     * @param item item.
-     */
-    public void update(Item item) {
-        for (int i = 0; i < this.position; i++) {
-            if (item.getId().equals(this.items[i].getId())) {
-                this.items[i] = item;
-            }
-        }
-
     }
 
     /**
@@ -43,41 +28,30 @@ public class Tracker {
      * @param item item.
      */
     public void delete(Item item) {
-        if (item != null) {
-            for (int i = 0; i < this.position; i++) {
-                if (item.getId().equals(this.items[i].getId())) {
-                    System.arraycopy(this.items, i + 1, this.items, i, this.position - i - 1);
-                    i--;
-                    this.position--;
-                    this.items[this.position] = null;
-                }
-            }
-        }
+        this.items.remove(item);
     }
 
     /**
      * Получение списка всех заявок.
      * @return items.
      */
-    public Item[] findAll() {
-        Item[] itemsToReturn = new Item[this.position];
-        System.arraycopy(this.items, 0, itemsToReturn, 0, this.position);
-        return itemsToReturn;
+    public ArrayList<Item> findAll() {
+        return this.items;
     }
 
     /**
      * Получение списка по имени.
-     * @param key key.
+     * @param name name.
      * @return items.
      */
-    public Item[] findByName(String key) {
+    public ArrayList<Item> findByName(String name) {
         Tracker tracker = new Tracker();
-        for (int i = 0; i < this.position; i++) {
-            if (key.equals(this.items[i].getName())) {
-                tracker.add(this.items[i]);
+        for (Item item: this.items) {
+            if (name.equals(item.getName())) {
+                tracker.add(item);
             }
         }
-        return tracker.findAll();
+        return tracker.items;
     }
 
     /**
@@ -86,11 +60,10 @@ public class Tracker {
      * @return item.
      */
     public Item findById(String id) {
-        for (int i = 0; i < position; i++) {
-            if (id.equals(items[i].getId())) {
-                return items[i];
+        for (Item item: this.items) {
+            if (id.equals(item.getId())) {
+                return item;
             }
-
         }
         return null;
     }
@@ -100,10 +73,11 @@ public class Tracker {
      * @return string.
      */
     public String toString() {
-        String string = "";
-        for (Item item: findAll()) {
-            string += item;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Item item: this.items) {
+            stringBuilder.append(item);
         }
-        return string;
+        return stringBuilder.toString();
     }
+
 }

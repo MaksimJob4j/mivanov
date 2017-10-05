@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import java.util.ArrayList;
+
 /**
  * MenuTracker.
  */
@@ -15,7 +17,7 @@ public class MenuTracker {
     /**
      *
      */
-    private UserAction[] actions = new UserAction[20];
+    private ArrayList<UserAction> actions = new ArrayList<>();
 
     /**
      * Number of menu items.
@@ -36,24 +38,38 @@ public class MenuTracker {
      *
      * @return range.
      */
-    public int[] getRange() {
-        int[] range = new int[position];
-        for (int i = 0; i < position; i++) {
-            range[i] = this.actions[i].key();
+    public ArrayList<Integer> getRange() {
+        ArrayList<Integer> range = new ArrayList<>();
+        for (UserAction userAction: this.actions) {
+            range.add(userAction.key());
         }
         return range;
+    }
+
+    /**
+     * Получить действие по ключу.
+     * @param key ключ.
+     * @return действие.
+     */
+    public UserAction getActionByKey(int key) {
+        for (UserAction userAction: actions) {
+            if (userAction.key() == key) {
+                return userAction;
+            }
+        }
+        return null;
     }
 
     /**
      * fillActions.
      */
     public void fillActions() {
-        this.actions[position++] = this.new AddItem(position, "Add new item");
-        this.actions[position++] = this.new ShowAll(position, "Show all items");
-        this.actions[position++] = new MenuTracker.Edit(position, "Edit item");
-        this.actions[position++] = new MenuTracker.Delete(position, "Delete item");
-        this.actions[position++] = new FindById(position, "Find item by Id");
-        this.actions[position++] = new FindByName(position, "Find items by name");
+        this.actions.add(this.new AddItem(++this.position, "Add new item"));
+        this.actions.add(this.new ShowAll(++this.position, "Show all items"));
+        this.actions.add(new MenuTracker.Edit(++this.position, "Edit item"));
+        this.actions.add(new MenuTracker.Delete(++this.position, "Delete item"));
+        this.actions.add(new FindById(++this.position, "Find item by Id"));
+        this.actions.add(new FindByName(++this.position, "Find items by name"));
 
         BaseAction menuExit = new BaseAction("Exit") {
             @Override
@@ -68,8 +84,8 @@ public class MenuTracker {
      * @param baseAction baseAction.
      */
     public void addAction(BaseAction baseAction) {
-        this.actions[position++] = baseAction;
-        baseAction.setKey(position);
+        actions.add(baseAction);
+        baseAction.setKey(++this.position);
     }
 
     /**
@@ -77,7 +93,7 @@ public class MenuTracker {
      * @param key key.
      */
     public void select(int key) {
-        this.actions[key - 1].execute(this.input, this.tracker);
+        getActionByKey(key).execute(this.input, this.tracker);
     }
 
     /**
@@ -260,7 +276,7 @@ class FindByName extends BaseAction {
     public void execute(Input input, Tracker tracker) {
         String name;
         name = input.ask("Enter name for find: ");
-        if (tracker.findByName(name).length > 0) {
+        if (tracker.findByName(name).size() > 0) {
             for (Item item : tracker.findByName(name)) {
                 System.out.println(item);
             }
@@ -269,6 +285,7 @@ class FindByName extends BaseAction {
         }
     }
 }
+
 //
 ///**
 // * Exit.

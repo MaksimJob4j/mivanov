@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import java.util.ArrayList;
+
 /**
  * Input.
  */
@@ -17,6 +19,6 @@ public interface Input {
      * @param range range.
      * @return int.
      */
-    int ask(String question, int[] range);
+    int ask(String question, ArrayList<Integer> range);
 
 }

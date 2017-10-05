@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+import java.util.ArrayList;
+
 /**
  * StartUI.
  */
@@ -32,12 +34,12 @@ public class StartUI {
 
         MenuTracker menuTracker = new MenuTracker(this.input, this.tracker);
         menuTracker.fillActions();
-        int[] range = menuTracker.getRange();
+        ArrayList<Integer> range = menuTracker.getRange();
 
         do {
             menuTracker.show();
             menuTracker.select(input.ask("Select:", range));
-        } while (!"y".equals(this.input.ask("Exit? (y):")));
+        } while (!"y".equals(this.input.ask("Exit? (y):").toLowerCase()));
     }
 
     /**
