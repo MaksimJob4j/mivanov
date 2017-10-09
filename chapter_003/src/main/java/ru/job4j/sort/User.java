@@ -12,6 +12,37 @@ public class User implements Comparable<User> {
      * age.
      */
     private int age;
+    /**
+     * .
+     * @return name.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * .
+     * @param name name.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * .
+     * @return age.
+     */
+    public int getAge() {
+        return age;
+    }
+
+    /**
+     * .
+     * @param age age.
+     */
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     /**
      * .
