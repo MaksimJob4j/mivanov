@@ -62,19 +62,20 @@ public class User implements Comparable<User> {
                 + '}';
     }
 
+
+
     @Override
     public int compareTo(User o) {
         int rsl;
         if (this == o) {
             rsl = 0;
-        } else if (o == null) {
-            rsl = 1;
         } else {
             rsl = this.age - o.age == 0 ? this.name.compareTo(o.name) : this.age - o.age;
         }
         return rsl;
     }
 }
+
 
 
 
