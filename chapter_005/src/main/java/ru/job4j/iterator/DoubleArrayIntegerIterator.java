@@ -11,13 +11,13 @@ public class DoubleArrayIntegerIterator implements Iterator {
      */
     private final Integer[][] doubleArray;
     /**
-     * indexi.
+     * row.
      */
-    private int iIndex = 0;
+    private int row = 0;
     /**
-     * indexj.
+     * column.
      */
-    private int jIndex = 0;
+    private int column = 0;
 
 
     /**
@@ -30,27 +30,23 @@ public class DoubleArrayIntegerIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
-        boolean result = false;
-        if (iIndex < doubleArray.length) {
-            result = true;
-        }
-        return result;
+        return row < doubleArray.length;
     }
 
     @Override
     public Object next() {
         Integer result;
-        if (doubleArray[iIndex].length == 0) {
+        if (doubleArray[row].length == 0) {
             result = null;
-            iIndex++;
-            jIndex = 0;
+            row++;
+            column = 0;
         } else {
-            result = doubleArray[iIndex][jIndex];
-            if (doubleArray[iIndex].length - jIndex > 1) {
-                jIndex++;
+            result = doubleArray[row][column];
+            if (doubleArray[row].length - column > 1) {
+                column++;
             } else {
-                iIndex++;
-                jIndex = 0;
+                row++;
+                column = 0;
             }
         }
         return result;
