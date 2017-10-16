@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 /**
  * Итератор принимает список произвольных чисел возвращает только четные значения.
  */
-public class EvenIterator implements Iterator {
+public class EvenIt implements Iterator {
     /**
      * Массив.
      */
@@ -14,13 +14,13 @@ public class EvenIterator implements Iterator {
     /**
      * index.
      */
-    private int index = 0;
+    private int index = -1;
 
     /**
      * Конструктор.
-     * @param array int[][].
+     * @param array int[].
      */
-    public EvenIterator(int[] array) {
+    public EvenIt(int[] array) {
         this.array = array;
     }
 

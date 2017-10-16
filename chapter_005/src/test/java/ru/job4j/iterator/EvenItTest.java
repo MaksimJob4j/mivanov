@@ -8,15 +8,15 @@ import static org.hamcrest.core.Is.is;
 /**
  * Итератор, возвращающий только четные значения.
  */
-public class EvenIteratorTest {
+public class EvenItTest {
 
     /**
      * hasNext Test True.
      */
     @Test
     public void whenHasNextCallThenTrue() {
-        EvenIterator evenIterator = new EvenIterator(new int[] {1, 2, 3});
-        boolean result = evenIterator.hasNext();
+        EvenIt evenIt = new EvenIt(new int[] {2, 1, 1});
+        boolean result = evenIt.hasNext();
         assertThat(result, is(true));
     }
 
@@ -25,8 +25,8 @@ public class EvenIteratorTest {
      */
     @Test
     public void whenHasNextCallThenFalse() {
-        EvenIterator evenIterator = new EvenIterator(new int[] {1, 3});
-        boolean result = evenIterator.hasNext();
+        EvenIt evenIt = new EvenIt(new int[] {1, 3});
+        boolean result = evenIt.hasNext();
         assertThat(result, is(false));
     }
 
@@ -35,8 +35,8 @@ public class EvenIteratorTest {
      */
     @Test
     public void whenNextCallThenVolume() {
-        EvenIterator evenIterator = new EvenIterator(new int[] {1, 2, 3});
-        int result = (int) evenIterator.next();
+        EvenIt evenIt = new EvenIt(new int[] {2, 4, 3});
+        int result = (int) evenIt.next();
         assertThat(result, is(2));
     }
 
@@ -45,11 +45,10 @@ public class EvenIteratorTest {
      */
     @Test
     public void whenNextCallThenException() {
-        EvenIterator evenIterator = new EvenIterator(new int[] {1, 2, 3});
-        evenIterator.next();
+        EvenIt evenIt = new EvenIt(new int[] {1, 7, 3});
         String result = "";
         try {
-            evenIterator.next();
+            evenIt.next();
         } catch (Exception e) {
             result = e.getMessage();
         }
