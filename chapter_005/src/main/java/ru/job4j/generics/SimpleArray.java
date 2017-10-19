@@ -10,7 +10,7 @@ public class SimpleArray<T> {
     /**
      * Массив.
      */
-    private Object[] array = null;
+    private Object[] array;
     /**
      * Индекс.
      */
@@ -28,7 +28,6 @@ public class SimpleArray<T> {
      * Конструктор.
      */
     public SimpleArray() {
-        super();
     }
     /**
      * Конструктор.
@@ -36,7 +35,6 @@ public class SimpleArray<T> {
      */
     public SimpleArray(T[] array) {
         this.array = array;
-        index = array.length;
     }
 
 
@@ -45,16 +43,17 @@ public class SimpleArray<T> {
      * @param t T.
      */
     public void add(T t) {
-        if (array == null) {
-            array = new Object[]{t};
-            index++;
-        } else if (index < array.length) {
-            array[index++] = t;
-        } else {
-            array = Arrays.copyOf(array, (int) (array.length < 10 ? 10 : array.length * 1.5));
-            array[index++] = t;
+        if (t != null) {
+            if (array == null) {
+                array = new Object[]{t};
+                index++;
+            } else if (index < array.length) {
+                array[index++] = t;
+            } else {
+                array = Arrays.copyOf(array, (int) (array.length < 10 ? 10 : array.length * 1.5));
+                array[index++] = t;
+            }
         }
-
     }
 
     /**
@@ -63,8 +62,8 @@ public class SimpleArray<T> {
      */
     public void delete(int i) {
         if (i > -1 && i < index) {
-            for (int j = i; j < index;) {
-                array[j] = array[++j];
+            if (index - i > 1) {
+                System.arraycopy(array, i + 1, array, i, index - i);
             }
             index--;
         } else {
@@ -79,7 +78,7 @@ public class SimpleArray<T> {
      */
     public void delete(T t) {
         for (int i = 0; i < index; i++) {
-            if (t.equals(array[i])) {
+            if (array[i].equals(t)) {
                 delete(i);
                 i = index;
             }
