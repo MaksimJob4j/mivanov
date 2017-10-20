@@ -1,16 +1,18 @@
 package ru.job4j.generics;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * SimpleArray<T>.
  * @param <T> Класс.
  */
-public class SimpleArray<T> {
+public class SimpleArray<T> implements Iterable<T> {
     /**
      * Массив.
      */
-    private Object[] array;
+    private T[] array;
     /**
      * Индекс.
      */
@@ -45,7 +47,7 @@ public class SimpleArray<T> {
     public void add(T t) {
         if (t != null) {
             if (array == null) {
-                array = new Object[]{t};
+                array = (T[]) new Object[]{t};
                 index++;
             } else if (index < array.length) {
                 array[index++] = t;
@@ -101,9 +103,57 @@ public class SimpleArray<T> {
 
     }
 
+    /**
+     * update.
+     * @param t T.
+     */
+    public void update(T t) {
+        for (int i = 0; i < index; i++) {
+            if (array[i].equals(t)) {
+                array[i] = t;
+            }
+        }
+    }
+
     @Override
     public String toString() {
 
         return ((T[]) array).toString();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+
+            private int i = 0;
+            private boolean isNextCall;
+
+            @Override
+            public boolean hasNext() {
+                return i < index;
+            }
+
+            @Override
+            public T next() {
+                T returnT;
+                if (i < index) {
+                    returnT = (T) array[i++];
+                    isNextCall = true;
+                } else {
+                    throw new NoSuchElementException();
+                }
+                return returnT;
+            }
+
+            @Override
+            public void remove() {
+                if (isNextCall) {
+                    delete(--i);
+                    isNextCall = false;
+                } else {
+                    throw new IllegalStateException();
+                }
+            }
+        };
     }
 }
