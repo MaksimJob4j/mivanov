@@ -81,5 +81,50 @@ public class MyLinkedListTest {
         assertThat(result, is("s1s2s3"));
     }
 
+    /**
+     * hasCycle Test True.
+     */
+    @Test
+    public void whenListHesCycleThenItTrue() {
+        MyLinkedList<String> strings = new MyLinkedList<>();
+        MyLinkedList.Node first = strings.new Node<>(1);
+        MyLinkedList.Node two = strings.new Node<>(2);
+        MyLinkedList.Node third = strings.new Node<>(3);
+        MyLinkedList.Node four = strings.new Node<>(4);
+
+        first.setNext(two);
+        two.setNext(third);
+        third.setNext(four);
+        four.setNext(two);
+
+        Boolean result = strings.hasCycle(first);
+
+        assertThat(result, is(true));
+    }
+
+    /**
+     * hasCycle Test True.
+     */
+    @Test
+    public void whenListHesNoCycleThenItFalse() {
+        MyLinkedList<String> strings = new MyLinkedList<>();
+        MyLinkedList.Node first = strings.new Node<>(1);
+        MyLinkedList.Node two = strings.new Node<>(2);
+        MyLinkedList.Node third = strings.new Node<>(3);
+        MyLinkedList.Node four = strings.new Node<>(4);
+
+        first.setNext(two);
+        two.setNext(third);
+        third.setNext(four);
+//        four.setNext(two);
+
+        Boolean result = strings.hasCycle(first);
+
+        assertThat(result, is(false));
+    }
+
+
+
+
 
 }

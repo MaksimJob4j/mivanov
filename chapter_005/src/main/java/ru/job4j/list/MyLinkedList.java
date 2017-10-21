@@ -1,7 +1,9 @@
 package ru.job4j.list;
 
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * MyLinkedList.
@@ -29,7 +31,7 @@ public class MyLinkedList<E> implements Iterable<E> {
      * Node.
      * @param <E> E.
      */
-    private class Node<E> {
+    class Node<E> {
         /**
          * item.
          */
@@ -42,6 +44,14 @@ public class MyLinkedList<E> implements Iterable<E> {
          * next.
          */
         private Node<E> next;
+
+        /**
+         * setNext.
+         * @param next Node.
+         */
+        public void setNext(Node<E> next) {
+            this.next = next;
+        }
 
         /**
          * node.
@@ -208,4 +218,23 @@ public class MyLinkedList<E> implements Iterable<E> {
         }
         return sb.toString();
     }
+
+    /**
+     * Проверка списка на цикличность.
+     * @param first первый элемент.
+     * @return true если есть цикличность.
+     */
+    boolean hasCycle(Node first) {
+        Boolean result = false;
+        Node node = first;
+        int countNode = 0;
+        Set<Node> nodes = new HashSet<>();
+        while (!result && node.next != null) {
+            nodes.add(node);
+            result = ++countNode > nodes.size();
+            node = node.next;
+        }
+        return result;
+    };
+
 }
