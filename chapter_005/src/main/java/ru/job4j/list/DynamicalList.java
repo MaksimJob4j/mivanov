@@ -30,7 +30,7 @@ public class DynamicalList<E> implements Iterable<E> {
      * add.
      * @param value E.
      */
-    void add(E value) {
+    public void add(E value) {
         if (index >= container.length) {
             container = Arrays.copyOf(container, (int) (container.length < 10 ? 10 : container.length * 1.5));
         }
@@ -105,5 +105,8 @@ public class DynamicalList<E> implements Iterable<E> {
         };
     }
 
-
+    @Override
+    public String toString() {
+        return Arrays.toString(container);
+    }
 }
