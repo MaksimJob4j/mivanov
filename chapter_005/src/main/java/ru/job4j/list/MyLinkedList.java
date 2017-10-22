@@ -113,7 +113,7 @@ public class MyLinkedList<E> implements Iterable<E> {
      * add.
      * @param item E.
      */
-    void add(E item) {
+    public void add(E item) {
         Node<E> node = new Node<E>(item);
 
         if (index++ == 0) {
