@@ -98,10 +98,10 @@ public class User {
         this.birthday = birthday;
     }
 
-//    @Override
-//    public int hashCode() {
-//        return name != null ? name.hashCode() : 0;
-//    }
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
+    }
 
     @Override
     public boolean equals(Object o) {
