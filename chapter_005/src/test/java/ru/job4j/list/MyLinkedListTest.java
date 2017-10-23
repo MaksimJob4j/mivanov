@@ -103,7 +103,7 @@ public class MyLinkedListTest {
     }
 
     /**
-     * hasCycle Test True.
+     * hasCycle Test False.
      */
     @Test
     public void whenListHesNoCycleThenItFalse() {
@@ -116,7 +116,6 @@ public class MyLinkedListTest {
         first.setNext(two);
         two.setNext(third);
         third.setNext(four);
-//        four.setNext(two);
 
         Boolean result = strings.hasCycle(first);
 

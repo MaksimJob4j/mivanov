@@ -1,9 +1,6 @@
 package ru.job4j.list;
 
-
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 /**
  * MyLinkedList.
@@ -221,15 +218,24 @@ public class MyLinkedList<E> implements Iterable<E> {
      */
     boolean hasCycle(Node first) {
         Boolean result = false;
-        Node node = first;
-        int countNode = 0;
-        Set<Node> nodes = new HashSet<>();
-        while (!result && node.next != null) {
-            nodes.add(node);
-            result = ++countNode > nodes.size();
-            node = node.next;
+        Node checkNode = first;
+
+        while (!result && checkNode.next != null) {
+            if (checkNode.next == checkNode) {
+                result = true;
+            } else {
+                Node tempNode = first;
+                while (!result && checkNode != tempNode) {
+                    if (checkNode.next == tempNode) {
+                        result = true;
+                    } else {
+                        tempNode = tempNode.next;
+                    }
+                }
+                checkNode = checkNode.next;
+            }
         }
         return result;
-    };
+    }
 
 }
