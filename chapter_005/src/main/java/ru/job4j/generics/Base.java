@@ -16,7 +16,7 @@ public abstract class Base {
      */
     String getId() {
         return id;
-    };
+    }
 
     /**
      * setId.
