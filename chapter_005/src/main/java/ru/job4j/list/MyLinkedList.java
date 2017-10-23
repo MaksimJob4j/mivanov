@@ -61,12 +61,6 @@ public class MyLinkedList<E> implements Iterable<E> {
             this.item = item;
         }
 
-//        public Node(E item, Node<E> prev, Node<E> next) {
-//            this.item = item;
-//            this.prev = prev;
-//            this.next = next;
-//        }
-
         @Override
         public String toString() {
             return "Node{item=" + item + '}';
@@ -162,6 +156,7 @@ public class MyLinkedList<E> implements Iterable<E> {
         if (node.next != null) {
             node.prev.next = node.next;
             node.next.prev = node.prev;
+            first = header.next;
         } else {
             last = node.prev;
             last.next = null;

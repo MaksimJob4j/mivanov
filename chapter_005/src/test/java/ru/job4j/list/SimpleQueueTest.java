@@ -35,6 +35,31 @@ public class SimpleQueueTest {
     }
 
     /**
+     * poll Objects.
+     */
+    @Test
+    public void whenPollAllItemsFromQueueThenQueueDoesNotHaveItAnymore() {
+        SimpleQueue queue = new SimpleQueue<>();
+        queue.push(1);
+        queue.push(2);
+        queue.push(3);
+        queue.push(4);
+        queue.push(5);
+        assertThat(queue.poll(), is(1));
+        assertThat(queue.poll(), is(2));
+        assertThat(queue.poll(), is(3));
+        queue.push(6);
+        queue.push(7);
+        assertThat(queue.poll(), is(4));
+        assertThat(queue.poll(), is(5));
+        queue.push(8);
+        assertThat(queue.poll(), is(6));
+        assertThat(queue.poll(), is(7));
+        assertThat(queue.poll(), is(8));
+
+    }
+
+    /**
      * poll.
      */
     @Test

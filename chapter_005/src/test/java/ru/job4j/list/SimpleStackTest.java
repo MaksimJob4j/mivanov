@@ -36,6 +36,31 @@ public class SimpleStackTest {
     }
 
     /**
+     * poll Objects.
+     */
+    @Test
+    public void whenPollAllItemsFromQueueThenQueueDoesNotHaveItAnymore() {
+        SimpleStack stack = new SimpleStack<>();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        stack.push(5);
+        assertThat(stack.poll(), is(5));
+        assertThat(stack.poll(), is(4));
+        assertThat(stack.poll(), is(3));
+        stack.push(6);
+        stack.push(7);
+        assertThat(stack.poll(), is(7));
+        assertThat(stack.poll(), is(6));
+        stack.push(8);
+        assertThat(stack.poll(), is(8));
+        assertThat(stack.poll(), is(2));
+        assertThat(stack.poll(), is(1));
+
+    }
+
+    /**
      * poll.
      */
     @Test
