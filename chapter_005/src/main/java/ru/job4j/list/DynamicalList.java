@@ -42,7 +42,7 @@ public class DynamicalList<E> implements Iterable<E> {
      * @param index int.
      * @return E.
      */
-    E get(int index) {
+    public E get(int index) {
         E result;
         if (index > -1 && index < this.index) {
             result = (E) container[index];
@@ -56,7 +56,7 @@ public class DynamicalList<E> implements Iterable<E> {
      * delete.
      * @param i i.
      */
-    void delete(int i) {
+    public void delete(int i) {
         if (i > -1 && i < index) {
             if (index - i > 1) {
                 System.arraycopy(container, i + 1, container, i, index - i);
@@ -65,6 +65,30 @@ public class DynamicalList<E> implements Iterable<E> {
         } else {
             throw new ArrayIndexOutOfBoundsException();
         }
+    }
+
+    /**
+     * delete.
+     * @param i i.
+     */
+    public boolean delete(E e) {
+        boolean result = false;
+        for (int i = 0; i < index; i++) {
+            if (container[i].equals(e)) {
+                delete(i);
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    public boolean contains(E element) {
+        for (int i = 0; i < index; i++) {
+            if (((E) container[i]).equals(element)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -107,6 +131,20 @@ public class DynamicalList<E> implements Iterable<E> {
 
     @Override
     public String toString() {
-        return Arrays.toString(container);
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < index; i++) {
+
+            if (container[i] != null) {
+                sb.append(container[i]);
+                sb.append(", ");
+            }
+        }
+        try {
+            sb.deleteCharAt(sb.lastIndexOf(","));
+            sb.deleteCharAt(sb.lastIndexOf(" "));
+        } catch (Exception e) { }
+        sb.append("]");
+        return sb.toString();
     }
 }

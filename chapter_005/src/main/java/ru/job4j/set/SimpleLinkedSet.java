@@ -3,6 +3,7 @@ package ru.job4j.set;
 import ru.job4j.list.MyLinkedList;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Set на LinkedList.
@@ -13,6 +14,15 @@ public class SimpleLinkedSet<E> implements Iterable<E> {
      * MyLinkedList for Set.
      */
     private MyLinkedList<E> set = new MyLinkedList<>();
+
+    public SimpleLinkedSet() {
+    }
+
+    public SimpleLinkedSet(List<E> list) {
+        for (E e: list) {
+            set.add(e);
+        }
+    }
 
     /**
      * Iterator.
@@ -27,7 +37,7 @@ public class SimpleLinkedSet<E> implements Iterable<E> {
      * @param e элемент.
      */
     void add(E e) {
-        if (e != null && !isContain(e)) {
+        if (e != null && !contains(e)) {
             set.add(e);
         }
 
@@ -38,7 +48,7 @@ public class SimpleLinkedSet<E> implements Iterable<E> {
      * @param e Элемент.
      * @return true если элемент содержится во множестве.
      */
-    private boolean isContain(E e) {
+    public boolean contains(E e) {
         Boolean result = false;
         Iterator<E> it = set.iterator();
         while (!result && it.hasNext()) {

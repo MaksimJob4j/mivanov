@@ -3,6 +3,7 @@ package ru.job4j.set;
 import ru.job4j.list.DynamicalList;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * SimpleSet.
@@ -19,12 +20,21 @@ public class SimpleSet<E> implements Iterable<E> {
      */
     private Iterator<E> iterator = items.iterator();
 
+    public SimpleSet() {
+    }
+
+    public SimpleSet(List<E> list) {
+        for (E e: list) {
+            items.add(e);
+        }
+    }
+
     /**
      * add.
      * @param e элемент.
      */
     void add(E e) {
-        if (e != null && !isContain(e)) {
+        if (e != null && !contains(e)) {
             items.add(e);
         }
 
@@ -35,7 +45,7 @@ public class SimpleSet<E> implements Iterable<E> {
      * @param e Элемент.
      * @return true если элемент содержится во множестве.
      */
-    private boolean isContain(E e) {
+    public boolean contains(E e) {
         Boolean result = false;
         Iterator<E> it = items.iterator();
         while (!result && it.hasNext()) {

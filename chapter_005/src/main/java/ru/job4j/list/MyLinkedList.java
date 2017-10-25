@@ -149,20 +149,24 @@ public class MyLinkedList<E> implements Iterable<E> {
      * remove.
      * @param node Node.
      */
-    void remove(Node node) {
-        if (node.next != null) {
-            node.prev.next = node.next;
-            node.next.prev = node.prev;
-            first = header.next;
-        } else {
-            last = node.prev;
-            last.next = null;
+    boolean remove(Node node) {
+        boolean result = false;
+        if (node != null) {
+            if (node.next != null) {
+                node.prev.next = node.next;
+                node.next.prev = node.prev;
+                first = header.next;
+            } else {
+                last = node.prev;
+                last.next = null;
+            }
+            if (--index == 0) {
+                first = null;
+                last = null;
+            }
+            result = true;
         }
-        if (--index == 0) {
-            first = null;
-            last = null;
-        }
-
+        return result;
     }
 
     /**
@@ -171,6 +175,23 @@ public class MyLinkedList<E> implements Iterable<E> {
      */
     void remove(int index) {
         remove(getNode(index));
+    }
+
+    public boolean remove(E element) {
+        return remove(findNode(element));
+    }
+
+    public boolean contain(E element) {
+        return findNode(element) != null;
+    }
+
+    private Node findNode(E element) {
+        for (int i = 0; i < index; i++) {
+            if (getNode(i).item.equals(element)) {
+                return getNode(i);
+            }
+        }
+        return null;
     }
 
     @Override
