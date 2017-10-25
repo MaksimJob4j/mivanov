@@ -2,14 +2,13 @@ package ru.job4j.set;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 
-public class MyHashSetTest {
+public class MyHashSetLinkedElementsTest {
 
     @Test
-    public void whenAddAndRemoveElementsThenDoIt() {
-        MyHashSet<String> set = new MyHashSet<>();
+    public void whenAddThenSetHasIt() {
+        MyHashSetLinkedElements<String> set = new MyHashSetLinkedElements<>();
         for (int i = 0; i < 10; i++) {
             set.add("aaa" + i);
         }
@@ -27,16 +26,18 @@ public class MyHashSetTest {
             set.remove("aaa" + i);
         }
 
+        set.remove(null);
+
         System.out.println(set);
 
 
-        for (int i = 0; i < 100; i++) {
+//        здесь начинает выдавать ошибку
+//        java.lang.OutOfMemoryError: Java heap space
+        for (int i = 0; i < 10000; i++) {
             set.add("bbb" + i);
         }
 
         System.out.println(set);
-
     }
-
 
 }

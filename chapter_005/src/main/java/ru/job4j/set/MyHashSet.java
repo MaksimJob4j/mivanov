@@ -42,7 +42,7 @@ public class MyHashSet<E> {
     boolean add(E element) {
         boolean result = false;
         if (element != null && !contains(element)) {
-            if (++size * loadFactor > threshold) {
+            if (++size > threshold) {
                 riseCapacity();
             }
             if (table[index(element)] == null) {
@@ -65,7 +65,7 @@ public class MyHashSet<E> {
         return result;
     }
 
-    private boolean contains(E element) {
+    public boolean contains(E element) {
         return (table[index(element)] != null && table[index(element)].contains(element));
     }
 
@@ -86,6 +86,8 @@ public class MyHashSet<E> {
                 }
             }
         }
+        threshold = (int) (capacity * loadFactor);
+
         table = newTable;
     }
 
