@@ -47,6 +47,10 @@ class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
     private Node<E> root;
 
+    public Node<E> getRoot() {
+        return root;
+    }
+
 
     @Override
     public boolean add(E parent, E child) {
@@ -163,5 +167,41 @@ class Tree<E extends Comparable<E>> implements SimpleTree<E> {
                     || isBinary(node.children.get(1))));
         }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Iterator<E> it = iterator();
+
+        sb.append("Tree{");
+
+        while (it.hasNext()) {
+            E v = it.next();
+            sb.append("{V:");
+            sb.append(v);
+            sb.append(", children:");
+            List<Node<E>> nodes = findNodeInBranch(v, root).children;
+            if (nodes != null) {
+                for (Node<E> node: nodes) {
+                    sb.append(node.value);
+                    sb.append(", ");
+                }
+            }
+            try {
+                sb.deleteCharAt(sb.lastIndexOf(","));
+                sb.deleteCharAt(sb.lastIndexOf(" "));
+            } catch (Exception e) { }
+
+            sb.append("}, ");
+        }
+        try {
+            sb.deleteCharAt(sb.lastIndexOf(","));
+            sb.deleteCharAt(sb.lastIndexOf(" "));
+        } catch (Exception e) { }
+
+        sb.append("}");
+
+        return sb.toString();
     }
 }
