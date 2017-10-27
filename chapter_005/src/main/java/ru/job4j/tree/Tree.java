@@ -36,8 +36,10 @@ class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     class Node<E> {
         E value;
         List<Node<E>> children;
+
         Node() {
         }
+
         Node(E value) {
             this.value = value;
         }
@@ -131,5 +133,35 @@ class Tree<E extends Comparable<E>> implements SimpleTree<E> {
                 return it.next();
             }
         };
+    }
+
+    /**
+     * Метод должен проверять количество дочерних элементов в дереве.
+     * Если их <= 2 - то дерево бинарное.
+     *
+     * @return true если дерево бинарное.
+     */
+    public boolean isBinary() {
+        return isBinary(root);
+    }
+
+    /**
+     * Проверяет ветвь на бинарность.
+     *
+     * @param node корень ветви для проверки.
+     * @return true если ветвь бинарная.
+     */
+    private boolean isBinary(Node<E> node) {
+        boolean result;
+        if (node == null || node.children == null || node.children.size() == 0) {
+            result = true;
+        } else if (node.children.size() > 2) {
+            result = false;
+        } else {
+            result =   (isBinary(node.children.get(0))
+                    && (node.children.size() == 1
+                    || isBinary(node.children.get(1))));
+        }
+        return result;
     }
 }

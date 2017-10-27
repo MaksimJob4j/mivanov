@@ -50,4 +50,23 @@ public class TreeTest {
 
     }
 
+    @Test
+    public void whenCallisBinaryThenItWorks() throws Exception {
+        Tree<String> tree = new Tree<>();
+        assertThat(tree.isBinary(), is(true));
+        tree.add("a", "aa");
+        assertThat(tree.isBinary(), is(true));
+        tree.add("a", "bb");
+        assertThat(tree.isBinary(), is(true));
+
+        tree.add("aa", "aaa");
+        assertThat(tree.isBinary(), is(true));
+        tree.add("aa", "bbb");
+        assertThat(tree.isBinary(), is(true));
+
+        tree.add("aa", "ccc");
+        assertThat(tree.isBinary(), is(false));
+
+    }
+
 }
