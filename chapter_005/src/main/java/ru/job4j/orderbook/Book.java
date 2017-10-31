@@ -52,15 +52,19 @@ public class Book {
         return deals;
     }
 
-    void addOrder(Order order) {
+    boolean addOrder(Order order) {
+        boolean result = false;
 
-        if (order.getOperation().equals(Operation.BUY)) {
-            bid.computeIfAbsent(order.getPrice(), orderList -> new LinkedList<>()).add(order);
-        } else {
-            ask.computeIfAbsent(order.getPrice(), orderList -> new LinkedList<>()).add(order);
-        }
+            if (order.getOperation().equals(Operation.BUY)) {
+                bid.computeIfAbsent(order.getPrice(), orderList -> new LinkedList<>()).add(order);
+                result = true;
+            } else if (order.getOperation().equals(Operation.SELL)) {
+                ask.computeIfAbsent(order.getPrice(), orderList -> new LinkedList<>()).add(order);
+                result = true;
+            }
 
-        makeDeals();
+            makeDeals();
+        return result;
     }
 
     private void makeDeals() {
