@@ -23,7 +23,7 @@ public class Book {
     /**
      * Bid orders.
      */
-    private TreeMap<Float, LinkedList<Order>> bid = new TreeMap<Float, LinkedList<Order>>(new Comparator<Float>() {
+    private TreeMap<Float, LinkedList<Order>> bid = new TreeMap<>(new Comparator<Float>() {
         @Override
         public int compare(Float o1, Float o2) {
             return -o1.compareTo(o2);
@@ -155,31 +155,24 @@ public class Book {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append("Order book: ");
-        result.append(name);
-        result.append("\n");
-        result.append("BID\t\t\t\t\tASK\n");
-        result.append("Volume@Price\t–\tVolume@Price\n");
+        result.append(String.format("\nOrder book: %s\n", name));
+        result.append("      BID\t\t\t\t\t  ASK\n");
+        result.append("Volume @   Price\t–\tVolume @   Price\n");
         ArrayList<BookItem> bids = bookSideToList(bid);
         ArrayList<BookItem> asks = bookSideToList(ask);
         int depth = Math.max(bids.size(), asks.size());
         for (int i = 0; i < depth; i++) {
             if (i < bids.size()) {
-                result.append(bids.get(i).volume);
-                result.append("@");
-                result.append(bids.get(i).price);
+                result.append(String.format("%5s, @ %7s", bids.get(i).volume, bids.get(i).price));
             } else {
-                result.append("-------");
+                result.append("------ @ -------");
             }
-            result.append("\t\t\t-\t");
+            result.append("\t-\t");
             if (i < asks.size()) {
-                result.append(asks.get(i).volume);
-                result.append("@");
-                result.append(asks.get(i).price);
+                result.append(String.format("%5s, @ %7s\n", asks.get(i).volume, asks.get(i).price));
             } else {
-                result.append("-------");
+                result.append("------ @ -------\n");
             }
-            result.append("\n");
         }
         return result.toString();
     }

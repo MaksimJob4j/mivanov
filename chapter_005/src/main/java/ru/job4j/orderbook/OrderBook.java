@@ -7,20 +7,22 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.File;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class OrderBook {
 
-    int countOperationTotal = 0;
-    int countOperation = 0;
-    int countAdd = 0;
-    int countNotAdd = 0;
-    int countDell = 0;
-    int countNotDell = 0;
-
-
+    private int countAdd = 0;
+    private int countNotAdd = 0;
+    private int countDell = 0;
+    private int countNotDell = 0;
 
     private Map<String, Book> books = new HashMap<>();
 
@@ -52,21 +54,72 @@ public class OrderBook {
     }
 
     /**
+     * Метод запускает программу (читат файл и добавляет команды в OrderBook).
+     * Разбор файла проводится через String за 1 проход строки.
+     * @param file файл заявок.
+     * @return стакан в формате String.
+     * @throws IOException IOException.
+     */
+    public String startStringNew(File file) throws IOException {
+
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+
+            if (line.charAt(1) == 'A') {
+                ArrayList<String> values = parseLine(line);
+                addOrder(new Order(
+                        values.get(0),
+                        values.get(1).equalsIgnoreCase("SELL") ? Operation.SELL : Operation.BUY,
+                        Float.valueOf(values.get(2)),
+                        Integer.valueOf(values.get(3)),
+                        Integer.valueOf(values.get(4))
+                ));
+            } else if (line.charAt(1) == 'D') {
+                ArrayList<String> values = parseLine(line);
+                deleteOrder(
+                        values.get(0),
+                        Integer.valueOf(values.get(1))
+                );
+            }
+        }
+        return printOrderBook();
+    }
+
+    private ArrayList<String> parseLine(String line) {
+        ArrayList<String> values = new ArrayList<>();
+        Boolean start = false;
+        int beginIndex = 0;
+        for (int i = 0; i < line.length(); i++) {
+
+            if (line.charAt(i) == '\"') {
+                if (start) {
+                    values.add(line.substring(beginIndex, i));
+                    start = false;
+                } else {
+                    start = true;
+                    beginIndex = i + 1;
+                }
+            }
+        }
+        return values;
+    }
+
+    /**
      * Метод запускает программу (читат файли добавляет команды в OrderBook).
      * Разбор файла проводится через String.
-     * @return количество совершенных операций
-     * @throws IOException
+     * @param file файл заявок.
+     * @return стакан в формате String.
+     * @throws IOException IOException.
      */
-    public int startString() throws IOException {
-        File file = new File("orders.xml");
-        FileReader fileReader = new FileReader(file);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
+    public String startString(File file) throws IOException {
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String line;
-        int countOperationTotal = 0;
         while ((line = bufferedReader.readLine()) != null) {
 
             if (line.contains("AddOrder")) {
-                countOperationTotal++;
 
                 int startIndex = line.indexOf("\"", line.indexOf("book=")) + 1;
                 int endIndex = line.indexOf("\"", startIndex);
@@ -92,14 +145,12 @@ public class OrderBook {
                 int orderId = Integer.parseInt(line.substring(startIndex, endIndex));
 
                 if (addOrder(new Order(book, operation, price, volume, orderId))) {
-                    countOperation++;
                     countAdd++;
                 } else {
                     countNotAdd++;
                 }
 
             } else if (line.contains("DeleteOrder")) {
-                countOperationTotal++;
 
                 int startIndex = line.indexOf("\"", line.indexOf("book=")) + 1;
                 int endIndex = line.indexOf("\"", startIndex);
@@ -110,31 +161,27 @@ public class OrderBook {
                 int orderId = Integer.parseInt(line.substring(startIndex, endIndex));
 
                 if (deleteOrder(book, orderId)) {
-                    countOperation++;
                     countDell++;
                 } else {
                     countNotDell++;
                 }
             }
         }
-        this.countOperationTotal = countOperationTotal;
-        return countOperationTotal;
+        return printOrderBook();
     }
 
     /**
      * Метод запускает программу (читат файли добавляет команды в OrderBook).
      * Разбор XML файла проводится с использованием Java StAX API.
-     * @return количество совершенных операций
-     * @throws IOException
+     * @param file файл заявок.
+     * @return стакан в формате String.
+     * @throws IOException IOException.
      */
-    public int startXML() throws IOException, XMLStreamException {
-        int countOperationTotal = 0;
-
-        File file = new File("orders.xml");
+    public String startXML(File file) throws IOException, XMLStreamException {
 
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
         // инициализируем reader и скармливаем ему xml файл
-        XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(new File("orders.xml")));
+        XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(file));
 
         // проходим по всем элементам xml файла
         while (reader.hasNext()) {
@@ -143,7 +190,6 @@ public class OrderBook {
             if (xmlEvent.isStartElement()) {
                 StartElement startElement = xmlEvent.asStartElement();
                 if (startElement.getName().getLocalPart().equals("AddOrder")) {
-                    countOperationTotal++;
 
                     // Получаем атрибут для каждого элемента
                     Attribute bookAttr = startElement.getAttributeByName(new QName("book"));
@@ -164,14 +210,12 @@ public class OrderBook {
                     int orderId = Integer.parseInt(orderIdAttr.getValue());
 
                     if (addOrder(new Order(book, operation, price, volume, orderId))) {
-                        countOperation++;
                         countAdd++;
                     } else {
                         countNotAdd++;
                     }
 
                 } else if (startElement.getName().getLocalPart().equals("DeleteOrder")) {
-                    countOperationTotal++;
 
                     // Получаем атрибут для каждого элемента
                     Attribute bookAttr = startElement.getAttributeByName(new QName("book"));
@@ -181,7 +225,6 @@ public class OrderBook {
                     int orderId = Integer.parseInt(orderIdAttr.getValue());
 
                     if (deleteOrder(book, orderId)) {
-                        countOperation++;
                         countDell++;
                     } else {
                         countNotDell++;
@@ -189,58 +232,72 @@ public class OrderBook {
                 }
             }
         }
-        this.countOperationTotal = countOperationTotal;
-        return countOperationTotal;
+        return printOrderBook();
     }
 
 
     public static void main(String[] args) {
+        File file = new File("orders.xml");
 
+        // Подсчет времени работы вырианта
+        // с парсингом через XMLInputFactory и получение атрибутов каждого элемента
         Long timeXML = -System.currentTimeMillis();
 
         OrderBook oBXML = new OrderBook();
-        int bookOperationXML = 0;
+        String orderBookXML = "";
 
         try {
-            bookOperationXML = oBXML.startXML();
-        } catch (IOException ioe) {
-            System.out.println(ioe);
-        } catch (XMLStreamException e) {
-            System.out.println(e);
+            orderBookXML = oBXML.startXML(file);
+        } catch (XMLStreamException | IOException e) {
+            e.printStackTrace();
         }
-        String bookXML = oBXML.printOrderBook();
         timeXML += System.currentTimeMillis();
 
+        // Подсчет времени работы вырианта
+        // с чтением через BufferedReader и парсингом методами String
         Long timeString = -System.currentTimeMillis();
         OrderBook oBString = new OrderBook();
-        int bookOperationString = 0;
+        String orderBookString = "";
         try {
-            bookOperationString = oBString.startString();
+            orderBookString = oBString.startString(file);
         } catch (IOException ioe) {
-            System.out.println(ioe);
+            ioe.printStackTrace();
         }
-        String bookString = oBXML.printOrderBook();
         timeString += System.currentTimeMillis();
 
-        System.out.println();
-        System.out.printf("Время выполнение StAX API - %S сек, к-во операций %S, добавлено/отклонено %S/%S, удалено/отклонено %S/%S",
-                (timeXML / 1000), bookOperationXML, oBXML.countAdd, oBXML.countNotAdd, oBXML.countDell, oBXML.countNotDell);
-        System.out.println();
-        System.out.printf("Время выполнение String - %S сек, к-во операций %S, добавлено/отклонено %S/%S, удалено/отклонено %S/%S",
-                (timeString / 1000), bookOperationString, oBString.countAdd, oBString.countNotAdd, oBString.countDell, oBString.countNotDell);
-        System.out.println();
-        System.out.println();
+        // Подсчет времени работы вырианта
+        // с чтением через BufferedReader и парсингом методами String за 1 проход строки
+        Long timeStringNew = -System.currentTimeMillis();
+        OrderBook oBStringNew = new OrderBook();
+        String orderBookStringNew = "";
+        try {
+            orderBookStringNew = oBStringNew.startString(file);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        timeStringNew += System.currentTimeMillis();
 
-        if (bookString.equals(bookXML)) {
+        if (orderBookXML.equals(orderBookStringNew)) {
             System.out.printf("Результат методов StAX API и String идентичен");
             System.out.println();
-            System.out.println(bookString);
+            System.out.println(orderBookString);
         } else {
             System.out.println("Результаты методов StAX API и String не совпадают");
             System.out.println("Результаты метода StAX API:");
-            System.out.println(bookString);
+            System.out.println(orderBookXML);
             System.out.println("Результаты метода String:");
-            System.out.println(bookXML);
+            System.out.println(orderBookStringNew);
         }
+
+        System.out.println();
+        System.out.printf("Время выполнение StAX API - %S Мсек, добавлено %S, удалено/отклонено %S/%S",
+                timeXML, oBXML.countAdd, oBXML.countDell, oBXML.countNotDell);
+        System.out.println();
+        System.out.printf("Время выполнение String - %S Мсек, добавлено %S, удалено/отклонено %S/%S",
+                timeString, oBString.countAdd, oBString.countDell, oBString.countNotDell);
+        System.out.println();
+        System.out.printf("Время выполнение StringNEW - %S Мсек, добавлено %S, удалено/отклонено %S/%S",
+                timeStringNew, oBStringNew.countAdd, oBStringNew.countDell, oBStringNew.countNotDell);
+
     }
 }
