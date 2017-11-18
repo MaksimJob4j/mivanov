@@ -6,18 +6,16 @@ import net.jcip.annotations.ThreadSafe;
 @ThreadSafe
 public class Count implements Runnable {
 
-    @GuardedBy("count")
+    @GuardedBy("this")
     private int count = 0;
 
-    public int getCount() {
+    synchronized int getCount() {
         return count;
     }
 
-    @GuardedBy(value = "count")
     synchronized int increment() {
         return ++this.count;
     }
-
 
     @Override
     public void run() {
