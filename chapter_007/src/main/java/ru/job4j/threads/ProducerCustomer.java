@@ -1,13 +1,18 @@
 package ru.job4j.threads;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.LinkedList;
 
 /**
  * Структура данных блокирующей очереди.
  * @param <E> Тип данных элементов очереди.
  */
+@ThreadSafe
 public class ProducerCustomer<E> {
 
+    @GuardedBy("itself")
     private final LinkedList<E> container = new LinkedList<>();
 
     /**
