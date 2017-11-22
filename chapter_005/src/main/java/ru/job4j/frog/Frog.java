@@ -64,6 +64,7 @@ class Frog {
     private Point star;
     private Set<Point> trees;
     private Map<Integer, Point> visited;
+    private int numberOfStep;
 
     /**
      *
@@ -85,11 +86,14 @@ class Frog {
             }
         }
 
+        numberOfStep = 0;
         this.visited = new HashMap<>();
         return findThePath(frog, 0);
     }
 
     private LinkedList<Point> findThePath(Point frog, int step) {
+
+        numberOfStep++;
 
         LinkedList<Point> result = null;
         if (distanceBetweenPoint(frog, star) == numberOfCellsPerTurn) {
@@ -115,6 +119,7 @@ class Frog {
                     LinkedList<Point> path = findThePath(next, step + 1);
 
                     if (path != null) {
+                        next.stepsToPoint = step + 1;
                         path.addFirst(next);
                         result = path;
                     }
@@ -150,6 +155,7 @@ class Frog {
         } else {
             System.out.println("Звезда недостижима!");
         }
+        System.out.println(String.format("Количество итераций - %s", numberOfStep));
     }
 
     public static void main(String[] args) {
@@ -157,12 +163,12 @@ class Frog {
 //        Frog frog = new Frog(16,10,3);
         List<Point> steps;
 
-        System.out.println("Вариант с проходом");
-        steps = frog.findTheShortestPath(1, 1, 1, 1, 3, 1, 4, 2, 3, 3, 1);
+        System.out.println("Вариант с проходом к звезде");
+        steps = frog.findTheShortestPath(1, 1, 10, 1, 3, 1, 4, 2, 3, 3, 1);
         frog.printResult(steps);
 
         System.out.println();
-        System.out.println("Вариант без прохода");
+        System.out.println("Вариант без прохода к звезде");
         steps = frog.findTheShortestPath(1, 1, 1, 1, 3, 1, 4, 2, 3, 3, 2);
         frog.printResult(steps);
     }
