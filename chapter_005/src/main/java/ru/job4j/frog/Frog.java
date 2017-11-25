@@ -1,5 +1,6 @@
 package ru.job4j.frog;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -68,23 +69,18 @@ class Frog {
 
     /**
      *
-     * @param args args[0], args[1] координаты лягушки (кольцо, сектор);
-     *             args[2], args[3] координаты звезды (кольцо, сектор);
-     *             args[4] количество деревьев;
-     *             args[5]... координаты деревьев (кольцо, сектор).
-     *             Значения кольцо и сектор должны быть больше нуля
+     * @param frog точка лягушки.
+     * @param star точка звезды.
+     * @param trees массив деревьев.
+     *             Координаты точекдолжны быть больше нуля
      *             и в рамках заданных при создании класса через конструктор.
      * @return Список шагов или null если до звезды дойти невозможно.
      */
-    public List<Point> findTheShortestPath(int...args) {
-        frog = new Point(args[0], args[1]);
-        star = new Point(args[2], args[3]);
-        trees = new HashSet<>();
-        if (args[4] > 0) {
-            for (int i = 0; i < args[4]; i++) {
-                trees.add(new Point(args[5 + i * 2], args[6 + i * 2]));
-            }
-        }
+    public List<Point> findTheShortestPath(Point frog, Point star, Point...trees) {
+        this.frog = frog;
+        this.star = star;
+        this.trees = new HashSet<>();
+        this.trees.addAll(Arrays.asList(trees));
 
         numberOfStep = 0;
         this.visited = new HashMap<>();
@@ -164,12 +160,20 @@ class Frog {
         List<Point> steps;
 
         System.out.println("Вариант с проходом к звезде");
-        steps = frog.findTheShortestPath(1, 1, 10, 1, 3, 1, 4, 2, 3, 3, 1);
+        steps = frog.findTheShortestPath(frog.new Point(1, 1),
+                                        frog.new Point(10, 1),
+                                        frog.new Point(1, 4),
+                                        frog.new Point(2, 3),
+                                        frog.new Point(3, 1));
         frog.printResult(steps);
 
         System.out.println();
         System.out.println("Вариант без прохода к звезде");
-        steps = frog.findTheShortestPath(1, 1, 1, 1, 3, 1, 4, 2, 3, 3, 2);
+        steps = frog.findTheShortestPath(frog.new Point(1, 1),
+                                        frog.new Point(1, 1),
+                                        frog.new Point(1, 4),
+                                        frog.new Point(2, 3),
+                                        frog.new Point(3, 2));
         frog.printResult(steps);
     }
 }
