@@ -6,10 +6,8 @@
  root - путь до папки откуда надо осуществлять поиск.
  text - заданных текст.
  exts - расширения файлов в которых нужно делать поиск.
-
  Приложения должно искать текст в файлах (в том числе и в подкаталогах) и сохранять адрес файла.
  List<String> result(); - возвращает список всех файлов.
-
  Логика приложения.
  1. Запустить код.
  2. Внутри запустить несколько потоков. Объяснить для чего нужно делать потоки.
@@ -31,8 +29,10 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import static java.nio.file.FileVisitResult.*;
+import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class ParallerSearch {
     private List<String> files;
@@ -40,84 +40,95 @@ public class ParallerSearch {
     private String text;
     private List<String> exts;
     private PathMatcher matcher;
-    private Integer treadCount = 0;
+    private AtomicInteger runThread;
 
+    private ConcurrentLinkedQueue<Path> fileQueue;
 
-    public ParallerSearch(String root, String text, List<String> exts){
+    public ParallerSearch(String root, String text, List<String> exts) {
         this.root = root;
         this.text = text;
         this.exts = exts;
-        files = new ArrayList<String>();
+        files = new ArrayList<>();
+        fileQueue = new ConcurrentLinkedQueue<>();
+        runThread = new AtomicInteger(0);
     }
 
     class Visitor extends SimpleFileVisitor<Path> {
 
         @Override
-        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-            findText(file);
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+            if (findFile(file)) {
+                new Thread(() -> {
+
+                    runThread.incrementAndGet();
+
+                    while (!fileQueue.isEmpty()) {
+                        findText(fileQueue.poll());
+                    }
+
+                    runThread.decrementAndGet();
+
+                }).start();
+            }
+
             return CONTINUE;
         }
 
         @Override
         public FileVisitResult visitFileFailed(Path file, IOException exc) {
+//            exc.printStackTrace();
             return CONTINUE;
         }
 
     }
 
-    List<String> result() throws IOException, InterruptedException {
+    List<String> result() {
+
         makeMatcher();
         Visitor visitor = new Visitor();
-        Files.walkFileTree(Paths.get(root), visitor);
+        try {
+            Files.walkFileTree(Paths.get(root), visitor);
+        } catch (IOException e) {
+//            e.printStackTrace();
+        }
 
-        synchronized (this.treadCount) {
-            while (this.treadCount > 0) {
-//                treadCount.wait();
-                this.treadCount.wait(100);
+        while (runThread.get() != 0 || !fileQueue.isEmpty()) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+//                e.printStackTrace();
             }
         }
 
         return files;
     }
 
-    private void findText(Path file) {
+    private boolean findFile(Path file) {
         Path name = file.getFileName();
         if (name != null && matcher.matches(name)) {
-            Thread thread = new Thread(){
+            fileQueue.add(file);
+            return true;
+        }
+        return false;
+    }
 
-                @Override
-                public void run() {
-
-                    try {
-                        BufferedReader reader = new BufferedReader(new FileReader(file.toFile()));
-                        String line;
-
-                        while ((line = reader.readLine()) != null) {
-                            if (line.contains(text)){
-                                synchronized (ParallerSearch.this.files) {
-                                    ParallerSearch.this.files.add(file.toString());
-                                }
-                                break;
-                            }
-                        }
-                    } catch (IOException e) {
-                            e.printStackTrace();
-                    } finally {
-                        synchronized (ParallerSearch.this.treadCount) {
-                            ParallerSearch.this.treadCount--;
-//                            ParallerSearch.this.treadCount.notify();
-                        }
+    private void findText(Path file) {
+        if (file != null) {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(file.toFile()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains(text)) {
+                        files.add(file.toString());
+                        break;
                     }
-
                 }
-            };
-            synchronized (this.treadCount) {
-                this.treadCount++;
+            } catch (IOException e) {
+//                e.printStackTrace();
             }
-            thread.start();
-
         }
     }
+
 
     private void makeMatcher() {
         StringBuilder pattern = new StringBuilder();
@@ -140,13 +151,13 @@ public class ParallerSearch {
         matcher = FileSystems.getDefault().getPathMatcher("glob:" + pattern.toString());
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
 
         List<String> ests = new ArrayList<>();
         ests.add("TXT");
         ests.add("java");
 
-        ParallerSearch search = new ParallerSearch("c:\\projects", "class", ests);
+        ParallerSearch search = new ParallerSearch("c:\\", "class", ests);
 
         for (String res: search.result()) {
             System.out.println(res);
