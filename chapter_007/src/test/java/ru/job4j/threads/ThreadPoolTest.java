@@ -11,7 +11,7 @@ public class ThreadPoolTest {
         Thread thread;
 
         for (int i = 0; i < 10; i++) {
-            Work work = new Work();
+            Work work = new Work(String.valueOf(i));
             threadPool.add(work);
         }
         Thread.sleep(10000);
@@ -21,16 +21,21 @@ public class ThreadPoolTest {
 }
 
 class Work implements Runnable {
+    private String name;
+
+    public Work(String name) {
+        this.name = name;
+    }
 
     @Override
     public void run() {
-        System.out.println(String.format("Tread-%s start", Thread.currentThread().getName()));
+        System.out.println(String.format("Work-%s start", name));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(String.format("Tread-%s stop", Thread.currentThread().getName()));
+        System.out.println(String.format("Work-%s stop", name));
     }
 
 }

@@ -69,7 +69,8 @@ public class DynamicalList<E> implements Iterable<E> {
 
     /**
      * delete.
-     * @param i i.
+     * @param e e.
+     * @return true если элемент удален.
      */
     public boolean delete(E e) {
         boolean result = false;
