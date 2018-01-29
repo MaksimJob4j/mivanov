@@ -10,6 +10,7 @@
 package ru.job4j.threads;
 
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class ThreadPoolNew<W extends Runnable> {
 
@@ -17,28 +18,21 @@ public class ThreadPoolNew<W extends Runnable> {
 
     private LinkedBlockingQueue<W> works = new LinkedBlockingQueue<>();
 
-    private final Object lock = new Object();
-
-    public ThreadPoolNew() {
-        initialize();
-    }
+    private boolean isStarted = false;
 
     private void initialize() {
         for (int i = 0; i < maxTreadCount; i++) {
             new Thread(() -> {
                 Runnable work;
                 while (true) {
-                    work = works.poll();
-                    if (work != null) {
-                        work.run();
-                    } else {
-                        synchronized (lock) {
-                            try {
-                                lock.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                    try {
+                        work = works.poll(1L, TimeUnit.SECONDS);
+                        if (work != null) {
+                            work.run();
                         }
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
 
@@ -47,9 +41,10 @@ public class ThreadPoolNew<W extends Runnable> {
     }
 
     public void add(W work) {
-        works.add(work);
-        synchronized (lock) {
-            lock.notify();
+        if (!isStarted) {
+            this.initialize();
+            this.isStarted = true;
         }
+        works.add(work);
     }
 }
