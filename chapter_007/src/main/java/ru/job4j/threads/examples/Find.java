@@ -1,4 +1,4 @@
-package ru.job4j.threads.examplesFileVisitor;
+package ru.job4j.threads.examples;
 
 /*
  * Copyright (c) 2009, Oracle and/or its affiliates. All rights reserved.

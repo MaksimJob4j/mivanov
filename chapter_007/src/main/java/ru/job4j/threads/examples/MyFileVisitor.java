@@ -1,4 +1,4 @@
-package ru.job4j.threads.examplesFileVisitor;
+package ru.job4j.threads.examples;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
