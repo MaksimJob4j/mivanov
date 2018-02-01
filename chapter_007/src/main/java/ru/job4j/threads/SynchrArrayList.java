@@ -1,5 +1,8 @@
 package ru.job4j.threads;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -8,14 +11,17 @@ import java.util.NoSuchElementException;
  * Потокобезопасный ArrayList.
  * @param <E> generic.
  */
+@ThreadSafe
 public class SynchrArrayList<E> implements Iterable<E> {
     /**
      * Container.
      */
+    @GuardedBy("this")
     private Object[] container;
     /**
      * index.
      */
+    @GuardedBy("this")
     private volatile int index = 0;
 
     /**

@@ -1,5 +1,8 @@
 package ru.job4j.threads;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -7,6 +10,7 @@ import java.util.NoSuchElementException;
  * Потокобезопасный LinkedList.
  * @param <E> generic.
  * */
+@ThreadSafe
 public class SynchrLinkedList<E> implements Iterable<E> {
     /**
      * getFirst.
@@ -66,11 +70,13 @@ public class SynchrLinkedList<E> implements Iterable<E> {
     /**
      * index.
      */
+    @GuardedBy("this")
     private int index = 0;
 
     /**
      * header.
      */
+    @GuardedBy("this")
     private Node header;
 
     /**
@@ -83,10 +89,12 @@ public class SynchrLinkedList<E> implements Iterable<E> {
     /**
      * first.
      */
+    @GuardedBy("this")
     private Node first;
     /**
      * last.
      */
+    @GuardedBy("this")
     private Node last;
 
     /**
