@@ -28,9 +28,19 @@ public class MyLock {
     }
 
     public synchronized void unlock() {
+        System.out.println(Thread.currentThread().getName() + " пытается снять блокировку");
+
+        if (Thread.currentThread().equals(locker)) {
             isLocked = false;
             locker = null;
-            this.notify();
+            System.out.println(Thread.currentThread().getName() + " снял блокировку");
+
+        } else {
+            System.out.println(Thread.currentThread().getName() + " не смог снять блокировку");
+
+        }
+
+        this.notifyAll();
     }
 
     public static void main(String[] args) {
@@ -43,6 +53,7 @@ public class MyLock {
                 @Override
                 public void run() {
                     try {
+//                        lock.unlock();
                         lock.lock();
                         System.out.println("Лок захвачен " + Thread.currentThread().getName());
                         System.out.println("Ждем 3");
@@ -50,6 +61,8 @@ public class MyLock {
                         System.out.println("Ждем 2");
                         Thread.sleep(1000);
                         System.out.println("Ждем 1");
+                        Thread.sleep(1000);
+                        lock.unlock();
                         Thread.sleep(1000);
                         lock.unlock();
 
