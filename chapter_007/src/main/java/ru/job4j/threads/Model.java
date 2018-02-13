@@ -1,6 +1,6 @@
 package ru.job4j.threads;
 
-abstract class Model {
+class Model {
     String id;
     String name;
     int version;
