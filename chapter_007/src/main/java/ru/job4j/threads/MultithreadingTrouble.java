@@ -36,6 +36,22 @@ public class MultithreadingTrouble {
         System.out.printf("1000 * 1000 = %s", i);
     }
 
+    private void getTroubleGroup() {
+        this.i = 0;
+        ThreadGroup threadGroup = new ThreadGroup("Group1");
+        for (int i = 0; i < 1000; i++) {
+            new Thread(threadGroup, getIncrementThread()).start();
+        }
+        while (threadGroup.activeCount() > 0) {
+            try {
+                Thread.sleep(0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.printf("1000 * 1000 = %s", i);
+    }
+
     private void getTroubleJoin() {
         this.i = 0;
         Thread[] threads = new Thread[1000];
@@ -66,5 +82,7 @@ public class MultithreadingTrouble {
         trouble.getTroubleExecutor();
         System.out.println();
         trouble.getTroubleJoin();
+        System.out.println();
+        trouble.getTroubleGroup();
     }
 }

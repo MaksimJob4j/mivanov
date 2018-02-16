@@ -15,16 +15,13 @@ public class ModelsStorage {
     }
 
     public void update(Model model) throws OplimisticException {
-            if (models.computeIfPresent(model.id, (key, value) -> {
-                if (model.version == value.version) {
-                    model.version++;
-                    return model;
-                } else {
-                    return value;
-                }
-            }).version != model.version) {
-                throw new OplimisticException();
+        models.computeIfPresent(model.id, (key, value) -> {
+            if (model.version == value.version) {
+                model.version++;
+                return model;
             }
+            throw new OplimisticException();
+        });
     }
 
     public void delete(Model model) {
