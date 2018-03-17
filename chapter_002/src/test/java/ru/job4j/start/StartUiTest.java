@@ -3,6 +3,7 @@ package ru.job4j.start;
 
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,18 +15,21 @@ import static org.junit.Assert.assertThat;
  */
 public class StartUiTest {
 
+    static File initFile = new File("C:\\projects\\mivanov\\tracker.xml");
+
     /**
      * Test add.
      */
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
-        Tracker tracker = new Tracker();
+        Tracker tracker = new Tracker(initFile);
+        tracker.init();
         ArrayList<String> commands = new ArrayList<>(
-                Arrays.asList(new String[]{
+                Arrays.asList(
                         "1",
                         "TestName",
                         "TestTask",
-                        "y"})
+                        "y")
         );
         Input input = new StubInput(commands);
         new StartUI(input, tracker).init();
@@ -37,15 +41,16 @@ public class StartUiTest {
      */
     @Test
     public void whenUserChangeTaskThenTrackerHasChangedItem() {
-        Tracker tracker = new Tracker();
+        Tracker tracker = new Tracker(initFile);
+        tracker.init();
         Item item = new Item("TestName", "TestTask", 111L);
         tracker.add(item);
         ArrayList<String> commands = new ArrayList<>(
-                Arrays.asList(new String[]{
+                Arrays.asList(
                         "3",
-                        item.getId(),
+                        item.getId().toString(),
                         "ChangedTask",
-                        "y"})
+                        "y")
         );
         Input input = new StubInput(commands);
         new StartUI(input, tracker).init();
@@ -57,20 +62,21 @@ public class StartUiTest {
      */
     @Test
     public void whenUserDeleteItemThenTrackerHasNoThisItem() {
-        Tracker tracker = new Tracker();
-        Item first = new Item("First", "FirstTestTask", 111L);
-        Item second = new Item("Second", "SecondTestTask", 222L);
-        tracker.add(first);
-        tracker.add(second);
+        Tracker tracker = new Tracker(initFile);
+        tracker.init();
+        Item item = new Item("First", "FirstTestTask", 111L);
+        tracker.add(item);
+        Integer id = item.getId();
+        assertThat(tracker.findById(id), is(item));
         ArrayList<String> commands = new ArrayList<>(
-                Arrays.asList(new String[]{
+                Arrays.asList(
                         "4",
-                        first.getId(),
-                        "y"})
+                        id.toString(),
+                        "y")
         );
         Input input = new StubInput(commands);
         new StartUI(input, tracker).init();
-        assertThat(tracker.toString(), is(second.toString()));
+        assertThat(tracker.findById(id) == null, is(true));
     }
 
 }

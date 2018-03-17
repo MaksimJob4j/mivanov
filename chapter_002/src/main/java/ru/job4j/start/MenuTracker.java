@@ -70,6 +70,7 @@ public class MenuTracker {
         this.actions.add(new MenuTracker.Delete(++this.position, "Delete item"));
         this.actions.add(new FindById(++this.position, "Find item by Id"));
         this.actions.add(new FindByName(++this.position, "Find items by name"));
+        this.actions.add(new MenuTracker.ClearBase(++this.position, "Clear DataBase (y)"));
 
         BaseAction menuExit = new BaseAction("Exit") {
             @Override
@@ -182,10 +183,11 @@ public class MenuTracker {
             Item item;
 
             id = input.ask("Enter task's ID for update: ");
-            item = tracker.findById(id);
+            item = tracker.findById(Integer.parseInt(id));
             if (item != null) {
                 System.out.println(item);
-                item.setTask(input.ask("Change task: "));
+//                item.setTask(input.ask("Change task: "));
+                tracker.updateTask(item, input.ask("Change task: "));
                 System.out.println("Task changed.");
             } else {
                 System.out.println("Item not found");
@@ -213,13 +215,42 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             String id;
                 id = input.ask("Enter task's ID for delete");
-                if (tracker.findById(id) != null) {
-                    tracker.delete(tracker.findById(id));
+                if (tracker.findById(Integer.parseInt(id)) != null) {
+                    tracker.delete(tracker.findById(Integer.parseInt(id)));
                     System.out.println("Task deleted.");
                 } else {
                     System.out.println("Item not found");
                 }
 
+        }
+    }
+
+    /**
+     * Delete item.
+     */
+    public static class ClearBase extends BaseAction {
+        /**
+         * @param key  key.
+         * @param name name.
+         */
+        ClearBase(int key, String name) {
+            super(key, name);
+        }
+        /**
+         *
+         * @param input input.
+         * @param  tracker tracker.
+         */
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            String id;
+                id = input.ask("Do you really want to clear the database?");
+                if (id.equals("y")) {
+                    tracker.clearBase();
+                    System.out.println("Database cleared.");
+                } else {
+                    System.out.println("Clearing is canceled");
+                }
         }
     }
 
@@ -245,7 +276,7 @@ class FindById extends BaseAction {
      */
     @Override
     public void execute(Input input, Tracker tracker) {
-        Item item = tracker.findById(input.ask("Enter task's ID for find: "));
+        Item item = tracker.findById(Integer.parseInt(input.ask("Enter task's ID for find: ")));
         if (item != null) {
             System.out.println(item);
         } else {

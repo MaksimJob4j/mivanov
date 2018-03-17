@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tracker>
+    <url>jdbc:postgresql://localhost:5432/tracker</url>
+    <username>postgres</username>
+    <password>password</password>
+	<sqlCreateTable>
+		CREATE TABLE IF NOT EXISTS items (
+			id serial primary key,
+			name character varying (200),
+			task text,
+			created bigint)
+	</sqlCreateTable>
+	<sqlAddItem>
+		INSERT INTO items (name, task, created) 
+		VALUES (?, ?, ?)
+	</sqlAddItem>
+	<sqlRemoveItem>
+		DELETE FROM items 
+		WHERE id = ?
+	</sqlRemoveItem>
+	<sqlFindAll>
+		SELECT * FROM items
+	</sqlFindAll>
+	<sqlFindByName>
+		SELECT * FROM items 
+		WHERE name = ?
+	</sqlFindByName>
+	<sqlFindByID>
+		SELECT * FROM items 
+		WHERE id = ?
+	</sqlFindByID>
+	<sqlUpdateTask>
+		UPDATE items SET task = ? 
+		WHERE id = ?
+	</sqlUpdateTask>
+	<sqlClearBase>
+		DROP TABLE items;
+		CREATE TABLE items (
+			id serial primary key,
+			name character varying (200),
+			task text,
+			created bigint)
+	</sqlClearBase>
+
+
+
+	
+</tracker>
+	

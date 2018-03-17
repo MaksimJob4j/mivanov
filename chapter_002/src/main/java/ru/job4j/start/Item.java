@@ -1,20 +1,15 @@
 package ru.job4j.start;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Заявка.
  */
 public class Item {
     /**
-     * random.
-     */
-    private static final Random RANDOM = new Random();
-    /**
      * id.
      */
-    private final String id = Long.toString(System.currentTimeMillis() + Item.RANDOM.nextInt());
+    private Integer id = null;
     /**
      * name.
      */
@@ -38,7 +33,7 @@ public class Item {
      * @param task task.
      * @param created created.
      */
-    public Item(String name, String task, long created) {
+    Item(String name, String task, long created) {
         this.name = name;
         this.task = task;
         this.created = created;
@@ -48,16 +43,21 @@ public class Item {
      *
      * @return id.
      */
-    public String getId() {
+    Integer getId() {
         return id;
     }
 
+    void setID(Integer id) {
+        if (id != null && this.id == null) {
+            this.id = id;
+        }
+    }
 
     /**
      *
      * @return name.
      */
-    public String getName() {
+    String getName() {
         return name;
     }
 
@@ -65,7 +65,7 @@ public class Item {
      *
      * @param name name.
      */
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -73,7 +73,7 @@ public class Item {
      *
      * @return task.
      */
-    public String getTask() {
+    String getTask() {
         return task;
     }
 
@@ -81,7 +81,7 @@ public class Item {
      *
      * @param task task.
      */
-    public void setTask(String task) {
+    void setTask(String task) {
         this.task = task;
     }
 
@@ -89,7 +89,7 @@ public class Item {
      *
      * @return created.
      */
-    public long getCreated() {
+    long getCreated() {
         return created;
     }
 
@@ -97,7 +97,7 @@ public class Item {
      *
      * @param created created.
      */
-    public void setCreated(long created) {
+    void setCreated(long created) {
         this.created = created;
     }
 
@@ -105,7 +105,7 @@ public class Item {
      *
      * @return comments.
      */
-    public ArrayList<String> getComments() {
+    ArrayList<String> getComments() {
         return comments;
     }
 
@@ -113,7 +113,7 @@ public class Item {
      *
      * @param comments comments.
      */
-    public void setComments(ArrayList<String> comments) {
+    void setComments(ArrayList<String> comments) {
         this.comments = comments;
     }
 
@@ -127,6 +127,28 @@ public class Item {
                 + "task: " + this.task + System.getProperty("line.separator")
                 + "created: " + this.created + System.getProperty("line.separator")
                 + "comments: " + this.comments + System.getProperty("line.separator");
+    }
+
+    boolean equalsWithoutId(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Item item = (Item) o;
+
+        if (item.name != null && item.name.equals(this.name) || item.name == null && this.name == null) {
+            if (item.task != null && item.task.equals(this.task) || item.task == null && this.task == null) {
+                return item.created == this.created;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
     }
 
     @Override

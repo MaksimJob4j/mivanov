@@ -1,5 +1,6 @@
 package ru.job4j.start;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -32,6 +33,7 @@ public class StartUI {
      */
     public void init() {
 
+        tracker.init();
         MenuTracker menuTracker = new MenuTracker(this.input, this.tracker);
         menuTracker.fillActions();
         ArrayList<Integer> range = menuTracker.getRange();
@@ -47,7 +49,7 @@ public class StartUI {
      * @param args args.
      */
     public static void main(String[] args) {
-        new StartUI(new ValidateInput(), new Tracker()).init();
+        new StartUI(new ValidateInput(), new Tracker(new File("tracker.xml"))).init();
     }
 }
 
