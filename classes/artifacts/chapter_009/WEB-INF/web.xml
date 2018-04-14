@@ -11,7 +11,7 @@
 
     <servlet>
         <servlet-name>CrudServlet</servlet-name>
-        <servlet-class>ru.job4j.crudservlet.CrudServlet</servlet-class>
+        <servlet-class>ru.job4j.crudServlet.CrudServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
