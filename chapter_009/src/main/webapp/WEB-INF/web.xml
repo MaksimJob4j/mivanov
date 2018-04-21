@@ -1,9 +1,9 @@
 <web-app>
+
     <servlet>
         <servlet-name>EchoServlet</servlet-name>
         <servlet-class>ru.job4j.EchoServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>EchoServlet</servlet-name>
         <url-pattern>/echo</url-pattern>
@@ -13,9 +13,46 @@
         <servlet-name>CrudServlet</servlet-name>
         <servlet-class>ru.job4j.crudservlet.CrudServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>CrudServlet</servlet-name>
         <url-pattern>/crud</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>List</servlet-name>
+        <servlet-class>ru.job4j.userservlet.ListUsers</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>List</servlet-name>
+        <url-pattern>/list</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Edit</servlet-name>
+        <servlet-class>ru.job4j.userservlet.EditUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Edit</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Delete</servlet-name>
+        <servlet-class>ru.job4j.userservlet.DeleteUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Delete</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Create</servlet-name>
+        <servlet-class>ru.job4j.userservlet.CreateUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Create</servlet-name>
+        <url-pattern>/create</url-pattern>
+    </servlet-mapping>
+
 </web-app>
+
