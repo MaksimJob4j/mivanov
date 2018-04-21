@@ -14,10 +14,18 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class User {
-    static final List<String> FIELDS = Arrays.asList("id", "name", "login", "email", "createDate");
+    public static final List<String> FIELDS = Arrays.asList("id", "name", "login", "email", "createDate");
     private String id;
     private String name;
     private String login;
     private String email;
     private LocalDateTime createDate;
+//
+//    public User(String id, String name, String login, String email, LocalDateTime createDate) {
+//        this.id = id;
+//        this.name = name;
+//        this.login = login;
+//        this.email = email;
+//        this.createDate = createDate;
+//    }
 }

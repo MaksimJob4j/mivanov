@@ -73,15 +73,15 @@ public class UserStore {
         }
     }
 
-    void add(Map<String, String> par) {
+    void add(Map<String, String[]> par) {
         LOGGER.debug("Вызван метод");
         if (par.size() > 0) {
             try (PreparedStatement ps = getConnection().prepareStatement(
                     "INSERT INTO users (name, login, email, createDate) "
                             + "VALUES (?, ?, ?, ?)")) {
-                ps.setString(1, par.get("name"));
-                ps.setString(2, par.get("login"));
-                ps.setString(3, par.get("email"));
+                ps.setString(1, par.get("name") == null ? "" : par.get("name") [0]);
+                ps.setString(2, par.get("login") == null ? "" : par.get("login")[0]);
+                ps.setString(3, par.get("email") == null ? "" : par.get("email")[0]);
                 ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
                 ps.executeUpdate();
             } catch (SQLException e) {
@@ -91,16 +91,18 @@ public class UserStore {
     }
 
 
-    void edit(Map<String, String> par) {
+    void edit(Map<String, String[]> par) {
         LOGGER.debug("Вызван метод");
-        String idStr = par.get("id");
-        if (idStr != null) {
-            Integer id = Integer.parseInt(idStr);
-            for (String key: par.keySet()) {
-                if (!"id".equals(key)) {
-                    editItem(id, key, par.get(key));
-                }
+        if (par.get("id") != null) {
+            String idStr = par.get("id")[0];
+            if (idStr != null) {
+                Integer id = Integer.parseInt(idStr);
+                for (String key : par.keySet()) {
+                    if (!"id".equals(key)) {
+                        editItem(id, key, par.get(key)[0]);
+                    }
 
+                }
             }
         }
     }
@@ -117,7 +119,7 @@ public class UserStore {
         }
     }
 
-    void delete(Map<String, String> par) {
+    void delete(Map<String, String[]> par) {
         LOGGER.debug("Вызван метод");
         StringBuilder query = new StringBuilder();
         query.append("DELETE FROM users");
@@ -131,7 +133,7 @@ public class UserStore {
         }
     }
 
-    List<User> getUsers(Map<String, String> par) {
+    List<User> getUsers(Map<String, String[]> par) {
         LOGGER.debug("Вызван метод");
         List<User> result = new ArrayList<>();
         StringBuilder query = new StringBuilder();
@@ -158,14 +160,14 @@ public class UserStore {
         return result;
     }
 
-    private void setWhere(Map<String, String> par, StringBuilder query) {
+    private void setWhere(Map<String, String[]> par, StringBuilder query) {
         LOGGER.debug("Вызван метод");
         if (par.size() > 0) {
             query.append(" WHERE ");
             for (String kye: par.keySet()) {
                 query.append(kye);
                 query.append(" = '");
-                query.append(par.get(kye));
+                query.append(par.get(kye)[0]);
                 query.append("' AND ");
             }
             query.delete(query.length() - 5, query.length() - 1);
