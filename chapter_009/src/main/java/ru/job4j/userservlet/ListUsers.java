@@ -1,6 +1,8 @@
 package ru.job4j.userservlet;
 
 import org.apache.log4j.Logger;
+import ru.job4j.User;
+import ru.job4j.UserStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +13,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 public class ListUsers extends HttpServlet {
-    private final static Logger LOGGER = Logger.getLogger(ListUsers.class);
+    private final static Logger LOGGER = Logger.getLogger(ru.job4j.userservlet.ListUsers.class);
     private final UserStore users = UserStore.INSTANCE;
 
     @Override

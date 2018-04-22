@@ -1,6 +1,7 @@
 package ru.job4j.userservlet;
 
 import org.apache.log4j.Logger;
+import ru.job4j.UserStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -55,6 +56,5 @@ public class CreateUser extends HttpServlet {
         ListUsers listUsers = new ListUsers();
         listUsers.doGet(req, resp);
     }
-
 
 }

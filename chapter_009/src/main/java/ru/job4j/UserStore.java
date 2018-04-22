@@ -1,4 +1,4 @@
-package ru.job4j.userservlet;
+package ru.job4j;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.Logger;
@@ -15,7 +15,7 @@ import java.util.Properties;
 public enum UserStore {
     INSTANCE;
 
-    private final static Logger LOGGER = Logger.getLogger(ru.job4j.userservlet.UserStore.class);
+    private final static Logger LOGGER = Logger.getLogger(ru.job4j.UserStore.class);
 
     private final BasicDataSource basicDataSource = new BasicDataSource();
     private final Properties prop = new Properties();
@@ -25,7 +25,7 @@ public enum UserStore {
     }
 
     private void init() {
-        final Logger LOGGER = Logger.getLogger(ru.job4j.userservlet.UserStore.class);
+        final Logger LOGGER = Logger.getLogger(ru.job4j.UserStore.class);
 
         File propFile = new File("C:\\projects\\mivanov\\userservlet.properties");
         try (FileInputStream fileInputStream = new FileInputStream(propFile)) {
@@ -41,7 +41,7 @@ public enum UserStore {
     }
 
     private void createUsersTable() {
-        final Logger LOGGER = Logger.getLogger(ru.job4j.userservlet.UserStore.class);
+        final Logger LOGGER = Logger.getLogger(ru.job4j.UserStore.class);
         LOGGER.debug("Вызван метод");
         try (Connection conn = basicDataSource.getConnection();
              Statement st = conn.createStatement()) {
@@ -58,7 +58,7 @@ public enum UserStore {
         }
     }
 
-    void addUser(String name, String login, String email) {
+    public void addUser(String name, String login, String email) {
         LOGGER.debug("Вызван метод");
         try (Connection conn = basicDataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
@@ -75,7 +75,7 @@ public enum UserStore {
     }
 
 
-    void editUser(User user) {
+    public void editUser(User user) {
         LOGGER.debug("Вызван метод");
         try (Connection conn = basicDataSource.getConnection();
                 PreparedStatement ps = conn.prepareStatement(
@@ -91,7 +91,7 @@ public enum UserStore {
 
     }
 
-    void deleteUser(String id) {
+    public void deleteUser(String id) {
         LOGGER.debug("Вызван метод");
         try (Connection conn = basicDataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(
@@ -103,7 +103,7 @@ public enum UserStore {
         }
     }
 
-    List<User> getUsers() {
+    public List<User> getUsers() {
         LOGGER.debug("Вызван метод");
         List<User> result = new ArrayList<>();
         try (Connection conn = basicDataSource.getConnection();
@@ -126,7 +126,7 @@ public enum UserStore {
         return result;
     }
 
-    User getUser(String id) {
+    public User getUser(String id) {
         LOGGER.debug("Вызван метод");
         User result = null;
         String query = "SELECT * FROM users WHERE id = " + id;

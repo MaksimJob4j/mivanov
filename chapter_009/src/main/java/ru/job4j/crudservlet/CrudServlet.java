@@ -1,6 +1,7 @@
 package ru.job4j.crudservlet;
 
 import org.apache.log4j.Logger;
+import ru.job4j.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

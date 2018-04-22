@@ -1,6 +1,7 @@
 package ru.job4j.crudservlet;
 
 import org.apache.log4j.Logger;
+import ru.job4j.User;
 
 import java.io.File;
 import java.io.FileInputStream;

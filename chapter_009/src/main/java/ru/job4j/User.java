@@ -1,4 +1,4 @@
-package ru.job4j.userservlet;
+package ru.job4j;
 
 import lombok.*;
 
