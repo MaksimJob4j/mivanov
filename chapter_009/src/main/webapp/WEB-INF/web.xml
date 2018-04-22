@@ -54,5 +54,32 @@
         <url-pattern>/create</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>EditJSP</servlet-name>
+        <servlet-class>ru.job4j.userservletjsp.EditUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditJSP</servlet-name>
+        <url-pattern>/editjsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteJSP</servlet-name>
+        <servlet-class>ru.job4j.userservletjsp.DeleteUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteJSP</servlet-name>
+        <url-pattern>/deletejsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreateJSP</servlet-name>
+        <servlet-class>ru.job4j.userservletjsp.CreateUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateJSP</servlet-name>
+        <url-pattern>/createjsp</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 
