@@ -1,13 +1,12 @@
 <%@ page import="ru.job4j.User" %>
-<%@ page import="ru.job4j.UserStore" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Edit User</title>
 </head>
 <body>
-<%User user = UserStore.INSTANCE.getUser(request.getParameter("id"));%>
-<form action="<%=request.getContextPath()%>/editjsp" method="post" >
+<%User user = (User) request.getAttribute("user");%>
+<form action="<%=request.getContextPath()%>/edit2" method="post" >
     <table cellpadding="1" cellspacing="1" border="1" >
     <tr align="center" style="font-weight: bold">
         <td>Id</td>
@@ -30,7 +29,7 @@
     <input type="submit" value="ACCEPT">
 </form>
 
-<form action="<%=request.getContextPath()%>/index.jsp">
+<form action="<%=request.getContextPath()%>/">
     <input type="submit" value="CANCEL">
 </form>
 

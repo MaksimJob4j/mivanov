@@ -1,4 +1,4 @@
-package ru.job4j.userservletjsp;
+package ru.job4j.userservlet2;
 
 import org.apache.log4j.Logger;
 import ru.job4j.UserStore;
@@ -9,9 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CreateUser extends HttpServlet {
-    private final static Logger LOGGER = Logger.getLogger(ru.job4j.userservletjsp.CreateUser.class);
+public class UserCreateController extends HttpServlet {
+    private final static Logger LOGGER = Logger.getLogger(UserCreateController.class);
     private final UserStore users = UserStore.INSTANCE;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LOGGER.debug("Вызван метод");
+
+        req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,6 +31,6 @@ public class CreateUser extends HttpServlet {
                 req.getParameter("email")
         );
 
-        resp.sendRedirect(String.format("%s/index.jsp", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

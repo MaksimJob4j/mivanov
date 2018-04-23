@@ -4,7 +4,7 @@
     <title>Create User</title>
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/createjsp" method="post" >
+<form action="<%=request.getContextPath()%>/create2" method="post" >
     <table cellpadding="1" cellspacing="1" border="1" >
     <tr align="center" style="font-weight: bold">
         <td>Name</td>
@@ -20,7 +20,7 @@
     <input type="submit" value="CREATE">
 </form>
 
-<form action="<%=request.getContextPath()%>/index.jsp">
+<form action="<%=request.getContextPath()%>/">
     <input type="submit" value="CANCEL">
 </form>
 
