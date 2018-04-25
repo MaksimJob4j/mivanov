@@ -1,12 +1,11 @@
-<%@ page import="ru.job4j.User" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Edit User</title>
 </head>
 <body>
-<%User user = (User) request.getAttribute("user");%>
-<form action="<%=request.getContextPath()%>/edit2" method="post" >
+<form action="${pageContext.servletContext.contextPath}/edit2" method="post" >
     <table cellpadding="1" cellspacing="1" border="1" >
     <tr align="center" style="font-weight: bold">
         <td>Id</td>
@@ -17,19 +16,19 @@
     </tr>
     <tr>
         <td>
-            <%=user.getId()%>
-            <input name="id" type="hidden" value="<%=user.getId()%>">
+            <c:out value="${user.id}" />
+            <input name="id" type="hidden" value="<c:out value="${user.id}"/>" >
         </td>
-        <td><input name="name" value="<%=user.getName()%>"></td>
-        <td><input name="login" value="<%=user.getLogin()%>"></td>
-        <td><input name="email" value="<%=user.getEmail()%>"></td>
-        <td><%=user.getCreateDate()%></td>
+        <td><input type="text" name="name" value="<c:out value="${user.name}"/>" ></td>
+        <td><input name="login" value="<c:out value="${user.login}"/>" ></td>
+        <td><input name="email" value="<c:out value="${user.email}"/>" ></td>
+        <td><c:out value="${user.createDate}" /></td>
     </tr>
     </table>
     <input type="submit" value="ACCEPT">
 </form>
 
-<form action="<%=request.getContextPath()%>/">
+<form action="${pageContext.servletContext.contextPath}/">
     <input type="submit" value="CANCEL">
 </form>
 
