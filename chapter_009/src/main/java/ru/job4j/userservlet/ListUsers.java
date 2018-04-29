@@ -1,6 +1,7 @@
 package ru.job4j.userservlet;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.job4j.User;
 import ru.job4j.UserStore;
 
@@ -13,13 +14,12 @@ import java.io.PrintWriter;
 import java.util.List;
 
 public class ListUsers extends HttpServlet {
-    private final static Logger LOGGER = Logger.getLogger(ru.job4j.userservlet.ListUsers.class);
+    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.userservlet.ListUsers.class);
     private final UserStore users = UserStore.INSTANCE;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.debug("Вызван метод");
-        LOGGER.debug("Query: " + req.getQueryString());
+        LOGGER.traceEntry("Query: " + req.getQueryString());
         List<User> usersList = users.getUsers();
         StringBuilder table = new StringBuilder();
         if (usersList.size() > 0) {

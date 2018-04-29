@@ -1,6 +1,7 @@
 package ru.job4j.userservlet;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.job4j.UserStore;
 
 import javax.servlet.ServletException;
@@ -11,12 +12,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class CreateUser extends HttpServlet {
-    private final static Logger LOGGER = Logger.getLogger(ru.job4j.userservlet.CreateUser.class);
+    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.userservlet.CreateUser.class);
     private final UserStore users = UserStore.INSTANCE;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.debug("Вызван метод");
+        LOGGER.traceEntry("Query: " + req.getQueryString());
         StringBuilder table = new StringBuilder("<table>");
         table.append("<form action='" + req.getContextPath() + "/create' method='post' >"
                 + "<tr align='center'><td>Name</td><td>Login</td><td>Email</td></tr>"
@@ -48,7 +49,7 @@ public class CreateUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.debug("Вызван метод");
+        LOGGER.traceEntry();
         users.addUser(
                 req.getParameter("name"),
                 req.getParameter("login"),
