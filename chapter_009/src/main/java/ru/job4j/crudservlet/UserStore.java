@@ -1,12 +1,18 @@
 package ru.job4j.crudservlet;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.job4j.User;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.*;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,31 +20,28 @@ import java.util.Map;
 import java.util.Properties;
 
 public class UserStore {
-    private final static Logger LOGGER = Logger.getLogger(ru.job4j.crudservlet.UserStore.class);
+    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.crudservlet.CrudServlet.class);
 
     private static final UserStore INSTANCE = new UserStore();
+
+    private String username;
+    private String password;
+    private String url;
+
     private UserStore() { }
 
     static UserStore getInstance() {
-        LOGGER.debug("Вызван метод getInstance");
+        LOGGER.traceEntry();
         return INSTANCE;
     }
 
-    private String url;
-    private String username;
-    private String password;
-
-    private Connection getConnection() throws SQLException {
-        LOGGER.debug("Вызван метод");
-        return DriverManager.getConnection(url, username, password);
-    }
-
     static {
-        LOGGER.debug("Вызван static блок");
+        LOGGER.traceEntry();
         Properties prop = new Properties();
-        File propFile = new File("C:\\projects\\mivanov\\crudservlet.properties");
-        try (FileInputStream fileInputStream = new FileInputStream(propFile)) {
-            prop.load(fileInputStream);
+        try {
+
+            InputStream inputStream = UserStore.class.getClassLoader().getResourceAsStream("crudservlet.properties");
+            prop.load(inputStream);
         } catch (IOException e) {
             LOGGER.error("error", e);
         }
@@ -54,11 +57,16 @@ public class UserStore {
         LOGGER.debug("name: " + INSTANCE.username);
         LOGGER.debug("password: " + INSTANCE.password);
         INSTANCE.createUsersTable();
+        LOGGER.traceExit();
     }
 
+    private Connection getConnection() throws SQLException {
+        LOGGER.traceEntry();
+        return DriverManager.getConnection(url, username, password);
+    }
 
     private void createUsersTable() {
-        LOGGER.debug("Вызван метод");
+        LOGGER.traceEntry();
         try (Connection conn = getConnection();
              Statement st = conn.createStatement()) {
             st.executeUpdate(
@@ -75,7 +83,7 @@ public class UserStore {
     }
 
     void add(Map<String, String[]> par) {
-        LOGGER.debug("Вызван метод");
+        LOGGER.traceEntry();
         if (par.size() > 0) {
             try (PreparedStatement ps = getConnection().prepareStatement(
                     "INSERT INTO users (name, login, email, createDate) "
@@ -91,9 +99,8 @@ public class UserStore {
         }
     }
 
-
     void edit(Map<String, String[]> par) {
-        LOGGER.debug("Вызван метод");
+        LOGGER.traceEntry();
         if (par.get("id") != null) {
             String idStr = par.get("id")[0];
             if (idStr != null) {
@@ -102,14 +109,13 @@ public class UserStore {
                     if (!"id".equals(key)) {
                         editItem(id, key, par.get(key)[0]);
                     }
-
                 }
             }
         }
     }
 
     private void editItem(Integer id, String fieldName, String fieldVolume) {
-        LOGGER.debug("Вызван метод");
+        LOGGER.traceEntry();
         try (PreparedStatement ps = getConnection().prepareStatement(
                 "UPDATE users SET " + fieldName + " = ? WHERE id = ?")) {
             ps.setString(1, fieldVolume);
@@ -121,7 +127,7 @@ public class UserStore {
     }
 
     void delete(Map<String, String[]> par) {
-        LOGGER.debug("Вызван метод");
+        LOGGER.traceEntry();
         StringBuilder query = new StringBuilder();
         query.append("DELETE FROM users");
         setWhere(par, query);
@@ -135,7 +141,7 @@ public class UserStore {
     }
 
     List<User> getUsers(Map<String, String[]> par) {
-        LOGGER.debug("Вызван метод");
+        LOGGER.traceEntry();
         List<User> result = new ArrayList<>();
         StringBuilder query = new StringBuilder();
         query.append("SELECT * FROM users");
@@ -162,7 +168,7 @@ public class UserStore {
     }
 
     private void setWhere(Map<String, String[]> par, StringBuilder query) {
-        LOGGER.debug("Вызван метод");
+        LOGGER.traceEntry();
         if (par.size() > 0) {
             query.append(" WHERE ");
             for (String kye: par.keySet()) {
