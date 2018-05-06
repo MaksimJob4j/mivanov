@@ -22,19 +22,9 @@
 
     <!--CrudServlet2-->
     <servlet>
-        <servlet-name>CrudServlet2</servlet-name>
+        <servlet-name>List</servlet-name>
         <servlet-class>ru.job4j.crudservlet2.UserServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CrudServlet2</servlet-name>
-        <url-pattern>/crud2</url-pattern>
-    </servlet-mapping>
-
-    <!--Userservlet-->
-    <servlet>
-        <servlet-name>List</servlet-name>
-        <servlet-class>ru.job4j.userservlet.ListUsers</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>List</servlet-name>
@@ -43,7 +33,7 @@
 
     <servlet>
         <servlet-name>Edit</servlet-name>
-        <servlet-class>ru.job4j.userservlet.EditUser</servlet-class>
+        <servlet-class>ru.job4j.crudservlet2.UserUpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Edit</servlet-name>
@@ -52,7 +42,7 @@
 
     <servlet>
         <servlet-name>Delete</servlet-name>
-        <servlet-class>ru.job4j.userservlet.DeleteUser</servlet-class>
+        <servlet-class>ru.job4j.crudservlet2.UserDeleteServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Delete</servlet-name>
@@ -61,48 +51,11 @@
 
     <servlet>
         <servlet-name>Create</servlet-name>
-        <servlet-class>ru.job4j.userservlet.CreateUser</servlet-class>
+        <servlet-class>ru.job4j.crudservlet2.UserCreateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Create</servlet-name>
         <url-pattern>/create</url-pattern>
-    </servlet-mapping>
-
-    <!--Userservlet JSP / JSTL-->
-    <servlet>
-        <servlet-name>Users Edit Controller</servlet-name>
-        <servlet-class>ru.job4j.userservlet2.UserEditController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Users Edit Controller</servlet-name>
-        <url-pattern>/edit2</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Users Delete Controller</servlet-name>
-        <servlet-class>ru.job4j.userservlet2.UserDeleteController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Users Delete Controller</servlet-name>
-        <url-pattern>/delete2</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Users Create Controller</servlet-name>
-        <servlet-class>ru.job4j.userservlet2.UserCreateController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Users Create Controller</servlet-name>
-        <url-pattern>/create2</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Users List Controller</servlet-name>
-        <servlet-class>ru.job4j.userservlet2.UsersListController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Users List Controller</servlet-name>
-        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
 </web-app>
