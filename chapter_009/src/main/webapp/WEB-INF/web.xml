@@ -20,6 +20,17 @@
         <url-pattern>/crud</url-pattern>
     </servlet-mapping>
 
+    <!--CrudServlet2-->
+    <servlet>
+        <servlet-name>CrudServlet2</servlet-name>
+        <servlet-class>ru.job4j.crudservlet2.UserServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CrudServlet2</servlet-name>
+        <url-pattern>/crud2</url-pattern>
+    </servlet-mapping>
+
     <!--Userservlet-->
     <servlet>
         <servlet-name>List</servlet-name>
