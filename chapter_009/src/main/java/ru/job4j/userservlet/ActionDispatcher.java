@@ -1,4 +1,7 @@
-package ru.job4j.crudservlet2;
+package ru.job4j.userservlet;
+
+import ru.job4j.userservlet.store.UserException;
+import ru.job4j.userservlet.store.ValidateService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

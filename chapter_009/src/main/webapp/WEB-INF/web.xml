@@ -20,42 +20,15 @@
         <url-pattern>/crud</url-pattern>
     </servlet-mapping>
 
-    <!--CrudServlet2-->
+    <!--UserServlet-->
     <servlet>
         <servlet-name>List</servlet-name>
-        <servlet-class>ru.job4j.crudservlet2.UserServlet</servlet-class>
+        <servlet-class>ru.job4j.userservlet.UserServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>List</servlet-name>
         <url-pattern>/list</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Edit</servlet-name>
-        <servlet-class>ru.job4j.crudservlet2.UserUpdateServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Edit</servlet-name>
-        <url-pattern>/edit</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Delete</servlet-name>
-        <servlet-class>ru.job4j.crudservlet2.UserDeleteServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Delete</servlet-name>
-        <url-pattern>/delete</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Create</servlet-name>
-        <servlet-class>ru.job4j.crudservlet2.UserCreateServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Create</servlet-name>
-        <url-pattern>/create</url-pattern>
     </servlet-mapping>
 
 </web-app>

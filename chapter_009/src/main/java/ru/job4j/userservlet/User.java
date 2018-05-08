@@ -1,4 +1,4 @@
-package ru.job4j.crudservlet2;
+package ru.job4j.userservlet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

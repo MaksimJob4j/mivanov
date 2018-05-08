@@ -1,4 +1,6 @@
-package ru.job4j.crudservlet2;
+package ru.job4j.userservlet.store;
+
+import ru.job4j.userservlet.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
