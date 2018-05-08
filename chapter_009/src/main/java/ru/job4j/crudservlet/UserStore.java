@@ -2,7 +2,6 @@ package ru.job4j.crudservlet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.job4j.User;
 
 import java.io.IOException;
 import java.io.InputStream;
