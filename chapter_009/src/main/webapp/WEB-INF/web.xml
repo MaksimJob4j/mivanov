@@ -31,5 +31,32 @@
         <url-pattern>/list</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Edit</servlet-name>
+        <servlet-class>ru.job4j.userservlet.UserUpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Edit</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Delete</servlet-name>
+        <servlet-class>ru.job4j.userservlet.UserDeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Delete</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Create</servlet-name>
+        <servlet-class>ru.job4j.userservlet.UserCreateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Create</servlet-name>
+        <url-pattern>/create</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 

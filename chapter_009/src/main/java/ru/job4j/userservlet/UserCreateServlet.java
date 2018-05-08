@@ -1,8 +1,9 @@
-package ru.job4j.crudservlet2;
+package ru.job4j.userservlet;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.job4j.userservlet.ListUsers;
+import ru.job4j.userservlet.store.UserException;
+import ru.job4j.userservlet.store.ValidateService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,13 +13,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class UserCreateServlet extends HttpServlet {
-    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.crudservlet2.UserCreateServlet.class);
+    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.userservlet.UserCreateServlet.class);
 
     private final ValidateService users = ValidateService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.traceEntry("Query: " + req.getQueryString());
+
         StringBuilder table = new StringBuilder("<table>");
         table.append("<form action='" + req.getContextPath() + "/create' method='post' >"
                 + "<tr align='center'><td>Name</td><td>Login</td><td>Email</td></tr>"
@@ -33,6 +35,7 @@ public class UserCreateServlet extends HttpServlet {
                 + "<form action='" + req.getContextPath() + "/list' method='get' >"
                 + "<input type='submit' value='CANCEL'>"
                 + "</form>");
+
         resp.setContentType("text/html");
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
         writer.append("<!DOCTYPE html>"
@@ -51,6 +54,7 @@ public class UserCreateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.traceEntry();
+
         User user = new User();
         user.setName(req.getParameter("name"));
         user.setLogin(req.getParameter("login"));
@@ -60,6 +64,7 @@ public class UserCreateServlet extends HttpServlet {
         } catch (UserException e) {
             LOGGER.error("error", e);
         }
+
         new UserServlet().doGet(req, resp);
     }
 }
