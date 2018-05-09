@@ -1,5 +1,7 @@
 package ru.job4j.userservlet.store;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.job4j.userservlet.User;
 
 import java.time.LocalDateTime;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class MemoryStore implements Store {
+    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.userservlet.store.MemoryStore.class);
 
     private static final MemoryStore INSTANCE = new MemoryStore();
 
@@ -23,6 +26,7 @@ public class MemoryStore implements Store {
 
     @Override
     public User add(User user) {
+        LOGGER.traceEntry();
         user.setCreateDate(LocalDateTime.now());
         users.compute((++counter).toString(), (key, value) -> {
             user.setId(counter.toString());
@@ -33,21 +37,25 @@ public class MemoryStore implements Store {
 
     @Override
     public User update(User user) {
+        LOGGER.traceEntry();
         return users.put(user.getId(), user);
     }
 
     @Override
     public User delete(String id) {
+        LOGGER.traceEntry();
         return users.remove(id);
     }
 
     @Override
     public List<User> findAll() {
+        LOGGER.traceEntry();
         return new ArrayList<>(users.values());
     }
 
     @Override
     public User findById(String id) {
+        LOGGER.traceEntry();
         return users.get(id);
     }
 }
