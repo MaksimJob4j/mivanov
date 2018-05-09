@@ -11,7 +11,7 @@ public class ValidateService {
 
     private static final ValidateService INSTANCE = new ValidateService();
 
-    private final Store store = MemoryStore.getInstance();
+    private final Store store = DBStore.getInstance();
 
     private ValidateService() {
     }
