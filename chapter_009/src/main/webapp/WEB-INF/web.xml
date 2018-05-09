@@ -23,17 +23,17 @@
     <!--UserServlet-->
     <servlet>
         <servlet-name>List</servlet-name>
-        <servlet-class>ru.job4j.userservlet.UserServlet</servlet-class>
+        <servlet-class>ru.job4j.userservlet.UserListController</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>List</servlet-name>
-        <url-pattern>/list</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>Edit</servlet-name>
-        <servlet-class>ru.job4j.userservlet.UserUpdateServlet</servlet-class>
+        <servlet-class>ru.job4j.userservlet.UserUpdateController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Edit</servlet-name>
@@ -42,7 +42,7 @@
 
     <servlet>
         <servlet-name>Delete</servlet-name>
-        <servlet-class>ru.job4j.userservlet.UserDeleteServlet</servlet-class>
+        <servlet-class>ru.job4j.userservlet.UserDeleteController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Delete</servlet-name>
@@ -51,7 +51,7 @@
 
     <servlet>
         <servlet-name>Create</servlet-name>
-        <servlet-class>ru.job4j.userservlet.UserCreateServlet</servlet-class>
+        <servlet-class>ru.job4j.userservlet.UserCreateController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Create</servlet-name>

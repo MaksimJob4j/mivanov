@@ -11,23 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UserUpdateServlet  extends HttpServlet {
-    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.userservlet.UserUpdateServlet.class);
+public class UserCreateController extends HttpServlet {
+    private final static Logger LOGGER = LogManager.getLogger(UserCreateController.class);
 
     private final ValidateService users = ValidateService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.traceEntry("Query: " + req.getQueryString());
-
-        User user = null;
-        try {
-            user = users.findById(req.getParameter("id"));
-        } catch (UserException e) {
-            LOGGER.error("error", e);
-        }
-        req.setAttribute("user", user);
-        req.getRequestDispatcher("/edit.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
     }
 
     @Override
@@ -35,16 +27,16 @@ public class UserUpdateServlet  extends HttpServlet {
         LOGGER.traceEntry();
 
         User user = new User();
-        user.setId(req.getParameter("id"));
         user.setName(req.getParameter("name"));
         user.setLogin(req.getParameter("login"));
         user.setEmail(req.getParameter("email"));
+
         try {
-            users.update(user);
+            users.add(user);
         } catch (UserException e) {
             LOGGER.error("error", e);
         }
 
-        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

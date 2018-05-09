@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-public class UserServlet extends HttpServlet {
-    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.userservlet.UserServlet.class);
+public class UserListController extends HttpServlet {
+    private final static Logger LOGGER = LogManager.getLogger(UserListController.class);
 
     private final ValidateService users = ValidateService.getInstance();
 
@@ -29,7 +29,7 @@ public class UserServlet extends HttpServlet {
             LOGGER.error("error", e);
         }
         req.setAttribute("users", usersList);
-        req.getRequestDispatcher("/list.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/list.jsp").forward(req, resp);
     }
 
 //    @Override

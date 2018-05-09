@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UserDeleteServlet extends HttpServlet {
-    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.userservlet.UserDeleteServlet.class);
+public class UserDeleteController extends HttpServlet {
+    private final static Logger LOGGER = LogManager.getLogger(UserDeleteController.class);
 
     private final ValidateService users = ValidateService.getInstance();
 
@@ -26,6 +26,6 @@ public class UserDeleteServlet extends HttpServlet {
             LOGGER.error("error", e);
         }
 
-        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
+        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

@@ -1,10 +1,11 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Create User</title>
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/create" method="post" >
+<form action="${pageContext.servletContext.contextPath}/create" method="post" >
     <table cellpadding="1" cellspacing="1" border="1" >
         <tr align="center" style="font-weight: bold">
             <td>Name</td>
@@ -20,7 +21,7 @@
     <input type="submit" value="CREATE">
 </form>
 
-<form action="<%=request.getContextPath()%>/list">
+<form action="${pageContext.servletContext.contextPath}/">
     <input type="submit" value="CANCEL">
 </form>
 
