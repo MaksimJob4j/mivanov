@@ -17,7 +17,7 @@ public class UserDeleteServlet extends HttpServlet {
     private final ValidateService users = ValidateService.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.traceEntry("Query: " + req.getQueryString());
 
         try {
@@ -26,6 +26,6 @@ public class UserDeleteServlet extends HttpServlet {
             LOGGER.error("error", e);
         }
 
-        new UserServlet().doGet(req, resp);
+        resp.sendRedirect(String.format("%s/list", req.getContextPath()));
     }
 }
