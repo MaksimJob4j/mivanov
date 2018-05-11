@@ -2,6 +2,7 @@ package ru.job4j.userservlet.store;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.userservlet.Role;
 import ru.job4j.userservlet.User;
 
 import java.time.LocalDateTime;
@@ -57,5 +58,36 @@ public class MemoryStore implements Store {
     public User findById(String id) {
         LOGGER.traceEntry();
         return users.get(id);
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        LOGGER.traceEntry();
+        for (User user : users.values()) {
+            if (login.equals(user.getLogin())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Role addRole(Role role) throws UserSaveStoreException, UserReadStoreException {
+        return null;
+    }
+
+    @Override
+    public List<Role> findAllRoles() throws UserReadStoreException {
+        return null;
+    }
+
+    @Override
+    public Role findRoleById(String id) throws UserReadStoreException {
+        return null;
+    }
+
+    @Override
+    public Role findRoleByName(String name) throws UserReadStoreException {
+        return null;
     }
 }

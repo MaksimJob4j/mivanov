@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class UserListController extends HttpServlet {
-    private final static Logger LOGGER = LogManager.getLogger(UserListController.class);
+    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.userservlet.UserListController.class);
 
     private final ValidateService users = ValidateService.getInstance();
 
@@ -29,6 +29,15 @@ public class UserListController extends HttpServlet {
             LOGGER.error("error", e);
         }
         req.setAttribute("users", usersList);
+
+        User loginUser = null;
+        try {
+            loginUser = users.findByLogin(req.getSession().getAttribute("login").toString());
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+        req.setAttribute("loginUser", loginUser);
+
         req.getRequestDispatcher("/WEB-INF/views/list.jsp").forward(req, resp);
     }
 
