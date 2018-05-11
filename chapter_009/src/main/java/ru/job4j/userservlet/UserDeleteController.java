@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class UserDeleteController extends HttpServlet {
-    private final static Logger LOGGER = LogManager.getLogger(UserDeleteController.class);
+    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.userservlet.UserDeleteController.class);
 
     private final ValidateService users = ValidateService.getInstance();
 

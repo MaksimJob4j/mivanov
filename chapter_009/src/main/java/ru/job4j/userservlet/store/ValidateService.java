@@ -2,6 +2,7 @@ package ru.job4j.userservlet.store;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.userservlet.Role;
 import ru.job4j.userservlet.User;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public class ValidateService {
     public User add(User user) throws UserException {
         LOGGER.traceEntry();
         checkUserForNull(user);
+        if (user.getLogin() == null || user.getLogin().equals("")) {
+            throw new UserException("Login is NULL!");
+        }
         return store.add(user);
     }
 
@@ -32,14 +36,23 @@ public class ValidateService {
         checkUserForNull(user);
         User oldUser = findById(user.getId());
         checkUserStoreForNull(oldUser);
+        if (user.getLogin() != null) {
+            if (user.getLogin().equals("")) {
+                throw new UserException("Login is NULL!");
+            }
+            oldUser.setLogin(user.getLogin());
+        }
+        if (user.getPassword() != null) {
+            oldUser.setPassword(user.getPassword());
+        }
         if (user.getName() != null) {
             oldUser.setName(user.getName());
         }
-        if (user.getLogin() != null) {
-            oldUser.setLogin(user.getLogin());
-        }
         if (user.getEmail() != null) {
             oldUser.setEmail(user.getEmail());
+        }
+        if (user.getRole() != null) {
+            oldUser.setRole(user.getRole());
         }
         return store.update(oldUser);
     }
@@ -48,6 +61,16 @@ public class ValidateService {
         LOGGER.traceEntry();
         checkUserStoreForNull(store.findById(id));
         return store.delete(id);
+    }
+
+    public List<Role> findAllRoles() throws UserReadStoreException {
+        LOGGER.traceEntry();
+        return store.findAllRoles();
+    }
+
+    public Role findRoleById(String id) throws UserException {
+        LOGGER.traceEntry();
+        return store.findRoleById(id);
     }
 
     public List<User> findAll() throws UserReadStoreException {
@@ -72,5 +95,26 @@ public class ValidateService {
         if (user == null) {
             throw new NullUserStoreException("User don't found in the store.");
         }
+    }
+
+    public boolean isCredential(String login, String password) {
+        LOGGER.traceEntry();
+        boolean exist = false;
+        try {
+            User user = store.findByLogin(login);
+            if (user != null && password.equals(user.getPassword())) {
+                exist = true;
+            }
+        } catch (UserReadStoreException e) {
+            e.printStackTrace();
+        }
+        return exist;
+    }
+
+    public User findByLogin(String login) throws UserException {
+        LOGGER.traceEntry();
+        User user = store.findByLogin(login);
+        checkUserStoreForNull(user);
+        return user;
     }
 }

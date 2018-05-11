@@ -6,8 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 @Getter
 @Setter
@@ -15,11 +13,13 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class User {
-    public static final List<String> FIELDS = Arrays.asList("id", "name", "login", "email", "createDate");
+//    public static final List<String> FIELDS = Arrays.asList("id", "login", "password", "name", "email", "createDate", "role");
     private String id;
-    private String name;
     private String login;
+    private String password;
+    private String name;
     private String email;
     private LocalDateTime createDate;
+    private String role;
 
 }
