@@ -18,38 +18,16 @@ public class UserDeleteControllerTest {
     private final ValidateService users = ValidateService.getInstance();
 
     @Test
-    public void deleteTest() {
-
+    public void deleteTest() throws UserException, ServletException, IOException {
         TestHelper.getTestUser();
-
-        User user = null;
-        try {
-            user = users.findByLogin("test_user");
-        } catch (UserException e) {
-            e.printStackTrace();
-        }
-
+        User user = users.findByLogin("test_user");
         assertThat(user == null, is(false));
-
         UserDeleteController controller = new UserDeleteController();
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
-
         when(request.getParameter("id")).thenReturn(user.getId());
-
-        try {
-            controller.doPost(request, response);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
-
-        user = null;
-        try {
-            user = users.findByLogin("test_user");
-        } catch (UserException e) {
-            e.printStackTrace();
-        }
-
+        controller.doPost(request, response);
+        user = users.findByLogin("test_user");
         assertThat(user == null, is(true));
     }
 }
