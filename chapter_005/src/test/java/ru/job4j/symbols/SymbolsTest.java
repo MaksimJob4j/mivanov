@@ -19,6 +19,9 @@ public class SymbolsTest {
         assertThat(symbols.compareStrings("addd", "dad"), is(false));
         assertThat(symbols.compareStrings("add", "dadd"), is(false));
         assertThat(symbols.compareStrings("ada", "dad"), is(false));
+        assertThat(symbols.compareStrings("ada", "adad"), is(false));
+        assertThat(symbols.compareStrings("ada", "adaq"), is(false));
+        assertThat(symbols.compareStrings("adaq", "ada"), is(false));
     }
 
 }
