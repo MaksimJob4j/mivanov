@@ -27,6 +27,7 @@ public class UserCreateController extends HttpServlet {
             LOGGER.error("error", e);
         }
         req.setAttribute("roles", roleList);
+        req.setAttribute("countries", new CityHandler().getCountries());
         req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
     }
 
@@ -40,12 +41,15 @@ public class UserCreateController extends HttpServlet {
         user.setName(req.getParameter("name"));
         user.setEmail(req.getParameter("email"));
         user.setRole(req.getParameter("role"));
+        user.setCountry(req.getParameter("country"));
+        user.setCity(req.getParameter("city"));
 
         try {
             users.add(user);
         } catch (UserException e) {
             LOGGER.error("error", e);
             req.setAttribute("error", e.getMessage());
+            req.setAttribute("user", user);
             doGet(req, resp);
         }
 

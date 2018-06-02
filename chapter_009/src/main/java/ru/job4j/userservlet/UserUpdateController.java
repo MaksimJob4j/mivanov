@@ -28,11 +28,13 @@ public class UserUpdateController extends HttpServlet {
             e.printStackTrace();
         }
         req.setAttribute("loginUser", loginUser);
-        User user = null;
-        try {
-            user = users.findById(req.getParameter("id"));
-        } catch (UserException e) {
-            LOGGER.error("error", e);
+        User user = (User) req.getAttribute("user");
+        if (user == null) {
+            try {
+                user = users.findById(req.getParameter("id"));
+            } catch (UserException e) {
+                LOGGER.error("error", e);
+            }
         }
         req.setAttribute("user", user);
         if (loginUser.getRole().equals("admin")) {
@@ -44,6 +46,7 @@ public class UserUpdateController extends HttpServlet {
             }
             req.setAttribute("roles", roleList);
         }
+        req.setAttribute("countries", new CityHandler().getCountries());
         req.getRequestDispatcher("/WEB-INF/views/edit.jsp").forward(req, resp);
     }
 
@@ -58,14 +61,16 @@ public class UserUpdateController extends HttpServlet {
         user.setName(req.getParameter("name"));
         user.setEmail(req.getParameter("email"));
         user.setRole(req.getParameter("role"));
+        user.setCountry(req.getParameter("country"));
+        user.setCity(req.getParameter("city"));
         try {
             users.update(user);
         } catch (UserException e) {
             LOGGER.error("error", e);
             req.setAttribute("error", e.getMessage());
+            req.setAttribute("user", user);
             doGet(req, resp);
         }
-
         resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

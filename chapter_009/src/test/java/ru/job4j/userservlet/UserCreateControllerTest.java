@@ -33,8 +33,9 @@ public class UserCreateControllerTest {
         when(request.getParameter("login")).thenReturn("test_user");
         when(request.getParameter("password")).thenReturn("test_password");
         when(request.getParameter("role")).thenReturn("user");
+        when(request.getParameter("email")).thenReturn("user@user.us");
         controller.doPost(request, response);
-        user = users.findByLogin("test_login");
+        user = users.findByLogin("test_user");
         assertThat(user.getPassword(), is("test_password"));
     }
 }

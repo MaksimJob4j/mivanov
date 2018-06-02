@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<countrylist>
+	<country>
+		<countryname>Russia</countryname>
+		<citylist>
+			<city>Moscow</city>
+			<city>SPB</city>
+			<city>Sochy</city>
+			<city>Chelyabinsk</city>
+			<city>Other</city>
+		</citylist>
+	</country>
+	<country>
+		<countryname>USA</countryname>
+		<citylist>
+			<city>Washington, D.C.</city>
+			<city>New York</city>
+			<city>Los Angeles</city>
+			<city>Other</city>
+		</citylist>
+	</country>
+	<country>
+		<countryname>Other</countryname>
+		<citylist>
+			<city>Other</city>
+		</citylist>
+	</country>
+</countrylist>

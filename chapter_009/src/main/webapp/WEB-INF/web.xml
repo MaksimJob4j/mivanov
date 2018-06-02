@@ -94,5 +94,14 @@
         <url-pattern>/signout</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Cities</servlet-name>
+        <servlet-class>ru.job4j.userservlet.CityController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Cities</servlet-name>
+        <url-pattern>/cities</url-pattern>
+    </servlet-mapping>
+
 </web-app>
 

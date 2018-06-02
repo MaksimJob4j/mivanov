@@ -31,4 +31,20 @@ public class WordIndexTest {
         assertThat(set.size(), is(3));
         assertThat(wordIndex.getIndexes4Word("jova") == null, is(true));
     }
+
+    @Test
+    public void wordIndexTest2() throws Exception {
+        String testString = "мама мыла раму";
+        assertThat(testString.indexOf("мыла"), is(5));
+        String fileName = "test.txt";
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "UTF8"));
+        writer.write(testString);
+        writer.flush();
+        writer.close();
+        WordIndex wordIndex = new WordIndex();
+        wordIndex.loadFile(fileName);
+        Set<Integer> set = wordIndex.getIndexes4Word("мыла");
+        assertThat(set.contains(5), is(true));
+        assertThat(set.size(), is(1));
+    }
 }

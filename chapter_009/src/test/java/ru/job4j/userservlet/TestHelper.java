@@ -7,7 +7,12 @@ public class TestHelper {
     private static final ValidateService USERS = ValidateService.getInstance();
 
     public static User getTestUser() throws UserException {
+//        User user = null;
+//        try {
         User user = USERS.findByLogin("test_user");
+//        } catch (UserException e) {
+//            e.printStackTrace();
+//        }
         if (user != null) {
             USERS.delete(user.getId());
         }
@@ -15,8 +20,9 @@ public class TestHelper {
         user.setLogin("test_user");
         user.setPassword("test_password");
         user.setRole("user");
-        USERS.add(user);
-        user = USERS.findByLogin("test_user");
-        return user;
+        user.setEmail("user@user.us");
+//        USERS.add(user);
+//        user = USERS.findByLogin("test_user");
+        return USERS.add(user);
     }
 }

@@ -54,6 +54,12 @@ public class ValidateService {
         if (user.getRole() != null) {
             oldUser.setRole(user.getRole());
         }
+        if (user.getCountry() != null) {
+            oldUser.setCountry(user.getCountry());
+        }
+        if (user.getCity() != null) {
+            oldUser.setCity(user.getCity());
+        }
         return store.update(oldUser);
     }
 
@@ -114,7 +120,7 @@ public class ValidateService {
     public User findByLogin(String login) throws UserException {
         LOGGER.traceEntry();
         User user = store.findByLogin(login);
-        checkUserStoreForNull(user);
+//        checkUserStoreForNull(user);
         return user;
     }
 }

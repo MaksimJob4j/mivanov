@@ -42,7 +42,11 @@ public class SignInControllerTest {
         // Пробрасываем исключение вместо void метода spy-объекта
         // spy - объект, который не полностью подменяется моком, а лишь переопределяется часть методов.
         doThrow(new IOException()).when(controller).doGet(request, response);
-        controller.doPost(request, response);
+        try {
+            controller.doPost(request, response);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Mockito.verify(request, never()).getSession();
         Mockito.verify(request, times(1)).setAttribute("error", "Invalid sign in!");
     }

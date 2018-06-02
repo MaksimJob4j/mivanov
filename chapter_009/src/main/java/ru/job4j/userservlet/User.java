@@ -21,5 +21,6 @@ public class User {
     private String email;
     private LocalDateTime createDate;
     private String role;
-
+    private String country;
+    private String city;
 }

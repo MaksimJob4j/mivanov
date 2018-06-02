@@ -73,9 +73,10 @@ public class DBStore implements Store {
                             + "password CHARACTER VARYING (200),\n"
                             + "name CHARACTER VARYING (200),\n"
                             + "email CHARACTER VARYING (200),\n"
-                            + "createDate TIMESTAMP, \n"
-                            + "id_role INTEGER REFERENCES roles(id)); \n"
-
+                            + "createDate TIMESTAMP,\n"
+                            + "id_role INTEGER REFERENCES roles(id),\n"
+                            + "country CHARACTER VARYING (200),\n"
+                            + "city CHARACTER VARYING (200));\n"
             );
         } catch (SQLException e) {
             LOGGER.error("error", e);
@@ -124,7 +125,7 @@ public class DBStore implements Store {
             List<User> users = findAll();
             if (users == null || users.size() == 0) {
                 try {
-                    add(new User(null, "root", "root", null, null, null, "admin"));
+                    add(new User(null, "root", "root", null, null, null, "admin", null, null));
                 } catch (UserSaveStoreException e) {
                     e.printStackTrace();
                     LOGGER.error("error", e);
@@ -140,16 +141,17 @@ public class DBStore implements Store {
         LOGGER.traceEntry();
         try (Connection connection = getDataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "INSERT INTO users (login, password, name, email, createDate, id_role) "
-                             + "VALUES (?, ?, ?, ?, ?, ?)",
+                     "INSERT INTO users (login, password, name, email, createDate, id_role, country, city) "
+                             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, user.getLogin());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getName());
             ps.setString(4, user.getEmail());
-//            user.setCreateDate(LocalDateTime.now());
             ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
             ps.setInt(6, Integer.parseInt(findRoleByName(user.getRole()).getId()));
+            ps.setString(7, user.getCountry());
+            ps.setString(8, user.getCity());
             ps.executeUpdate();
             ResultSet gk = ps.getGeneratedKeys();
             if (gk.next()) {
@@ -187,13 +189,15 @@ public class DBStore implements Store {
         LOGGER.traceEntry();
         try (Connection connection = getDataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "UPDATE users SET login = ?, password = ?, name = ?, email = ?, id_role = ? WHERE id = ?")) {
+                     "UPDATE users SET login = ?, password = ?, name = ?, email = ?, id_role = ?, country = ?, city = ? WHERE id = ?")) {
             ps.setString(1, user.getLogin());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getName());
             ps.setString(4, user.getEmail());
             ps.setInt(5, Integer.parseInt(findRoleByName(user.getRole()).getId()));
-            ps.setInt(6, Integer.parseInt(user.getId()));
+            ps.setString(6, user.getCountry());
+            ps.setString(7, user.getCity());
+            ps.setInt(8, Integer.parseInt(user.getId()));
             ps.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error("error", e);
@@ -234,7 +238,9 @@ public class DBStore implements Store {
                                 rs.getString("name"),
                                 rs.getString("email"),
                                 rs.getTimestamp("createDate").toLocalDateTime(),
-                                findRoleById(rs.getString("id_role")).getName()
+                                findRoleById(rs.getString("id_role")).getName(),
+                                rs.getString("country"),
+                                rs.getString("city")
                         )
                 );
             }
@@ -300,7 +306,9 @@ public class DBStore implements Store {
                         rs.getString("name"),
                         rs.getString("email"),
                         rs.getTimestamp("createDate").toLocalDateTime(),
-                        findRoleById(rs.getString("id_role")).getName()
+                        findRoleById(rs.getString("id_role")).getName(),
+                        rs.getString("country"),
+                        rs.getString("city")
                 );
             }
         } catch (SQLException e) {
@@ -309,6 +317,7 @@ public class DBStore implements Store {
         }
         return result;
     }
+
     @Override
     public Role findRoleById(String id) throws UserReadStoreException {
         LOGGER.traceEntry();
