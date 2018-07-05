@@ -1,0 +1,121 @@
+<web-app>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.job4j.music.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>RoleFilter</filter-name>
+        <filter-class>ru.job4j.music.RoleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoleFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>SignIn</servlet-name>
+        <servlet-class>ru.job4j.music.SignInController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignIn</servlet-name>
+        <url-pattern>/signin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SignOut</servlet-name>
+        <servlet-class>ru.job4j.music.SignOutController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignOut</servlet-name>
+        <url-pattern>/signout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>List</servlet-name>
+        <servlet-class>ru.job4j.music.ListController</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>List</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Create User</servlet-name>
+        <servlet-class>ru.job4j.music.UserCreateController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Create User</servlet-name>
+        <url-pattern>/create_user</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Users Info</servlet-name>
+        <servlet-class>ru.job4j.music.UserInfoController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Users Info</servlet-name>
+        <url-pattern>/user_info</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Update User</servlet-name>
+        <servlet-class>ru.job4j.music.UserUpdateController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Update User</servlet-name>
+        <url-pattern>/update_user</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Delete User</servlet-name>
+        <servlet-class>ru.job4j.music.UserDeleteController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Delete User</servlet-name>
+        <url-pattern>/delete_user</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>List Users Type</servlet-name>
+        <servlet-class>ru.job4j.music.UsersMusicTypeListController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>List Users Type</servlet-name>
+        <url-pattern>/list_type</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Add Users Type</servlet-name>
+        <servlet-class>ru.job4j.music.UsersMusicTypeAddController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Add Users Type</servlet-name>
+        <url-pattern>/add_type</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Delete Users Type</servlet-name>
+        <servlet-class>ru.job4j.music.UsersMusicTypeDelController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Delete Users Type</servlet-name>
+        <url-pattern>/delete_type</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Roles</servlet-name>
+        <servlet-class>ru.job4j.music.RoleTypeController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Roles</servlet-name>
+        <url-pattern>/roles</url-pattern>
+    </servlet-mapping>
+
+</web-app>

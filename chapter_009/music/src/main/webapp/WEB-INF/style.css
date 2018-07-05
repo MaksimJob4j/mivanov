@@ -1,0 +1,28 @@
+thead {
+    font-weight: bold;
+}
+table {
+    zoom: 80%;
+}
+tbody tr:hover{
+    background: #ffebcd; /* Цвет фона при наведении */
+    /*color: #fff; !* Цвет текста при наведении *!*/
+}
+
+.padded-text{
+    padding:6px;
+}
+td form {
+    margin: 0;
+}
+.buttons-beside {
+    float: left; display: block; margin-right: 15px
+}
+.table-responsive {
+    float: left;
+}
+#error {
+    background-color: red;
+    color: yellow;
+    font-weight: bold
+}
