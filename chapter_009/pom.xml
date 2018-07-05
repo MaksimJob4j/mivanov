@@ -2,7 +2,8 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>chapter_009</artifactId>
     <version>1.0</version>
-    <packaging>war</packaging>
+    <!--<packaging>war</packaging>-->
+    <packaging>pom</packaging>
     <parent>
         <groupId>ru.job4j</groupId>
         <artifactId>junior</artifactId>
@@ -19,4 +20,9 @@
     <dependencies>
 
     </dependencies>
+
+    <modules>
+        <module>music</module>
+    </modules>
+
 </project>

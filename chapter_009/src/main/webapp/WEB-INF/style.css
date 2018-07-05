@@ -11,5 +11,5 @@ tbody tr:hover{
 #error {
     background-color: red;
     color: yellow;
-    font-weight: bold
+    font-weight: bold;
 }
