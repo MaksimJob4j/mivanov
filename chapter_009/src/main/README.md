@@ -1,4 +1,4 @@
-# chapter_009 / UserServlet
+# chapter_009 / userservlet
 
 ## Приложение для работы с пользователями.
 
@@ -7,15 +7,15 @@
  * **User** имеет право просматривать список пользователей и редактировать свои данные _(кроме роли)_.  
  * **Admin** имеет право создавать, удалять и редактировать любого пользователя _(в том числе роль)_.  
 
-#### Приложение содержит 4 экрана:  
+#### Проложение содержит 4 экрана:  
 Экран авторизации:  
-![](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/src/main/images/Login.png)  
+![Image alt](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/src/main/images/Login.png)  
 Экран списка пользователей в зависимости от роли владельца имеет разный вид. 
 Список пользователей ADMIN:  
- ![](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/src/main/images/AdminsList.png)   
+ ![Image alt](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/src/main/images/AdminsList.png)   
  Список пользователей USER:  
- ![](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/src/main/images/UsersList.png)   
-Экран создания нового пользователя:  
-  ![](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/src/main/images/CreatUser.png)   
-Экран редактирования пользователя:  
-  ![](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/src/main/images/EditUser.png)  
+ ![Image alt](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/src/main/images/UsersList.png)   
+Экран саздания нового пользоваделя:  
+  ![Image alt](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/src/main/images/CreatUser.png)   
+Экран редактирования пользоваделя:  
+  ![Image alt](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/src/main/images/EditUser.png)  
