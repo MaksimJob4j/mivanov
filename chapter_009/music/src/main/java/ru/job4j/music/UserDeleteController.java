@@ -21,11 +21,10 @@ public class UserDeleteController extends HttpServlet {
 
         try {
             logic.deleteUser(req.getParameter("id"));
+            resp.sendRedirect(String.format("%s/", req.getContextPath()));
         } catch (StoreException e) {
-            LOGGER.traceEntry();
-            req.setAttribute("error", "DataBase ERROR: " + e.getMessage());
+            LOGGER.error("error", e);
+            resp.sendError(500, e.getMessage());
         }
-
-        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

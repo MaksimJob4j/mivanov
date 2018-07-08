@@ -21,16 +21,15 @@ public class ListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.traceEntry();
-        LOGGER.debug("Query: " + req.getQueryString());
         List<User> usersList = null;
         try {
             usersList = logic.findAllUsers();
             usersList.sort(Comparator.comparingInt(User::getId));
+            req.setAttribute("users", usersList);
+            req.getRequestDispatcher("/WEB-INF/views/list.jsp").forward(req, resp);
         } catch (StoreException e) {
             LOGGER.error("error", e);
-            req.setAttribute("error", "DataBase ERROR: " + e.getMessage());
+            resp.sendError(500, e.getMessage());
         }
-        req.setAttribute("users", usersList);
-        req.getRequestDispatcher("/WEB-INF/views/list.jsp").forward(req, resp);
     }
 }

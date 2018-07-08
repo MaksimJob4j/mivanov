@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.1
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.1.xsd">
+
+    <changeSet id="1" author="max">
+        <sql>
+            CREATE TABLE roles
+            (
+            id serial PRIMARY KEY,
+            name CHARACTER VARYING (200) UNIQUE NOT NULL,
+            level SMALLINT
+            )
+        </sql>
+    </changeSet>
+    <changeSet id="2" author="max">
+        <sql>
+            CREATE TABLE addresses
+            (
+            id serial PRIMARY KEY,
+            country CHARACTER VARYING (200),
+            city CHARACTER VARYING (200),
+            rest CHARACTER VARYING (200)
+            )
+        </sql>
+    </changeSet>
+    <changeSet id="3" author="max">
+        <sql>
+            CREATE TABLE users
+            (
+            id serial PRIMARY KEY,
+            login CHARACTER VARYING (200) UNIQUE NOT NULL,
+            password CHARACTER VARYING (200) NOT NULL,
+            id_role INTEGER REFERENCES roles(id),
+            id_address INTEGER REFERENCES addresses(id)
+            )
+        </sql>
+    </changeSet>
+    <changeSet id="4" author="max">
+        <sql>
+            CREATE TABLE music
+            (
+            id serial PRIMARY KEY,
+            name CHARACTER VARYING (200) UNIQUE NOT NULL );
+            CREATE TABLE IF NOT EXISTS music_pref (
+            id_user INTEGER REFERENCES users(id),
+            id_music INTEGER REFERENCES music(id),
+            PRIMARY KEY (id_user, id_music)
+            )
+        </sql>
+    </changeSet>
+    <changeSet id="5" author="max">
+        <sql>
+            INSERT INTO roles (name, level)
+            VALUES ('ADMIN', 10), ('MANDATOR', 5), ('USER', 0)
+        </sql>
+    </changeSet>
+    <changeSet id="6" author="max">
+        <sql>
+            INSERT INTO users (login, password, id_role)
+            VALUES
+            ('root', 'root', (SELECT id FROM roles WHERE name='ADMIN')),
+            ('mandator', 'mandator', (SELECT id FROM roles WHERE name='MANDATOR')),
+            ('user', 'user', (SELECT id FROM roles WHERE name='USER'))
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

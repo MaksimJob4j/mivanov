@@ -38,8 +38,7 @@ public class SignInController extends HttpServlet {
             }
         } catch (StoreException e) {
             LOGGER.error("error", e);
-            req.setAttribute("error", "DataBase ERROR: " + e.getMessage());
-            doGet(req, resp);
+            resp.sendError(500, e.getMessage());
         }
     }
 }

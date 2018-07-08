@@ -21,50 +21,35 @@ public class UserCreateController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.traceEntry("Query: " + req.getQueryString());
+        LOGGER.traceEntry();
 
         User loginUser = (User) req.getSession().getAttribute("loginUser");
         List<Role> roleList = null;
-        if (loginUser.getRole().getLevel() == 10) {
-            try {
+        try {
+            if (loginUser.getRole().getLevel() == 10) {
                 roleList = logic.findAllRoles();
-            } catch (StoreException e) {
-                LOGGER.traceEntry();
-                req.setAttribute("error", "DataBase ERROR: " + e.getMessage());
             }
+            req.setAttribute("roles", roleList);
+            req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
+        } catch (StoreException e) {
+            LOGGER.error("error", e);
+            resp.sendError(500, e.getMessage());
         }
-        req.setAttribute("roles", roleList);
-        req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.traceEntry();
 
-        User user = (User) req.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setAddress(new Address());
-        }
         try {
-            String login = req.getParameter("login");
-            if (login == null) {
-                throw new StoreException("Login is NULL");
-            } else {
-                user.setLogin(login);
+            User user = (User) req.getAttribute("user");
+            if (user == null) {
+                user = new User();
+                user.setAddress(new Address());
             }
-            String password = req.getParameter("password");
-            if (password == null) {
-                throw new StoreException("Password is NULL");
-            } else {
-                user.setPassword(password);
-            }
-            String role = req.getParameter("role");
-            if (role == null) {
-                throw new StoreException("Role is NULL");
-            } else {
-                user.setRole(logic.findRoleByName(role));
-            }
+            user.setLogin(req.getParameter("login"));
+            user.setPassword(req.getParameter("password"));
+            user.setRole(logic.findRoleByName(req.getParameter("role")));
             String country = req.getParameter("country");
             String city = req.getParameter("city");
             String restAddress = req.getParameter("restAddress");
@@ -77,13 +62,27 @@ public class UserCreateController extends HttpServlet {
             } else {
                 user.setAddress(null);
             }
-            logic.add(user);
+
+            req.setAttribute("user", user);
+            if (user.getLogin() == null || "".equals(user.getLogin())) {
+                req.setAttribute("error", "Enter login!");
+                doGet(req, resp);
+            } else if (user.getPassword() == null || "".equals(user.getPassword())) {
+                req.setAttribute("error", "Enter password!");
+                doGet(req, resp);
+            } else if (user.getRole() == null) {
+                req.setAttribute("error", "Enter role!");
+                doGet(req, resp);
+            } else if (logic.findUserByLogin(user.getLogin()) != null) {
+                req.setAttribute("error", String.format("Login %s is already in the database!", user.getLogin()));
+                doGet(req, resp);
+            } else {
+                logic.add(user);
+            }
+            resp.sendRedirect(String.format("%s/", req.getContextPath()));
         } catch (StoreException e) {
             LOGGER.error("error", e);
-            req.setAttribute("error", "DataBase ERROR: " + e.getMessage());
-            req.setAttribute("user", user);
-            doGet(req, resp);
+            resp.sendError(500, e.getMessage());
         }
-        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

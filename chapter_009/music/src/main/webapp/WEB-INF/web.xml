@@ -109,13 +109,4 @@
         <url-pattern>/delete_type</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>Roles</servlet-name>
-        <servlet-class>ru.job4j.music.RoleTypeController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Roles</servlet-name>
-        <url-pattern>/roles</url-pattern>
-    </servlet-mapping>
-
 </web-app>

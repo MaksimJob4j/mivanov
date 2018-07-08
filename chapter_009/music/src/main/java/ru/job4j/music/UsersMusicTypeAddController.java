@@ -36,10 +36,10 @@ public class UsersMusicTypeAddController extends HttpServlet {
             if (typeId > 0) {
                 logic.addMusicPref(userId, typeId);
             }
+            new JSONHandler().makeMusicTypeJSONResponse(req, resp, userId);
         } catch (StoreException e) {
-            LOGGER.traceEntry();
-            req.setAttribute("error", "DataBase ERROR: " + e.getMessage());
+            LOGGER.error("error", e);
+            resp.sendError(500, e.getMessage());
         }
-        new JSONHandler().makeMusicTypeJSONResponse(req, resp, userId);
     }
 }

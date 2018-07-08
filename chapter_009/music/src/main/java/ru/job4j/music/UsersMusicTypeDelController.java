@@ -20,14 +20,12 @@ public class UsersMusicTypeDelController extends HttpServlet {
         LOGGER.traceEntry();
         int typeId = Integer.parseInt(req.getParameter("type-id"));
         int userId = Integer.parseInt(req.getParameter("user-id"));
-
         try {
             logic.delMusicPref(userId, typeId);
+            new JSONHandler().makeMusicTypeJSONResponse(req, resp, userId);
         } catch (StoreException e) {
-            LOGGER.traceEntry();
-            req.setAttribute("error", "DataBase ERROR: " + e.getMessage());
+            LOGGER.error("error", e);
+            resp.sendError(500, e.getMessage());
         }
-
-        new JSONHandler().makeMusicTypeJSONResponse(req, resp, userId);
     }
 }

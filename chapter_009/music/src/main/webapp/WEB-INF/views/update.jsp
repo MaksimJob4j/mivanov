@@ -11,14 +11,6 @@
     </style>
     <script>
         <%@include file="/WEB-INF/validate.js"%>
-        <%@include file="/WEB-INF/setroles.js"%>
-        $(document).ready(
-            function () {
-                if (${loginUser.role.level == 10}) {
-                    setroles();
-                }
-            }
-        );
     </script>
 </head>
 <body>
@@ -54,6 +46,14 @@
                             </c:if>
                             <c:if test="${loginUser.role.level == 10}">
                                 <select class="form-control" name="role" id="role">
+                                    <c:forEach items = "${roles}" var = "role">
+                                        <c:if test="${user == null || user.role.name != role.name}">
+                                            <option>${role.name}</option>
+                                        </c:if>
+                                        <c:if test="${user != null && user.role.name == role.name}">
+                                            <option value="${role.name}" selected>${role.name}</option>
+                                        </c:if>
+                                    </c:forEach>
                                 </select>
                             </c:if>
                         </td>
@@ -75,7 +75,7 @@
 </div>
 <div class="container" id="error">
     <div>
-        <c:out value="${saveerror}"/>
+        <c:out value="${error}"/>
     </div>
 </div>
 </body>

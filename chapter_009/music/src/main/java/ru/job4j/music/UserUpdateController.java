@@ -19,41 +19,37 @@ public class UserUpdateController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.traceEntry("Query: " + req.getQueryString());
+        LOGGER.traceEntry();
 
-        User user = (User) req.getAttribute("user");
-
-        if (user == null) {
-            try {
+        try {
+            User user = (User) req.getAttribute("user");
+            if (user == null) {
                 user = logic.findUserById(req.getParameter("id"));
                 req.setAttribute("user", user);
-            } catch (StoreException e) {
-                LOGGER.traceEntry();
-                req.setAttribute("error", "DataBase ERROR: " + e.getMessage());
-                resp.sendRedirect(String.format("%s/user_info?id=%s", req.getContextPath(), user.getId()));
-
             }
-        }
-
-        Address address = (Address) req.getAttribute("address");
-
-        if (address == null) {
-            address = user.getAddress();
+            Address address = (Address) req.getAttribute("address");
             if (address == null) {
-                address = new Address();
+                address = user.getAddress();
+                if (address == null) {
+                    address = new Address();
+                }
             }
+            req.setAttribute("address", address);
+            req.setAttribute("roles", logic.findAllRoles());
+            req.getRequestDispatcher("/WEB-INF/views/update.jsp").forward(req, resp);
+        } catch (StoreException e) {
+            LOGGER.error("error", e);
+            resp.sendError(500, e.getMessage());
         }
-        req.setAttribute("address", address);
-        req.getRequestDispatcher("/WEB-INF/views/update.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.traceEntry();
 
-        User user = (User) req.getAttribute("user");
-        Address address = (Address) req.getAttribute("address");
         try {
+            User user = (User) req.getAttribute("user");
+            Address address = (Address) req.getAttribute("address");
             if (user == null) {
                 user = logic.findUserById(req.getParameter("id"));
             }
@@ -73,12 +69,28 @@ public class UserUpdateController extends HttpServlet {
             }
             req.setAttribute("user", user);
             req.setAttribute("address", address);
-            logic.update(user);
+            if (user.getLogin() == null || "".equals(user.getLogin())) {
+                req.setAttribute("error", "Enter login!");
+                doGet(req, resp);
+            } else if (user.getPassword() == null || "".equals(user.getPassword())) {
+                req.setAttribute("error", "Enter password!");
+                doGet(req, resp);
+            } else if (user.getRole() == null) {
+                req.setAttribute("error", "Enter role!");
+                doGet(req, resp);
+            } else {
+                User baseUser = logic.findUserByLogin(user.getLogin());
+                if (baseUser != null && baseUser.getId() != user.getId()) {
+                    req.setAttribute("error", String.format("Login %s is already in the database!", user.getLogin()));
+                    doGet(req, resp);
+                } else {
+                    logic.update(user);
+                    resp.sendRedirect(String.format("%s/user_info?id=%s", req.getContextPath(), user.getId()));
+                }
+            }
         } catch (StoreException e) {
             LOGGER.error("error", e);
-            req.setAttribute("saveerror", e.getMessage());
-            doGet(req, resp);
+            resp.sendError(500, e.getMessage());
         }
-        resp.sendRedirect(String.format("%s/user_info?id=%s", req.getContextPath(), user.getId()));
     }
 }

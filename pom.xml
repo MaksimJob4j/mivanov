@@ -53,7 +53,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.1</version>
+            <version>42.2.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
         <dependency>
@@ -109,9 +109,6 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
-
-
-
     </dependencies>
 
     <repositories>
