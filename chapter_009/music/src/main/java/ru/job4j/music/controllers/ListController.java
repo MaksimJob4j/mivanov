@@ -1,7 +1,8 @@
-package ru.job4j.music;
+package ru.job4j.music.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.music.MusicLogic;
 import ru.job4j.music.dao.StoreException;
 import ru.job4j.music.entities.User;
 
@@ -14,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ListController extends HttpServlet {
-    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.music.ListController.class);
+    private final static Logger LOGGER = LogManager.getLogger(ListController.class);
 
     private final MusicLogic logic = MusicLogic.getInstance();
 

@@ -23,6 +23,8 @@
 
     <modules>
         <module>music</module>
+        <module>file</module>
+        <module>file</module>
     </modules>
 
 </project>

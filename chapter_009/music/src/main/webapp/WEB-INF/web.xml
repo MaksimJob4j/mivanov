@@ -2,7 +2,7 @@
 
     <filter>
         <filter-name>AuthFilter</filter-name>
-        <filter-class>ru.job4j.music.AuthFilter</filter-class>
+        <filter-class>ru.job4j.music.filters.AuthFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
@@ -11,7 +11,7 @@
 
     <filter>
         <filter-name>RoleFilter</filter-name>
-        <filter-class>ru.job4j.music.RoleFilter</filter-class>
+        <filter-class>ru.job4j.music.filters.RoleFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>RoleFilter</filter-name>
@@ -20,7 +20,7 @@
 
     <servlet>
         <servlet-name>SignIn</servlet-name>
-        <servlet-class>ru.job4j.music.SignInController</servlet-class>
+        <servlet-class>ru.job4j.music.controllers.SignInController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignIn</servlet-name>
@@ -29,7 +29,7 @@
 
     <servlet>
         <servlet-name>SignOut</servlet-name>
-        <servlet-class>ru.job4j.music.SignOutController</servlet-class>
+        <servlet-class>ru.job4j.music.controllers.SignOutController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignOut</servlet-name>
@@ -38,7 +38,7 @@
 
     <servlet>
         <servlet-name>List</servlet-name>
-        <servlet-class>ru.job4j.music.ListController</servlet-class>
+        <servlet-class>ru.job4j.music.controllers.ListController</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -48,7 +48,7 @@
 
     <servlet>
         <servlet-name>Create User</servlet-name>
-        <servlet-class>ru.job4j.music.UserCreateController</servlet-class>
+        <servlet-class>ru.job4j.music.controllers.UserCreateController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Create User</servlet-name>
@@ -57,7 +57,7 @@
 
     <servlet>
         <servlet-name>Users Info</servlet-name>
-        <servlet-class>ru.job4j.music.UserInfoController</servlet-class>
+        <servlet-class>ru.job4j.music.controllers.UserInfoController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Users Info</servlet-name>
@@ -66,7 +66,7 @@
 
     <servlet>
         <servlet-name>Update User</servlet-name>
-        <servlet-class>ru.job4j.music.UserUpdateController</servlet-class>
+        <servlet-class>ru.job4j.music.controllers.UserUpdateController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Update User</servlet-name>
@@ -75,7 +75,7 @@
 
     <servlet>
         <servlet-name>Delete User</servlet-name>
-        <servlet-class>ru.job4j.music.UserDeleteController</servlet-class>
+        <servlet-class>ru.job4j.music.controllers.UserDeleteController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Delete User</servlet-name>
@@ -84,7 +84,7 @@
 
     <servlet>
         <servlet-name>List Users Type</servlet-name>
-        <servlet-class>ru.job4j.music.UsersMusicTypeListController</servlet-class>
+        <servlet-class>ru.job4j.music.controllers.UsersMusicTypeListController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>List Users Type</servlet-name>
@@ -93,7 +93,7 @@
 
     <servlet>
         <servlet-name>Add Users Type</servlet-name>
-        <servlet-class>ru.job4j.music.UsersMusicTypeAddController</servlet-class>
+        <servlet-class>ru.job4j.music.controllers.UsersMusicTypeAddController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Add Users Type</servlet-name>
@@ -102,7 +102,7 @@
 
     <servlet>
         <servlet-name>Delete Users Type</servlet-name>
-        <servlet-class>ru.job4j.music.UsersMusicTypeDelController</servlet-class>
+        <servlet-class>ru.job4j.music.controllers.UsersMusicTypeDelController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Delete Users Type</servlet-name>

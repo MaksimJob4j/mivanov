@@ -1,4 +1,4 @@
-package ru.job4j.music;
+package ru.job4j.music.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.music.MusicLogic;
 import ru.job4j.music.dao.StoreException;
 import ru.job4j.music.entities.MusicType;
 
@@ -20,7 +21,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 class JSONHandler {
-    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.music.JSONHandler.class);
+    private final static Logger LOGGER = LogManager.getLogger(JSONHandler.class);
 
     private final MusicLogic logic = MusicLogic.getInstance();
 

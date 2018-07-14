@@ -1,7 +1,8 @@
-package ru.job4j.music;
+package ru.job4j.music.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.job4j.music.MusicLogic;
 import ru.job4j.music.dao.StoreException;
 import ru.job4j.music.entities.MusicType;
 
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class UsersMusicTypeAddController extends HttpServlet {
-    private final static Logger LOGGER = LogManager.getLogger(ru.job4j.music.UsersMusicTypeAddController.class);
+    private final static Logger LOGGER = LogManager.getLogger(UsersMusicTypeAddController.class);
 
     private final MusicLogic logic = MusicLogic.getInstance();
 
