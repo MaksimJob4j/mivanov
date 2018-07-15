@@ -1,0 +1,24 @@
+<web-app>
+    <servlet>
+        <servlet-name>Start</servlet-name>
+        <servlet-class>ru.job4j.fileuploader.UploadController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Start</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Uploader</servlet-name>
+        <servlet-class>ru.job4j.fileuploader.UploadController</servlet-class>
+        <multipart-config>
+            <location>/</location>
+            <max-file-size>20848820</max-file-size>
+            <!--<max-request-size>418018841</max-request-size>-->
+            <!--<file-size-threshold>1048576</file-size-threshold>-->
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Uploader</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+</web-app>
