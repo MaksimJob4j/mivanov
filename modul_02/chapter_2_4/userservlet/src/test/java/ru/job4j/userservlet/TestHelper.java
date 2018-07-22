@@ -3,16 +3,11 @@ package ru.job4j.userservlet;
 import ru.job4j.userservlet.store.UserException;
 import ru.job4j.userservlet.store.ValidateService;
 
-public class TestHelper {
+class TestHelper {
     private static final ValidateService USERS = ValidateService.getInstance();
 
-    public static User getTestUser() throws UserException {
-//        User user = null;
-//        try {
+    static void getTestUser() throws UserException {
         User user = USERS.findByLogin("test_user");
-//        } catch (UserException e) {
-//            e.printStackTrace();
-//        }
         if (user != null) {
             USERS.delete(user.getId());
         }
@@ -21,8 +16,6 @@ public class TestHelper {
         user.setPassword("test_password");
         user.setRole("user");
         user.setEmail("user@user.us");
-//        USERS.add(user);
-//        user = USERS.findByLogin("test_user");
-        return USERS.add(user);
+        USERS.add(user);
     }
 }
