@@ -1,9 +1,13 @@
-<project>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>ru.job4j</groupId>
     <artifactId>junior</artifactId>
     <packaging>pom</packaging>
-    <version>2.0</version>
+    <version>1.0</version>
     <name>junior</name>
     <url>http://job4j.ru/</url>
 
@@ -14,13 +18,8 @@
     </properties>
 
     <modules>
-        <module>chapter_001</module>
-        <module>chapter_002</module>
-        <module>chapter_003</module>
-        <module>chapter_005</module>
-        <module>chapter_007</module>
-        <module>chapter_008</module>
-        <module>chapter_009</module>
+        <module>modul_01</module>
+        <module>modul_02</module>
     </modules>
 
     <dependencies>
@@ -109,6 +108,18 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.6</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.6</version>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -129,9 +140,6 @@
                     <compilerVersion>1.8</compilerVersion>
                 </configuration>
             </plugin>
-
-
-
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -154,6 +162,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
