@@ -6,22 +6,15 @@
 
     <parent>
         <groupId>ru.job4j</groupId>
-        <artifactId>modul_01</artifactId>
+        <artifactId>module_02</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>chapter_1_2</artifactId>
-
+    <artifactId>chapter_2_2</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

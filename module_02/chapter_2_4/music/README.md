@@ -18,32 +18,32 @@
  
 #### Приложение содержит 4 экрана:  
 Экран авторизации:  
-![png](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/music/src/main/images/Login.png)  
+![png](https://github.com/MaksimJob4j/mivanov/raw/master/module_02/chapter_2_4/music/src/main/images/Login.png)  
 
 Экран списка пользователей в зависимости от роли владельца имеет разный вид. 
 Список пользователей  (под ADMIN):  
- ![png](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/music/src/main/images/AdminsList.png)   
+ ![png](https://github.com/MaksimJob4j/mivanov/raw/master/module_02/chapter_2_4/music/src/main/images/AdminsList.png)   
  * Если пользователь зашел в приложение под MANDATOR, то в списке будут показаны только кнопки INFO напротив USER. Кнопки DELETE отсутствуют;
  * Если пользователь зашел в приложение под USER, то в списке отсутствуют все кнопки;
  * Кнопка CREATE NEW USER у USER отсутствует.
 
 
 Экран создания нового пользователя:  
-  ![png](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/music/src/main/images/CreateUser.png)   
+  ![png](https://github.com/MaksimJob4j/mivanov/raw/master/module_02/chapter_2_4/music/src/main/images/CreateUser.png)   
 При создании и редактировании пользователей проводится проверка на пустые поля LOGIN, PASSWORD и ROLE, а так же на уникальность LOGIN пользователя в базе.
 
 
 Экран информации пользователя (под ADMIN):  
-  ![png](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/music/src/main/images/UserInfo.png)  
+  ![png](https://github.com/MaksimJob4j/mivanov/raw/master/module_02/chapter_2_4/music/src/main/images/UserInfo.png)  
  * Кнопка DELETE USER присутствует только у ADMIN.
 
 При добавлении музыкального стиля предлагается выбрать его из списка или добавить новый.
 
-  ![png](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/music/src/main/images/SelectType.png)
-  ![png](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/music/src/main/images/EnterType.png)  
+  ![png](https://github.com/MaksimJob4j/mivanov/raw/master/module_02/chapter_2_4/music/src/main/images/SelectType.png)
+  ![png](https://github.com/MaksimJob4j/mivanov/raw/master/module_02/chapter_2_4/music/src/main/images/EnterType.png)  
 
 Если после удаления музыкального стиля из предпочтений пользователя он не присутствует больше ни у одного из пользователей, то этот стиль удаляется из базы.
 
 Экран редактирования пользователя (под ADMIN):  
-  ![png](https://github.com/MaksimJob4j/mivanov/raw/master/chapter_009/music/src/main/images/EditUser.png)  
+  ![png](https://github.com/MaksimJob4j/mivanov/raw/master/module_02/chapter_2_4/music/src/main/images/EditUser.png)  
   

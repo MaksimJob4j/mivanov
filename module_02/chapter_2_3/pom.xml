@@ -5,21 +5,22 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>junior</artifactId>
         <groupId>ru.job4j</groupId>
+        <artifactId>module_02</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>modul_01</artifactId>
-
+    <artifactId>chapter_2_3</artifactId>
     <version>1.0</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
-    <modules>
-        <module>chapter_1_1</module>
-        <module>chapter_1_2</module>
-        <module>chapter_1_3</module>
-    </modules>
-
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
 
 </project>

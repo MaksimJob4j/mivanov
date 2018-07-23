@@ -18,8 +18,8 @@
     </properties>
 
     <modules>
-        <module>modul_01</module>
-        <module>modul_02</module>
+        <module>module_01</module>
+        <module>module_02</module>
     </modules>
 
     <dependencies>
