@@ -20,6 +20,7 @@
     <modules>
         <module>module_01</module>
         <module>module_02</module>
+        <module>module_03</module>
     </modules>
 
     <dependencies>
@@ -120,6 +121,13 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.9.6</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.3.3.Final</version>
+        </dependency>
+
     </dependencies>
 
     <repositories>

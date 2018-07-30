@@ -1,0 +1,35 @@
+<web-app>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>List</servlet-name>
+        <servlet-class>ru.job4j.todolist.controllers.ListController</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>List</servlet-name>
+        <url-pattern>/list</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Add Tasks</servlet-name>
+        <servlet-class>ru.job4j.todolist.controllers.AddTaskController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Add Tasks</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Change Done</servlet-name>
+        <servlet-class>ru.job4j.todolist.controllers.ChangeDoneController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Change Done</servlet-name>
+        <url-pattern>/changeDone</url-pattern>
+    </servlet-mapping>
+
+</web-app>

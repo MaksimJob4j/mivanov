@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TODO List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="getItems.js"></script>
+    <script type="text/javascript" src="addItem.js"></script>
+    <script type="text/javascript" src="changeDone.js"></script>
+    <script type="text/javascript" src="setVisibility.js"></script>
+    <script>
+        $(document).ready(
+            function () {
+                getItems();
+            }
+        );
+    </script>
+</head>
+<body>
+<div class="container">
+    <h3>TODO List</h3>
+    <form class="form-inline" name="newTask" onsubmit="addItem(); return false;">
+        <input type="text" class="form-control" name="task" id="new_task" value=""
+               placeholder="Insert new task" style="width: 500px">
+        <button type="submit" class="btn btn-default">Add task</button>
+    </form>
+</div>
+<div class="container">
+    <h3>Current tasks:</h3>
+    <div>
+        <div class="checkbox" style="display: inline-block">
+            <label><input type="checkbox" id="show_done" onchange="setVisibility()">Show done tasks</label>
+        </div>
+        <div style="display: inline-block">
+            <button class="btn btn-default" onclick="getItems()">Update from server</button>
+        </div>
+    </div>
+    <div>
+        <div class="table-responsive" style="float: left">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Task</td>
+                    <td>Created</td>
+                    <td>Done</td>
+                </tr>
+                </thead>
+                <tbody id="items">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
