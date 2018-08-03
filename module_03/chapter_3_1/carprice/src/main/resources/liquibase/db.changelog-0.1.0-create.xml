@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.1
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.1.xsd">
+
+    <changeSet id="create_body" author="max">
+        <createTable tableName="body">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_engine" author="max">
+        <createTable tableName="engine">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_transmission" author="max">
+        <createTable tableName="transmission">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_car" author="max">
+        <createTable tableName="car">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="model" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="body_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_car_body"
+                             references="body(id)"/>
+            </column>
+            <column name="engine_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_car_engine"
+                             references="engine(id)"/>
+            </column>
+            <column name="transmission_id" type="BIGINT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_car_transmission"
+                             references="transmission(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
