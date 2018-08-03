@@ -15,7 +15,7 @@ import java.io.IOException;
 public class ChangeDoneController extends HttpServlet {
     private final static Logger LOGGER = LogManager.getLogger(ChangeDoneController.class);
 
-	private ItemStore store = ItemStore.getInstance();
+	private final ItemStore store = ItemStore.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -17,7 +17,7 @@ import java.time.ZonedDateTime;
 public class AddTaskController extends HttpServlet {
     private final static Logger LOGGER = LogManager.getLogger(AddTaskController.class);
 
-    private ItemStore store = ItemStore.getInstance();
+    private final ItemStore store = ItemStore.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

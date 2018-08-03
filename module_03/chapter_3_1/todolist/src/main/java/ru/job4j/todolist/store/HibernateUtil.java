@@ -13,12 +13,7 @@ public class HibernateUtil {
 
     static {
         LOGGER.traceEntry();
-        try {
-            SESSION_FACTORY = new Configuration().configure().buildSessionFactory();
-        } catch (Exception e) {
-            LOGGER.error("error", e);
-            throw e;
-        }
+        SESSION_FACTORY = new Configuration().configure().buildSessionFactory();
     }
 
     static SessionFactory getSessionFactory() {

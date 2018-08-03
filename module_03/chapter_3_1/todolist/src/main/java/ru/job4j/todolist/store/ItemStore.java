@@ -34,9 +34,8 @@ public class ItemStore implements ItemDAO {
             session.save(item);
             session.getTransaction().commit();
         } catch (Exception e) {
-            LOGGER.error("error", e);
 			session.getTransaction().rollback();
-            throw new StoreException(e.getMessage());
+            throw new StoreException(e);
         } finally {
             session.close();
         }
@@ -45,12 +44,11 @@ public class ItemStore implements ItemDAO {
 	@Override
     public Collection<Item> find() throws StoreException {
         LOGGER.traceEntry();
-		List<Item> items = null;
+		List<Item> items;
 		try (Session session = SESSION_FACTORY.openSession()) {
             items = session.createQuery("from Item").list();
         } catch (Exception e) {
-            LOGGER.error("error", e);
-            throw new StoreException(e.getMessage());
+            throw new StoreException(e);
         }
 		return items;
 	}
@@ -58,12 +56,11 @@ public class ItemStore implements ItemDAO {
 	@Override
 	public Item find(int id) throws StoreException {
         LOGGER.traceEntry();
-		Item item = null;
+		Item item;
 		try (Session session = SESSION_FACTORY.openSession()) {
-            item = (Item) session.get(Item.class, id);
+            item = session.get(Item.class, id);
         } catch (Exception e) {
-            LOGGER.error("error", e);
-            throw new StoreException(e.getMessage());
+            throw new StoreException(e);
         }
 		return item; 
 	}
@@ -89,9 +86,8 @@ public class ItemStore implements ItemDAO {
 			session.flush();
 			session.getTransaction().commit();
         } catch (Exception e) {
-            LOGGER.error("error", e);
 			session.getTransaction().rollback();
-            throw new StoreException(e.getMessage());
+            throw new StoreException(e);
         } finally {
 		    session.close();
         }

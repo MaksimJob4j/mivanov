@@ -16,20 +16,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 
 public class ListController extends HttpServlet {
     private final static Logger LOGGER = LogManager.getLogger(ListController.class);
 
-    private ItemStore store = ItemStore.getInstance();
+    private final ItemStore store = ItemStore.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.traceEntry();
 
-        Collection<Item> items = null;
+        List<Item> items = null;
         try {
-            items = store.find();
+            items = (List<Item>) store.find();
+            items.sort(Comparator.comparing(Item::getCreated));
         } catch (StoreException e) {
             LOGGER.error("error", e);
             resp.sendError(500, e.getMessage());
