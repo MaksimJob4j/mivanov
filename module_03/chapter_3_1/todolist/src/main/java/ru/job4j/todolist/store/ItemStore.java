@@ -4,12 +4,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import ru.job4j.todolist.dao.Item;
 import ru.job4j.todolist.dao.ItemDAO;
 import ru.job4j.todolist.dao.StoreException;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.function.Function;
 
 public class ItemStore implements ItemDAO {
     private static final Logger LOGGER = LogManager.getLogger(ru.job4j.todolist.store.ItemStore.class);
@@ -28,41 +29,23 @@ public class ItemStore implements ItemDAO {
 	@Override
 	public void create(Item item) throws StoreException {
         LOGGER.traceEntry();
-        Session session = SESSION_FACTORY.openSession();
-        try {
-            session.beginTransaction();
-            session.save(item);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-			session.getTransaction().rollback();
-            throw new StoreException(e);
-        } finally {
-            session.close();
-        }
+        this.tx(session -> session.save(item));
     }
 	
 	@Override
     public Collection<Item> find() throws StoreException {
         LOGGER.traceEntry();
-		List<Item> items;
-		try (Session session = SESSION_FACTORY.openSession()) {
-            items = session.createQuery("from Item").list();
-        } catch (Exception e) {
-            throw new StoreException(e);
-        }
-		return items;
+        return this.tx(
+                session -> session.createQuery("from Item ").list()
+        );
 	}
 
 	@Override
 	public Item find(int id) throws StoreException {
         LOGGER.traceEntry();
-		Item item;
-		try (Session session = SESSION_FACTORY.openSession()) {
-            item = session.get(Item.class, id);
-        } catch (Exception e) {
-            throw new StoreException(e);
-        }
-		return item; 
+        return this.tx(
+                session -> session.get(Item.class, id)
+        );
 	}
 
     @Override
@@ -78,18 +61,25 @@ public class ItemStore implements ItemDAO {
 	@Override
 	public void changeDone(int id) throws StoreException {
         LOGGER.traceEntry();
-        Session session = SESSION_FACTORY.openSession();
-		try {
-            session.beginTransaction();
-			Item item = (Item) session.load(Item.class, id);
-			item.setDone(!item.getDone());
-			session.flush();
-			session.getTransaction().commit();
-        } catch (Exception e) {
-			session.getTransaction().rollback();
+        this.tx(session -> {
+            Item item = session.load(Item.class, id);
+            item.setDone(!item.getDone());
+            return null;
+        });
+    }
+
+    private <T> T tx(final Function<Session, T> command) throws StoreException {
+        LOGGER.traceEntry();
+        final Session session = SESSION_FACTORY.openSession();
+        final Transaction tx = session.beginTransaction();
+        try {
+            return command.apply(session);
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
             throw new StoreException(e);
         } finally {
-		    session.close();
+            tx.commit();
+            session.close();
         }
     }
 }
