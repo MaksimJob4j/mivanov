@@ -1,5 +1,6 @@
 package ru.job4j.carprice.store;
 
+/*
 import org.junit.Test;
 import ru.job4j.carprice.items.Body;
 import ru.job4j.carprice.items.Car;
@@ -11,8 +12,10 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+*/
 
 public class HibStoreTest {
+/*
     @Test
     public void hibStoreTest() throws Exception {
 
@@ -68,4 +71,5 @@ public class HibStoreTest {
 
         assertThat(carDAO.find(car.getId()) == null, is(true));
     }
+*/
 }

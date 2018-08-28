@@ -1,4 +1,4 @@
-package ru.job4j.carprice.items;
+package ru.job4j.carprice.items.description;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Engine {
+public class Transmission {
     private Integer id;
     private String name;
 }

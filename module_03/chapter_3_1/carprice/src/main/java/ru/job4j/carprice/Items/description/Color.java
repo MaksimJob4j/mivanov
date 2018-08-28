@@ -1,6 +1,8 @@
-package ru.job4j.carprice.items;
+package ru.job4j.carprice.items.description;
 
 import lombok.*;
+
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -8,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Transmission {
-    private Integer id;
+public class Color {
+    private int id;
     private String name;
 }
