@@ -32,7 +32,7 @@ public class SignInController extends HttpServlet {
         try {
             User loginUser = logic.findUserByLogin(login);
             if (req.getParameter("new_user") == null) {
-                if (logic.isCredential(login, password)) {
+                if (loginUser != null && loginUser.getPassword().equals(password)) {
                     this.setLoginUser(req, resp, loginUser);
                 } else {
                     req.setAttribute("error", "Invalid sign in!");

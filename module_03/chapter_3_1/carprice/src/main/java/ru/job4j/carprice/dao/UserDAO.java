@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public interface UserDAO extends DAO<User> {
-    public User findUserByLogin(String login) throws StoreException;
-    public List<Car> findUsersCars(int userId) throws StoreException;
+    User findUserByLogin(String login) throws StoreException;
+    List<Car> findUsersCars(int userId) throws StoreException;
 
 }

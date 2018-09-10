@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Car List</title>
@@ -12,12 +11,19 @@
     </style>
     <script>
         <%@include file="/WEB-INF/changeSold.js"%>
+        <%@include file="/WEB-INF/applyCarFilter.js"%>
+        $(document).ready(
+            function () {
+                applyCarFilter();
+            }
+        );
     </script>
 </head>
 <body>
 <br/>
 <div class="container">
     <h4>Login: ${loginUser.login}</h4>
+    <input value="${loginUser.id}" id="login_id" hidden/>
     <div class="container, beside">
         <form action="${pageContext.servletContext.contextPath}/signout">
             <input type="submit" value="SIGN OUT" class="btn btn-default">
@@ -35,6 +41,22 @@
     </div>
 </div>
 <div class="container">
+        <form class="form-inline" onchange="applyCarFilter()" action="">
+            <select class="form-control" id="brand_filter" onchange="">
+                <option value="" selected>All brands</option>
+                <c:forEach items = "${brands}" var = "brand">
+                    <option value="${brand.id}" >${brand.name}</option>
+                </c:forEach>
+            </select>
+            <div class="checkbox">
+                <label><input type="checkbox" id="date_filter"> Last day</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" id="photo_filter"> Photo</label>
+            </div>
+        </form>
+</div>
+<div class="container">
     <h3>Cars for sale:</h3>
     <div class="table-responsive">
         <table class="table">
@@ -49,39 +71,7 @@
                 <td></td>
             </tr>
             </thead>
-            <tbody>
-            <c:forEach items = "${cars}" var = "car">
-                <tr
-                        <c:if test="${car.owner == loginUser}">
-                            class="users_car"
-                        </c:if>
-                >
-                    <td class="id" name='id' volume="${car.id}">${car.id}</td>
-                    <td>${car.model.brand.name} ${car.model.name} ${car.engine.name}
-                            ${car.volume} ${car.year} ${car.color.name} ${car.broken ? 'broken ' : ''}</td>
-                    <td>${car.price} RUB</td>
-                    <td>${car.dateCreated.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a X"))}</td>
-                    <td>
-                        <input class="check-box" type="checkbox" name="sold"
-                                <c:if test="${car.sold}">
-                                    checked
-                                </c:if>
-                                <c:if test="${car.owner != loginUser}">
-                                    disabled
-                                </c:if>
-                               onclick="changeSold(${car.id})"/>
-                    </td>
-                    <td>
-                            ${car.owner.login}
-                    </td>
-                    <td>
-                        <form action="${pageContext.servletContext.contextPath}/car">
-                            <input name='id' type='hidden' value="${car.id}">
-                            <input type='submit' value='INFO' class="btn btn-default">
-                        </form>
-                    </td>
-                </tr>
-            </c:forEach>
+            <tbody id="tbody_cars">
             </tbody>
         </table>
     </div>

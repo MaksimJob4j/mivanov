@@ -11,6 +11,6 @@ import java.util.Collection;
 @EqualsAndHashCode
 @ToString
 public class Drive {
-    private int id;
+    private Integer id;
     private String name;
 }

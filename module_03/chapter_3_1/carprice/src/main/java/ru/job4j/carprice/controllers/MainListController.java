@@ -4,14 +4,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.job4j.carprice.Logic;
 import ru.job4j.carprice.dao.StoreException;
-import ru.job4j.carprice.items.Car;
+import ru.job4j.carprice.items.description.Brand;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
 
 public class MainListController extends HttpServlet {
@@ -23,11 +22,9 @@ public class MainListController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.traceEntry();
 
-        List<Car> cars = null;
         try {
-            cars = logic.findCars();
-            cars.sort(Comparator.comparing(Car::getDateCreated).reversed());
-            req.setAttribute("cars", cars);
+            List<Brand> brands = logic.findBrands();
+            req.setAttribute("brands", brands);
             req.getRequestDispatcher("/WEB-INF/views/mainlist.jsp").forward(req, resp);
         } catch (StoreException e) {
             LOGGER.error("error", e);

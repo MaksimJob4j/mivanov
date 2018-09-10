@@ -28,9 +28,8 @@ public class UsersCarsController extends HttpServlet {
         if (loginUser == null) {
             resp.sendRedirect(String.format("%s/signin", req.getContextPath()));
         } else {
-            List<Car> cars = null;
             try {
-                cars = logic.findUsersCars(loginUser.getId());
+                List<Car> cars = logic.findUsersCars(loginUser.getId());
                 cars.sort(Comparator.comparing(Car::getDateCreated).reversed());
                 req.setAttribute("users_cars", cars);
                 req.getRequestDispatcher("/WEB-INF/views/userscars.jsp").forward(req, resp);

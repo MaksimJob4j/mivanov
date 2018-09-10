@@ -2,19 +2,15 @@ package ru.job4j.carprice;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.job4j.carprice.dao.ModelDAO;
-import ru.job4j.carprice.dao.PhotoDAO;
-import ru.job4j.carprice.dao.StoreException;
-import ru.job4j.carprice.dao.UserDAO;
+import ru.job4j.carprice.dao.*;
 import ru.job4j.carprice.items.Car;
 import ru.job4j.carprice.items.User;
 import ru.job4j.carprice.items.description.*;
-import ru.job4j.carprice.store.HibStore;
-import ru.job4j.carprice.store.ModelStore;
-import ru.job4j.carprice.store.PhotoStore;
-import ru.job4j.carprice.store.UserStore;
+import ru.job4j.carprice.store.*;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class Logic {
     private final static Logger LOGGER = LogManager.getLogger(ru.job4j.carprice.Logic.class);
@@ -23,6 +19,7 @@ public class Logic {
     private final UserDAO userDAO = new UserStore();
     private final PhotoDAO photoDAO = new PhotoStore();
     private final ModelDAO modelDAO = new ModelStore();
+    private final CarDAO carDAO = new CarStore();
 
     private Logic() {
     }
@@ -32,14 +29,19 @@ public class Logic {
         return INSTANCE;
     }
 
-    public List<Car> findCars() throws StoreException {
+    public Collection<Car> findCars() throws StoreException {
         LOGGER.traceEntry();
-        return (List<Car>) new HibStore(Car.class).find();
+        return carDAO.find();
+    }
+
+    public List<Car> findCars(Integer brandFilter, Boolean dateFilter, Boolean photoFilter) throws StoreException {
+        LOGGER.traceEntry();
+        return carDAO.findCars(brandFilter, dateFilter, photoFilter);
     }
 
     public Car findCar(Integer carId) throws StoreException {
         LOGGER.traceEntry();
-        return (Car) new HibStore(Car.class).find(carId);
+        return carDAO.find(carId);
     }
 
     public Car findCar(String carId) throws StoreException {
@@ -54,7 +56,7 @@ public class Logic {
 
     public List<Model> findModels() throws StoreException {
         LOGGER.traceEntry();
-        return (List<Model>) new HibStore(Model.class).find();
+        return (List<Model>) modelDAO.find();
     }
 
     public List<Body>  findBodies() throws StoreException {
@@ -84,7 +86,7 @@ public class Logic {
 
     public Model findModel(Integer modelId) throws StoreException {
         LOGGER.traceEntry();
-        return (Model) new HibStore(Model.class).find(modelId);
+        return modelDAO.find(modelId);
     }
 
     public Model findModel(String modelId) throws StoreException {
@@ -143,7 +145,7 @@ public class Logic {
 
     public void createCar(Car car) throws StoreException {
         LOGGER.traceEntry();
-        new HibStore(Car.class).create(car);
+        carDAO.create(car);
     }
 
     public List<Car> findUsersCars(int userId) throws StoreException {
@@ -205,5 +207,10 @@ public class Logic {
     public void update(Car car) throws StoreException {
         LOGGER.traceEntry();
         new HibStore(Car.class).update(car);
+    }
+
+    public Car createCarFromParameters(Map<String, String> parameters, User loginUser) throws StoreException {
+        LOGGER.traceEntry();
+        return carDAO.createCarFromParameters(parameters, loginUser);
     }
 }

@@ -100,6 +100,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>Car filter</servlet-name>
+        <servlet-class>ru.job4j.carprice.controllers.CarFilterController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Car filter</servlet-name>
+        <url-pattern>/carFilter</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>Change sold</servlet-name>
         <servlet-class>ru.job4j.carprice.controllers.ChangeSoldController</servlet-class>
     </servlet>

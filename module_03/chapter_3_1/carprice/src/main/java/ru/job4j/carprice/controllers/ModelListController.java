@@ -7,7 +7,6 @@ import ru.job4j.carprice.Logic;
 import ru.job4j.carprice.dao.StoreException;
 import ru.job4j.carprice.items.description.Model;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +20,7 @@ public class ModelListController extends HttpServlet {
     private final Logic logic = Logic.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         LOGGER.traceEntry();
         resp.setContentType("text/json");
 

@@ -6,7 +6,6 @@ import ru.job4j.carprice.Logic;
 import ru.job4j.carprice.dao.StoreException;
 import ru.job4j.carprice.items.Car;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +16,7 @@ public class ChangeSoldController extends HttpServlet {
     private final Logic logic = Logic.getInstance();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         LOGGER.traceEntry();
 
         try {

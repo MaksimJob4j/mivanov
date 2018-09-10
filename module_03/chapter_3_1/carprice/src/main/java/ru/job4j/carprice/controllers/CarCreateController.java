@@ -20,7 +20,6 @@ import ru.job4j.carprice.items.description.Photo;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,12 +47,12 @@ public class CarCreateController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         LOGGER.traceEntry();
 
         User loginUser = (User) req.getSession().getAttribute("loginUser");
         String tempFolder = getTempFolder(req);
-        String photoPath = null;
+        String photoPath;
         File photoFile = null;
         String photoFileName = null;
         Map<String, String> parameters = new HashMap<>();
@@ -78,8 +77,7 @@ public class CarCreateController extends HttpServlet {
                     }
                 }
             }
-            Car car = getCarFromParameters(parameters, loginUser);
-            logic.createCar(car);
+            Car car = logic.createCarFromParameters(parameters, loginUser);
             if (photoFile != null) {
                 Photo photo = getPhotoFromFile(car, photoFile);
                 logic.createPhoto(photo);
@@ -100,70 +98,6 @@ public class CarCreateController extends HttpServlet {
         photo.setFileData(Files.readAllBytes(photoFile.toPath()));
         photo.setCar(car);
         return photo;
-    }
-
-    private Car getCarFromParameters(Map<String, String> parameters, User loginUser) throws StoreException {
-        LOGGER.traceEntry();
-
-        Car car = new Car();
-
-        String model = parameters.get("model");
-        if (model != null && !"".equals(model)) {
-            car.setModel(logic.findModel(model));
-        }
-        String year = parameters.get("year");
-        if (year != null && !"".equals(year)) {
-            car.setYear(Integer.parseInt(year));
-        }
-        String mileage = parameters.get("mileage");
-        if (mileage != null && !"".equals(mileage)) {
-            car.setMileage(Integer.parseInt(mileage));
-        }
-        String body = parameters.get("body");
-        if (body != null && !"".equals(body)) {
-            car.setBody(logic.findBody(body));
-        }
-        String color = parameters.get("color");
-        if (color != null && !"".equals(color)) {
-            car.setColor(logic.findColor(color));
-        }
-        String volume = parameters.get("volume");
-        if (volume != null && !"".equals(volume)) {
-            car.setVolume(Float.parseFloat(volume));
-        }
-        String transmission = parameters.get("transmission");
-        if (transmission != null && !"".equals(transmission)) {
-            car.setTransmission(logic.findTransmission(transmission));
-        }
-        String engine = parameters.get("engine");
-        if (engine != null && !"".equals(engine)) {
-            car.setEngine(logic.findEngine(engine));
-        }
-        String drive = parameters.get("drive");
-        if (drive != null && !"".equals(engine)) {
-            car.setDrive(logic.findDrive(drive));
-        }
-        String rightWheel = parameters.get("rightWheel");
-        car.setRightWheel(Boolean.parseBoolean(rightWheel));
-        String broken = parameters.get("broken");
-        car.setBroken(Boolean.parseBoolean(broken));
-        String ownersNum = parameters.get("ownersNum");
-        if (ownersNum != null && !"".equals(ownersNum)) {
-            car.setOwnersNum(Integer.parseInt(ownersNum));
-        }
-        car.setVin(parameters.get("vin"));
-        String power = parameters.get("power");
-        if (power != null && !"".equals(power)) {
-            car.setPower(Integer.parseInt(power));
-        }
-        car.setAddress(parameters.get("address"));
-        car.setOwner(loginUser);
-        String price = parameters.get("price");
-        if (price != null && !"".equals(price)) {
-            car.setPrice(Integer.parseInt(price));
-        }
-        car.setDateCreated(ZonedDateTime.now());
-        return car;
     }
 
     private String getTempFolder(HttpServletRequest req) {

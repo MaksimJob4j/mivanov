@@ -6,5 +6,5 @@ import java.util.List;
 
 
 public interface PhotoDAO extends DAO<Photo> {
-    public List<Photo> findPhotoByCar(Integer carId) throws StoreException;
+    List<Photo> findPhotoByCar(Integer carId) throws StoreException;
 }

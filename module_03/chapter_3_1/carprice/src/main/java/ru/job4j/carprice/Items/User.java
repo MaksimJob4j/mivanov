@@ -11,7 +11,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class User {
-    private int id;
+    private Integer id;
     private String login;
     private String password;
     private List<Car> cars;

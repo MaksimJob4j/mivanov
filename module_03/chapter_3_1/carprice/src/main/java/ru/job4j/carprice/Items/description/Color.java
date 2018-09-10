@@ -11,6 +11,6 @@ import java.util.Collection;
 @EqualsAndHashCode
 @ToString
 public class Color {
-    private int id;
+    private Integer id;
     private String name;
 }

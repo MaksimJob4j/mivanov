@@ -11,7 +11,7 @@ import java.util.Collection;
 @EqualsAndHashCode
 @ToString
 public class Model {
-    private int id;
+    private Integer id;
     private String name;
     private Brand brand;
 }

@@ -6,7 +6,6 @@ import ru.job4j.carprice.Logic;
 import ru.job4j.carprice.dao.StoreException;
 import ru.job4j.carprice.items.description.Photo;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +17,7 @@ public class PhotoController extends HttpServlet {
     private final Logic logic = Logic.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         LOGGER.traceEntry();
 
         Photo photo = null;
