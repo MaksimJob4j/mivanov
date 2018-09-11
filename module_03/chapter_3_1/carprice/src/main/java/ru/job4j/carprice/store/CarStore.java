@@ -3,7 +3,6 @@ package ru.job4j.carprice.store;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ru.job4j.carprice.dao.CarDAO;
 import ru.job4j.carprice.dao.StoreException;
@@ -76,7 +75,7 @@ public class CarStore extends HibStore<Car> implements CarDAO {
                     car.setBody((Body) findEntity(parameters.get("body"), Body.class, session));
                     car.setColor((Color) findEntity(parameters.get("color"), Color.class, session));
                     car.setVolume(parsFloat(parameters.get("volume")));
-                    car.setTransmission((Transmission) findEntity(parameters.get("transmission"), Transaction.class, session));
+                    car.setTransmission((Transmission) findEntity(parameters.get("transmission"), Transmission.class, session));
                     car.setEngine((Engine) findEntity(parameters.get("engine"), Engine.class, session));
                     car.setDrive((Drive) findEntity(parameters.get("drive"), Drive.class, session));
                     car.setRightWheel(Boolean.parseBoolean(parameters.get("rightWheel")));
