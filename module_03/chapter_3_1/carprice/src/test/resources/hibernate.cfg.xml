@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+
+	<session-factory>
+		<property name="connection.url">jdbc:hsqldb:mem:carprice</property>
+		<property name="connection.driver_class">org.hsqldb.jdbcDriver</property>
+		<property name="connection.username">sa</property>
+		<property name="connection.password"></property>
+		<property name="dialect">org.hibernate.dialect.HSQLDialect</property>
+		<property name="show_sql">true</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
+
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+
+		<mapping resource="ru/job4j/carprice/items/Car.hbm.xml"/>
+		<mapping resource="ru/job4j/carprice/items/User.hbm.xml"/>
+		<mapping resource="ru/job4j/carprice/items/description/Body.hbm.xml"/>
+		<mapping resource="ru/job4j/carprice/items/description/Brand.hbm.xml"/>
+		<mapping resource="ru/job4j/carprice/items/description/Color.hbm.xml"/>
+		<mapping resource="ru/job4j/carprice/items/description/Drive.hbm.xml"/>
+		<mapping resource="ru/job4j/carprice/items/description/Engine.hbm.xml"/>
+		<mapping resource="ru/job4j/carprice/items/description/Model.hbm.xml"/>
+		<mapping resource="ru/job4j/carprice/items/description/Photo.hbm.xml"/>
+		<mapping resource="ru/job4j/carprice/items/description/Transmission.hbm.xml"/>
+	</session-factory>
+  
+</hibernate-configuration>
