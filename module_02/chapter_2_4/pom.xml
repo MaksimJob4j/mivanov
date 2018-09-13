@@ -16,7 +16,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>music</module>
+        <!--<module>music</module>-->
         <module>fileuploader</module>
         <module>userservlet</module>
     </modules>
