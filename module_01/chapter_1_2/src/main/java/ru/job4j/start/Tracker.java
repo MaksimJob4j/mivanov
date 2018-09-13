@@ -61,13 +61,13 @@ public class Tracker {
      */
     void add(Item item) {
         if (item != null) {
-            ArrayList<Item> items = findByName(item.getName());
-            for (Item it: items) {
-                if (item.equalsWithoutId(it)) {
-                    item.setID(it.getId());
-                    return;
-                }
-            }
+//             ArrayList<Item> items = findByName(item.getName());
+//             for (Item it: items) {
+//                 if (item.equalsWithoutId(it)) {
+//                     item.setID(it.getId());
+//                     return;
+//                 }
+//             }
             try (Connection conn = DriverManager.getConnection(bd.url, bd.username, bd.password);
                  PreparedStatement st = conn.prepareStatement(bd.sqlAddItem, Statement.RETURN_GENERATED_KEYS)) {
                 st.setString(1, item.getName());
