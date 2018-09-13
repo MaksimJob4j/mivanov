@@ -19,7 +19,8 @@ notifications:
 services:
 - postgresql
 
-before_script:
+#before_script:
+before_install:
 - psql -c 'create database music;' -U postgres
 - psql -c 'create database todolist;' -U postgres
 - psql -c 'create database carprice;' -U postgres
