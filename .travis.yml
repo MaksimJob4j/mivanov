@@ -21,12 +21,13 @@ services:
 
 #before_script:
 before_install:
+- psql -c 'create database tracker;' -U postgres
 - psql -c 'create database music;' -U postgres
 - psql -c 'create database todolist;' -U postgres
 - psql -c 'create database carprice;' -U postgres
 
-env:
-  global:
-  - PGPORT=5432
+# env:
+#   global:
+#   - PGPORT=5432
 
-script: mvn clean verify
+# script: mvn clean verify
