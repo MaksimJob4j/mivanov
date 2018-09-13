@@ -20,7 +20,10 @@ services:
 - postgresql
 
 before_script:
-- psql -c 'create database base;' -U postgres
+- psql -c 'create database music_test;' -U postgres
 - psql -c 'create database todolist;' -U postgres
 - psql -c 'create database carprice;' -U postgres
-- sudo -u postgres psql -c "ALTER ROLE postgres WITH password 'postgres'"
+
+env:
+  global:
+  - PGPORT=5432
