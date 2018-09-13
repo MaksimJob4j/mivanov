@@ -27,3 +27,5 @@ before_script:
 env:
   global:
   - PGPORT=5432
+
+script: mvn clean verify
