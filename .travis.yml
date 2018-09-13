@@ -12,6 +12,15 @@ after_success:
 notifications:
   email:
     recipients:
-      iv-maxim@ya.ru
+      - iv-maxim@ya.ru
     on_success: never # default: change
     on_failure: always # default: always
+
+services:
+- postgresql
+
+before_script:
+- psql -c 'CREATE DATABASE base;' -U postgres
+- psql -c 'CREATE DATABASE todolist;' -U postgres
+- psql -c 'CREATE DATABASE carprice;' -U postgres
+- psql -c "CREATE USER postgres WITH PASSWORD 'postgres';" -U postgres
