@@ -8,7 +8,7 @@ sudo: false
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 
-# Отправлять уведомление на почтуmailto:youremail@smtp.ru(Изменить на свою) если сборка упала
+# Отправлять уведомление на почту если сборка упала
 notifications:
   email:
     recipients:
@@ -19,15 +19,11 @@ notifications:
 services:
 - postgresql
 
-#before_script:
 before_install:
 - psql -c 'create database tracker;' -U postgres
+- psql -c 'create database userservlet;' -U postgres
+- psql -c 'create database joboffers;' -U postgres
+- psql -c 'create database sqlite;' -U postgres
 - psql -c 'create database music;' -U postgres
 - psql -c 'create database todolist;' -U postgres
 - psql -c 'create database carprice;' -U postgres
-
-# env:
-#   global:
-#   - PGPORT=5432
-
-# script: mvn clean verify
