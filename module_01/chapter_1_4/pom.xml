@@ -2,25 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
-        <artifactId>junior</artifactId>
+        <artifactId>module_01</artifactId>
         <groupId>ru.job4j</groupId>
         <version>1.0</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>module_01</artifactId>
-
-    <version>1.0</version>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>chapter_1_1</module>
-        <module>chapter_1_2</module>
-        <module>chapter_1_3</module>
-        <module>chapter_1_4</module>
-    </modules>
+    <artifactId>chapter_1_4</artifactId>
 
 
 </project>
