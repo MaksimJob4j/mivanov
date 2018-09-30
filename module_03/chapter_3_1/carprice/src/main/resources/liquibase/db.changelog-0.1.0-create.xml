@@ -166,17 +166,28 @@
 
     <!-- Photo -->
 
-    <changeSet id="create_photo" author="max">
+    <changeSet id="create_photo_postgresql" author="max" dbms="postgresql">
         <createTable tableName="photo">
             <column autoIncrement="true" name="id" type="INT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="file_name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+            <column name="file_name" type="VARCHAR(255)"/>
+            <column name="file_data" type="bytea"/>
+            <column name="car_id" type="INT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_photo_car"
+                             references="car(id)"/>
             </column>
-            <column name="file_data" type="bytea">
-                <constraints nullable="false"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_photo_hsqldb" author="max" dbms="hsqldb">
+        <createTable tableName="photo">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
             </column>
+            <column name="file_name" type="VARCHAR(255)"/>
+            <column name="file_data" type="binary"/>
             <column name="car_id" type="INT">
                 <constraints nullable="false"
                              foreignKeyName="fk_photo_car"

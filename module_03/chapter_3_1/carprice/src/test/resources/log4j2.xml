@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="TRACE" name="Carprice" packages="">
     <Properties>
-        <Property name="filename">C:/projects/mivanov/carprice_log4j2.log</Property>
+        <Property name="filename">C:/projects/mivanov/carprice_test.log</Property>
     </Properties>
     <Appenders>
         <Console type="Console" name="Console" target="SYSTEM_OUT">

@@ -21,18 +21,45 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <!--<testResources>-->
+            <!--<testResource>-->
+                <!--<directory>src/test/resources</directory>-->
+            <!--</testResource>-->
+        <!--</testResources>-->
         <plugins>
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.6.1</version>
-                <configuration>
-                    <changeLogFile>src/main/resources/liquibase/db.changelog-master.xml</changeLogFile>
-                    <driver>org.postgresql.Driver</driver>
-                    <url>jdbc:postgresql://localhost:5432/carprice</url>
-                    <username>postgres</username>
-                    <password>postgres</password>
-                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <!--<propertyFile>target/classes/liquibase.properties</propertyFile>-->
+                            <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                            <propertyFileWillOverride>false</propertyFileWillOverride>
+                            <propertyFile>src/test/resources/liquibase/liquibase.properties</propertyFile>
+                            <propertyFile>src/main/resources/liquibase/liquibase.properties</propertyFile>
+                        </configuration>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+ <!--                   <execution>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            &lt;!&ndash;<propertyFileWillOverride>true</propertyFileWillOverride>&ndash;&gt;
+                            &lt;!&ndash;<propertyFile>src/main/resources/liquibase/liquibase.properties</propertyFile>&ndash;&gt;
+                            <propertyFile>src/test/resources/liquibase/liquibase.properties</propertyFile>
+                        </configuration>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+ -->
+                </executions>
+
+<!--
                 <executions>
                     <execution>
                         <phase>process-resources</phase>
@@ -41,7 +68,39 @@
                         </goals>
                     </execution>
                 </executions>
+-->
+
             </plugin>
         </plugins>
     </build>
+<!--
+    <profiles>
+        <profile>
+            <id>db1</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <propertyFile>target/classes/liquibase.properties</propertyFile>
+
+
+                &lt;!&ndash;<liquibase.url>jdbc:h2:target/db1/liquibaseTest;AUTO_SERVER=TRUE</liquibase.url>&ndash;&gt;
+                &lt;!&ndash;<liquibase.driver>org.h2.Driver</liquibase.driver>&ndash;&gt;
+                &lt;!&ndash;<liquibase.username>user</liquibase.username>&ndash;&gt;
+                &lt;!&ndash;<liquibase.password>pass</liquibase.password>&ndash;&gt;
+            </properties>
+        </profile>
+        <profile>
+            <id>db2</id>
+            <properties>
+                <propertyFile>src/test/resources/liquibase/liquibase.properties</propertyFile>
+                &lt;!&ndash;<liquibase.url>jdbc:h2:target/db2/liquibaseTest;AUTO_SERVER=TRUE</liquibase.url>&ndash;&gt;
+                &lt;!&ndash;<liquibase.driver>org.h2.Driver</liquibase.driver>&ndash;&gt;
+                &lt;!&ndash;<liquibase.username>user</liquibase.username>&ndash;&gt;
+                &lt;!&ndash;<liquibase.password>pass</liquibase.password>&ndash;&gt;
+            </properties>
+        </profile>
+    </profiles>
+-->
+
 </project>

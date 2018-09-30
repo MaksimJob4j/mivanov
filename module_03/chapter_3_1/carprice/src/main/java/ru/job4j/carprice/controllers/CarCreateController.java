@@ -103,9 +103,9 @@ public class CarCreateController extends HttpServlet {
     private String getTempFolder(HttpServletRequest req) {
         LOGGER.traceEntry();
 
-        String tempFolderString = this.getServletContext().getRealPath("")
+        String tempFolderString = req.getServletContext().getRealPath("")
                 + File.separator
-                + this.getServletContext().getInitParameter("tempFolder");
+                + req.getServletContext().getInitParameter("tempFolder");
         File tempFolder = new File(tempFolderString);
         if (!tempFolder.exists()) {
             tempFolder.mkdir();

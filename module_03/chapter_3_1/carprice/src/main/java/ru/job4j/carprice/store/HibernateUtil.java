@@ -8,9 +8,10 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import ru.job4j.carprice.dao.StoreException;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
-class HibernateUtil {
+public class HibernateUtil {
     private final static Logger LOGGER = LogManager.getLogger(ru.job4j.carprice.store.HibernateUtil.class);
 
     private static final SessionFactory SESSION_FACTORY;
@@ -25,12 +26,12 @@ class HibernateUtil {
         }
     }
 
-    static SessionFactory getSessionFactory() {
+    private static SessionFactory getSessionFactory() {
         LOGGER.traceEntry();
         return SESSION_FACTORY;
     }
 
-    static <S> S tx(final Function<Session, S> command) throws StoreException {
+    public static <S> S tx(final Function<Session, S> command) throws StoreException {
         LOGGER.traceEntry();
         final Session session = SESSION_FACTORY.openSession();
         final Transaction tx = session.beginTransaction();
@@ -46,6 +47,13 @@ class HibernateUtil {
                 tx.commit();
             }
             session.close();
+        }
+    }
+
+    public static void ses(final Consumer<Session> command) {
+        LOGGER.traceEntry();
+        try (final Session session = SESSION_FACTORY.openSession()) {
+            command.accept(session);
         }
     }
 }

@@ -59,7 +59,7 @@ public class Logic {
         return (List<Model>) modelDAO.find();
     }
 
-    public List<Body>  findBodies() throws StoreException {
+    public List<Body> findBodies() throws StoreException {
         LOGGER.traceEntry();
         return (List<Body>) new HibStore(Body.class).find();
     }
@@ -206,11 +206,31 @@ public class Logic {
 
     public void update(Car car) throws StoreException {
         LOGGER.traceEntry();
-        new HibStore(Car.class).update(car);
+        carDAO.update(car);
     }
 
     public Car createCarFromParameters(Map<String, String> parameters, User loginUser) throws StoreException {
         LOGGER.traceEntry();
         return carDAO.createCarFromParameters(parameters, loginUser);
+    }
+
+    public void update(User user) throws StoreException {
+        LOGGER.traceEntry();
+        userDAO.update(user);
+    }
+
+    public User findUser(Integer userId) throws StoreException {
+        LOGGER.traceEntry();
+        return userDAO.find(userId);
+    }
+
+    public List<Photo> findPhotos() throws StoreException {
+        LOGGER.traceEntry();
+        return (List<Photo>) photoDAO.find();
+    }
+
+    public List<User> findUsers() throws StoreException {
+        LOGGER.traceEntry();
+        return (List<User>) new HibStore(User.class).find();
     }
 }

@@ -23,7 +23,7 @@ public class PhotoController extends HttpServlet {
         Photo photo = null;
         try {
             List<Photo> photoList = logic.findPhotoByCar(req.getParameter("car_id"));
-            if (photoList != null) {
+            if (photoList != null && photoList.size() > 0) {
                 photo = photoList.get(0);
             }
         } catch (StoreException e) {
@@ -32,7 +32,7 @@ public class PhotoController extends HttpServlet {
         }
         if (photo != null) {
             String imageFileName = photo.getFileName();
-            String contentType = this.getServletContext().getMimeType(imageFileName);
+            String contentType = req.getServletContext().getMimeType(imageFileName);
             resp.setHeader("Content-Type", contentType);
             resp.setHeader("Content-Length", String.valueOf(photo.getFileData().length));
             resp.setHeader("Content-Disposition", "inline; filename=\"" + imageFileName + "\"");
