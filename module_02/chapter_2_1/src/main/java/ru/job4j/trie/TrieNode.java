@@ -33,7 +33,7 @@ public class TrieNode {
                 sb.append(" ");
                 sb.append(i);
             }
-            sb.append("\n\r");
+            sb.append(System.lineSeparator());
         }
         for (Map.Entry<Character, TrieNode> node: children.entrySet()) {
             sb.append(node.getValue().toString());
