@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--XML-->
+    <bean id="memory" class="ru.job4j.beancreating.xml.MemoryStorage"/>
+    <bean id="jdbc" class="ru.job4j.beancreating.xml.JdbcStorage"/>
+
+    <!--XML constructor-->
+    <bean id="userStorageMemConstructor" class="ru.job4j.beancreating.xml.UserStorageConstructor">
+        <constructor-arg name="storage" ref="memory"/>
+    </bean>
+    <bean id="userStorageJdbcConstructor" class="ru.job4j.beancreating.xml.UserStorageConstructor">
+        <constructor-arg name="storage" ref="jdbc"/>
+    </bean>
+
+    <!--XML property-->
+    <bean id="userStorageMemProperty" class="ru.job4j.beancreating.xml.UserStorageProperty">
+        <property name="storage" ref="memory"/>
+    </bean>
+    <bean id="userStorageJdbcProperty" class="ru.job4j.beancreating.xml.UserStorageProperty">
+        <property name="storage" ref="jdbc"/>
+    </bean>
+
+    <!--annotation-->
+    <context:annotation-config/>
+    <bean id="userStorageAnnotation" class="ru.job4j.beancreating.xml.UserStorageAnnotation" />
+
+</beans>
