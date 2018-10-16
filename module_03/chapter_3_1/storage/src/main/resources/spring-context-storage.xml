@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <bean id="memory" class="ru.job4j.storage.MemoryStorage"/>
+    <bean id="jdbcSource" class="ru.job4j.storage.JDBCSource"/>
+    <bean id="jdbc" class="ru.job4j.storage.JdbcStorage">
+        <constructor-arg name="jdbcSource"  ref="jdbcSource"/>
+    </bean>
+
+    <bean id="userStorageMem" class="ru.job4j.storage.UserStorage">
+        <constructor-arg name="storage" ref="memory"/>
+    </bean>
+    <bean id="userStorageJdbc" class="ru.job4j.storage.UserStorage">
+        <constructor-arg name="storage" ref="jdbc"/>
+    </bean>
+
+</beans>
