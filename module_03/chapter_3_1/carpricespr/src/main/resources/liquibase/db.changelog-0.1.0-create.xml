@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.1
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.1.xsd">
+
+    <!-- car description -->
+
+    <changeSet id="create_body" author="max">
+        <createTable tableName="body">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_brand" author="max">
+        <createTable tableName="brand">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_color" author="max">
+        <createTable tableName="color">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_drive" author="max">
+        <createTable tableName="drive">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_engine" author="max">
+        <createTable tableName="engine">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_model" author="max">
+        <createTable tableName="model">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="brand_id" type="INT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_model_brand"
+                             references="brand(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_transmission" author="max">
+        <createTable tableName="transmission">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- User-->
+
+    <changeSet id="create_users" author="max">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="login" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Car -->
+
+    <changeSet id="create_car" author="max">
+        <createTable tableName="car">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <!-- car description -->
+
+            <column name="model_id" type="INT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_car_model"
+                             references="model(id)"/>
+            </column>
+            <column name="year" type="INT"/>
+            <column name="mileage" type="INT"/>
+            <column name="body_id" type="INT">
+                <constraints foreignKeyName="fk_car_body"
+                             references="body(id)"/>
+            </column>
+            <column name="color_id" type="INT">
+                <constraints foreignKeyName="fk_car_color"
+                             references="color(id)"/>
+            </column>
+            <column name="volume" type="REAL"/>
+            <column name="transmission_id" type="INT">
+                <constraints foreignKeyName="fk_car_transmission"
+                             references="transmission(id)"/>
+            </column>
+            <column name="engine_id" type="INT">
+                <constraints foreignKeyName="fk_car_engine"
+                             references="engine(id)"/>
+            </column>
+            <column name="drive_id" type="INT">
+                <constraints foreignKeyName="fk_car_drive"
+                             references="drive(id)"/>
+            </column>
+            <column name="right_wheel" type="BOOLEAN"/>
+            <column name="broken" type="BOOLEAN"/>
+            <column name="owners_num" type="INT"/>
+            <column name="vin" type="VARCHAR(255)"/>
+            <column name="power" type="INT"/>
+            <column name="address" type="TEXT"/>
+
+            <!-- Ad description -->
+
+            <column name="user_id" type="INT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_car_user"
+                             references="users(id)"/>
+            </column>
+            <column name="price" type="INT"/>
+            <column name="date_created" type="TIMESTAMP"/>
+            <column name="sold" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Photo -->
+
+    <changeSet id="create_photo_postgresql" author="max" dbms="postgresql">
+        <createTable tableName="photo">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="file_name" type="VARCHAR(255)"/>
+            <column name="file_data" type="bytea"/>
+            <column name="car_id" type="INT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_photo_car"
+                             references="car(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_photo_hsqldb" author="max" dbms="hsqldb">
+        <createTable tableName="photo">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="file_name" type="VARCHAR(255)"/>
+            <column name="file_data" type="binary"/>
+            <column name="car_id" type="INT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_photo_car"
+                             references="car(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

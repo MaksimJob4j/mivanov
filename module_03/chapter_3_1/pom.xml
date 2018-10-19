@@ -19,6 +19,7 @@
         <module>todolist</module>
         <module>carprice</module>
         <module>storage</module>
+        <module>carpricespr</module>
     </modules>
 
 </project>

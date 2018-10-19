@@ -1,0 +1,40 @@
+<hibernate-mapping>
+    <class name="ru.job4j.carpricespr.items.Car" table="car">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="model"
+                     column="model_id"
+                     class="ru.job4j.carpricespr.items.description.Model"/>
+        <property name="year" column="year"/>
+        <property name="mileage" column="mileage"/>
+        <many-to-one name="body"
+                     column="body_id"
+                     class="ru.job4j.carpricespr.items.description.Body"/>
+        <many-to-one name="color"
+                     column="color_id"
+                     class="ru.job4j.carpricespr.items.description.Color"/>
+        <property name="volume" column="volume"/>
+        <many-to-one name="transmission"
+                     column="transmission_id"
+                     class="ru.job4j.carpricespr.items.description.Transmission"/>
+        <many-to-one name="engine"
+                     column="engine_id"
+                     class="ru.job4j.carpricespr.items.description.Engine"/>
+        <many-to-one name="drive"
+                     column="drive_id"
+                     class="ru.job4j.carpricespr.items.description.Drive"/>
+        <property name="rightWheel" column="right_wheel"/>
+        <property name="broken" column="broken"/>
+        <property name="ownersNum" column="owners_num"/>
+        <property name="vin" column="vin"/>
+        <property name="power" column="power"/>
+        <property name="address" column="address"/>
+        <many-to-one name="owner"
+                     column="user_id"
+                     class="ru.job4j.carpricespr.items.User"/>
+        <property name="price" column="price"/>
+        <property name="dateCreated" column="date_created"/>
+        <property name="sold" column="sold"/>
+    </class>
+</hibernate-mapping>

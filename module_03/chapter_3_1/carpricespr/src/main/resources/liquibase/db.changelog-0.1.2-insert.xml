@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.1
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.1.xsd">
+
+    <!-- car description -->
+
+    <changeSet id="init_body" author="max">
+        <sql>
+            INSERT INTO body (name) VALUES
+            ('sedan'), ('hatchback'), ('station wagon'),
+            ('off-road car'), ('cabriolet'), ('coupe'),
+            ('limousine'), ('minivan'), ('pickup truck'),
+            ('van'), ('minibus');
+        </sql>
+    </changeSet>
+
+    <changeSet id="init_brand" author="max">
+        <sql>
+            INSERT INTO brand (name) VALUES
+            ('BMW'), ('Honda'), ('Hyundai'), ('Mazda'),
+            ('Porsche'), ('ВАЗ (Lada)'), ('ГАЗ'), ('УАЗ');
+
+            <!--
+                        ('Aston Martin'), ('Audi'), ('Bentley'), ('BMW'),
+                        ('Brilliance'), ('Cadillac'), ('Changan'),
+                        ('Chery'), ('Chevrolet'), ('Chrysler'), ('Citroen'),
+                        ('Datsun'), ('DongFeng'), ('FAW'), ('Ferrari'),
+                        ('Fiat'), ('Ford'), ('Foton'), ('Geely'),
+                        ('Genesis'), ('Great Wall'), ('Haval'), ('Hawtai'),
+                        ('Honda'), ('Hyundai'), ('Infiniti'), ('Isuzu'),
+                        ('Jaguar'), ('Jeep'), ('Kia'), ('Lamborghini'),
+                        ('Land Rover'), ('Lexus'), ('Lifan'), ('Maserati'), ('Mazda'),
+                        ('Mercedes-Benz'), ('Mini'), ('Mitsubishi'), ('Nissan'),
+                        ('Peugeot'), ('Porsche'), ('Ravon'), ('Renault'),
+                        ('Rolls-Royce'), ('Skoda'), ('Smart'), ('SsangYong'),
+                        ('Subaru'), ('Suzuki'), ('Toyota'), ('Volkswagen'),
+                        ('Volvo'), ('Zotye'), ('ВАЗ (Lada)'), ('ГАЗ'), ('УАЗ');
+            -->
+        </sql>
+    </changeSet>
+
+    <changeSet id="init_color" author="max">
+        <sql>
+            INSERT INTO color (name) VALUES
+            ('white'), ('silver'), ('gray'), ('black'),
+            ('brown'), ('gold'), ('beige'), ('red'),
+            ('orange'), ('yellow'), ('green'), ('light blue'),
+            ('blue'), ('purple'), ('pink');
+        </sql>
+    </changeSet>
+
+    <changeSet id="init_drive" author="max">
+        <sql>
+            INSERT INTO drive (name) VALUES
+            ('front-wheel'), ('rear'), ('four-wheel');
+        </sql>
+    </changeSet>
+
+    <changeSet id="init_engine" author="max">
+        <sql>
+            INSERT INTO engine (name) VALUES
+            ('petrol'), ('diesel'), ('hybrid'), ('electric'), ('gas');
+        </sql>
+    </changeSet>
+
+    <changeSet id="init_transmission" author="max">
+        <sql>
+            INSERT INTO transmission (name) VALUES
+            ('manual'), ('automatic'), ('robot'), ('variable');
+        </sql>
+    </changeSet>
+
+    <changeSet id="init_users" author="max">
+        <sql>
+            INSERT INTO users (login, password) VALUES
+            ('root', 'root'),
+            ('user', 'user'),
+            ('user1', 'user');
+        </sql>
+    </changeSet>
+
+    <changeSet id="init_model" author="max">
+        <sql>
+            INSERT INTO model (name, brand_id) VALUES
+            ('X1', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('X2', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('X3', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('X4', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('X5', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('X6', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('Sonata', (SELECT id FROM brand WHERE name = 'Hyundai')),
+            ('Solaris', (SELECT id FROM brand WHERE name = 'Hyundai')),
+            ('Tucson', (SELECT id FROM brand WHERE name = 'Hyundai')),
+            ('Creta', (SELECT id FROM brand WHERE name = 'Hyundai')),
+            ('Vesta', (SELECT id FROM brand WHERE name = 'ВАЗ (Lada)')),
+            ('Granta', (SELECT id FROM brand WHERE name = 'ВАЗ (Lada)')),
+            ('Kalina', (SELECT id FROM brand WHERE name = 'ВАЗ (Lada)')),
+            ('Priora', (SELECT id FROM brand WHERE name = 'ВАЗ (Lada)')),
+
+
+            ('Just a Honda model', (SELECT id FROM brand WHERE name = 'Honda')),
+            ('Just a Mazda model', (SELECT id FROM brand WHERE name = 'Mazda')),
+            ('Just a Porsche model', (SELECT id FROM brand WHERE name = 'Porsche')),
+            ('Just a ГАЗ model', (SELECT id FROM brand WHERE name = 'ГАЗ')),
+            ('Just a УАЗ model', (SELECT id FROM brand WHERE name = 'УАЗ'));
+
+        </sql>
+    </changeSet>
+
+
+    <changeSet id="init_car1" author="max">
+        <sql>
+            INSERT INTO car (
+            model_id, year, mileage, body_id, color_id, volume, transmission_id,
+            engine_id, drive_id, right_wheel, broken, owners_num, vin, power, address,
+            user_id, price, date_created, sold
+            )
+            VALUES (
+            (SELECT id FROM model WHERE name = 'X6'),
+            2016,
+            10000,
+            (SELECT id FROM body WHERE name = 'hatchback'),
+            (SELECT id FROM color WHERE name = 'silver'),
+            3.2,
+            (SELECT id FROM transmission WHERE name = 'automatic'),
+            (SELECT id FROM engine WHERE name = 'diesel'),
+            (SELECT id FROM drive WHERE name = 'four-wheel'),
+            false,
+            false,
+            1,
+            'XX215869674357474',
+            247,
+            'Chelyabinsk, Center',
+            (SELECT id FROM users WHERE login = 'user1'),
+            3350000,
+            to_timestamp('01-08-2017 12:12:12', 'dd-mm-yyyy hh24:mi:ss'),
+            true
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="init_car2" author="max">
+        <sql>
+            INSERT INTO car (
+            model_id, year, mileage, body_id, color_id, volume, transmission_id,
+            engine_id, drive_id, right_wheel, broken, owners_num, vin, power, address,
+            user_id, price, date_created, sold
+            )
+            VALUES (
+            (SELECT id FROM model WHERE name = 'X3'),
+            2009,
+            132000,
+            (SELECT id FROM body WHERE name = 'off-road car'),
+            (SELECT id FROM color WHERE name = 'blue'),
+            2.5,
+            (SELECT id FROM transmission WHERE name = 'automatic'),
+            (SELECT id FROM engine WHERE name = 'petrol'),
+            (SELECT id FROM drive WHERE name = 'four-wheel'),
+            false, <!--right_wheel-->
+            false, <!--broken-->
+            1, <!--owners_num-->
+            'XX11111111111111111',
+            218,
+            'Москва, 7км Варшавского шоссе',
+            (SELECT id FROM users WHERE login = 'user'),
+            635000,
+            to_timestamp('02-08-2017 12:12:12', 'dd-mm-yyyy hh24:mi:ss'), <!--date_created-->
+            false <!--sold-->
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="init_car3" author="max">
+        <sql>
+            INSERT INTO car (
+            model_id, year, mileage, body_id, color_id, volume, transmission_id,
+            engine_id, drive_id, right_wheel, broken, owners_num, vin, power, address,
+            user_id, price, date_created, sold
+            )
+            VALUES (
+            (SELECT id FROM model WHERE name = 'Solaris'),
+            2016,
+            28000,
+            (SELECT id FROM body WHERE name = 'sedan'),
+            (SELECT id FROM color WHERE name = 'black'),
+            1.6,
+            (SELECT id FROM transmission WHERE name = 'automatic'),
+            (SELECT id FROM engine WHERE name = 'petrol'),
+            (SELECT id FROM drive WHERE name = 'front-wheel'),
+            false, <!--right_wheel-->
+            true, <!--broken-->
+            3, <!--owners_num-->
+            'XX3746765485435486468',
+            123,
+            'Москва, Кремль',
+            (SELECT id FROM users WHERE login = 'user'),
+            99000,
+            to_timestamp('01-08-2017 12:12:12', 'dd-mm-yyyy hh24:mi:ss'), <!--date_created-->
+            false <!--sold-->
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.1
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.1.xsd">
+
+    <changeSet id="test_users" author="max" runOnChange="true">
+        <sql>
+            INSERT INTO users (login, password) VALUES
+            ('test_user', 'test_psw'),
+            ('test_user2', 'test_psw2'),
+            ('test_user3', 'test_psw3');
+        </sql>
+    </changeSet>
+
+    <changeSet id="test_brands" author="max" runOnChange="true">
+        <sql>
+            INSERT INTO brand (name) VALUES
+            ('test_brand1'),
+            ('test_brand2'),
+            ('test_brand3');
+        </sql>
+    </changeSet>
+
+    <changeSet id="test_models" author="max" runOnChange="true">
+        <sql>
+            INSERT INTO model (name, brand_id) VALUES
+            ('test_model1', (SELECT id FROM brand WHERE name = 'test_brand1' LIMIT 1)),
+            ('test_model2', (SELECT id FROM brand WHERE name = 'test_brand1' LIMIT 1)),
+            ('test_model3', (SELECT id FROM brand WHERE name = 'test_brand2' LIMIT 1));
+        </sql>
+    </changeSet>
+
+    <changeSet id="test_cars" author="max" runOnChange="true">
+        <sql>
+            INSERT INTO car (model_id, date_created, user_id) VALUES
+            (
+            (SELECT id FROM model WHERE name = 'test_model1' LIMIT 1),
+            (current_timestamp),
+            (SELECT id FROM users WHERE login = 'test_user' LIMIT 1)
+            ),
+            (
+            (SELECT id FROM model WHERE name = 'test_model2' LIMIT 1),
+            (DATEADD(day, -2, current_timestamp)),
+            (SELECT id FROM users WHERE login = 'test_user2' LIMIT 1)
+            ),
+            (
+            (SELECT id FROM model WHERE name = 'test_model3' LIMIT 1),
+            (DATEADD(Second, -1, current_timestamp)),
+            (SELECT id FROM users WHERE login = 'test_user' LIMIT 1)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="test_photos" author="max" runOnChange="true">
+        <sql>
+            INSERT INTO photo (car_id) VALUES
+            (SELECT id FROM car WHERE model_id =
+            (SELECT id FROM model WHERE name = 'test_model1' LIMIT 1) LIMIT 1),
+            (SELECT id FROM car WHERE model_id =
+            (SELECT id FROM model WHERE name = 'test_model1' LIMIT 1) LIMIT 1),
+            (SELECT id FROM car WHERE model_id =
+            (SELECT id FROM model WHERE name = 'test_model2' LIMIT 1) LIMIT 1);
+        </sql>
+    </changeSet>
+
+    <changeSet id="test_colors" author="max" runOnChange="true">
+        <sql>
+            INSERT INTO color (name) VALUES
+            ('test_color1'),
+            ('test_color2'),
+            ('test_color3');
+        </sql>
+    </changeSet>
+
+    <changeSet id="test_drives" author="max" runOnChange="true">
+        <sql>
+            INSERT INTO drive (name) VALUES
+            ('test_drive1'),
+            ('test_drive2'),
+            ('test_drive3');
+        </sql>
+    </changeSet>
+
+    <changeSet id="test_bodies" author="max" runOnChange="true">
+        <sql>
+            INSERT INTO body (name) VALUES
+            ('test_body1'),
+            ('test_body2'),
+            ('test_body3');
+        </sql>
+    </changeSet>
+
+    <changeSet id="test_engines" author="max" runOnChange="true">
+        <sql>
+            INSERT INTO engine (name) VALUES
+            ('test_engine1'),
+            ('test_engine2'),
+            ('test_engine3');
+        </sql>
+    </changeSet>
+
+    <changeSet id="test_transmissions" author="max" runOnChange="true">
+        <sql>
+            INSERT INTO transmission (name) VALUES
+            ('test_transmission1'),
+            ('test_transmission2'),
+            ('test_transmission3');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
