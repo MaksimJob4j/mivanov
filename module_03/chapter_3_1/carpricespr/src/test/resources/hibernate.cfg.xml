@@ -10,18 +10,18 @@
 		<property name="show_sql">true</property>
 		<property name="hibernate.hbm2ddl.auto">create</property>
 
-        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+        <!--<property name="hibernate.enable_lazy_load_no_trans">true</property>-->
 
-		<mapping resource="ru/job4j/carpricespr/items/Car.hbm.xml"/>
-		<mapping resource="ru/job4j/carpricespr/items/User.hbm.xml"/>
-		<mapping resource="ru/job4j/carpricespr/items/description/Body.hbm.xml"/>
-		<mapping resource="ru/job4j/carpricespr/items/description/Brand.hbm.xml"/>
-		<mapping resource="ru/job4j/carpricespr/items/description/Color.hbm.xml"/>
-		<mapping resource="ru/job4j/carpricespr/items/description/Drive.hbm.xml"/>
-		<mapping resource="ru/job4j/carpricespr/items/description/Engine.hbm.xml"/>
-		<mapping resource="ru/job4j/carpricespr/items/description/Model.hbm.xml"/>
-		<mapping resource="ru/job4j/carpricespr/items/description/Photo.hbm.xml"/>
-		<mapping resource="ru/job4j/carpricespr/items/description/Transmission.hbm.xml"/>
+		<mapping class="ru.job4j.carpricespr.items.Car"/>
+		<mapping class="ru.job4j.carpricespr.items.User"/>
+		<mapping class="ru.job4j.carpricespr.items.description.Body"/>
+		<mapping class="ru.job4j.carpricespr.items.description.Brand"/>
+		<mapping class="ru.job4j.carpricespr.items.description.Color"/>
+		<mapping class="ru.job4j.carpricespr.items.description.Drive"/>
+		<mapping class="ru.job4j.carpricespr.items.description.Engine"/>
+		<mapping class="ru.job4j.carpricespr.items.description.Model"/>
+		<mapping class="ru.job4j.carpricespr.items.description.Photo"/>
+		<mapping class="ru.job4j.carpricespr.items.description.Transmission"/>
 	</session-factory>
   
 </hibernate-configuration>
