@@ -1,120 +1,72 @@
 package ru.job4j.carpricespr.controllers;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import ru.job4j.carpricespr.editors.*;
 import ru.job4j.carpricespr.items.Car;
 import ru.job4j.carpricespr.items.User;
-import ru.job4j.carpricespr.items.description.Photo;
+import ru.job4j.carpricespr.items.description.*;
 import ru.job4j.carpricespr.Logic;
 import ru.job4j.carpricespr.dao.StoreException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import java.io.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class CarCreateController extends HttpServlet {
+@Controller
+@SessionAttributes(names = "loginUser", types = User.class)
+public class CarCreateController {
     private final static Logger LOGGER = LogManager.getLogger(CarCreateController.class);
-    private final Logic logic = Logic.getInstance();
+    private final Logic logic;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.traceEntry();
-
-        try {
-            req.setAttribute("brands", logic.findBrands());
-            req.setAttribute("bodies", logic.findBodies());
-            req.setAttribute("colors", logic.findColors());
-            req.setAttribute("transmissions", logic.findTransmissions());
-            req.setAttribute("engines", logic.findEngines());
-            req.setAttribute("drives", logic.findDrives());
-            req.getRequestDispatcher("/WEB-INF/views/createcar.jsp").forward(req, resp);
-        } catch (StoreException e) {
-            LOGGER.error("error", e);
-            resp.sendError(500, e.getMessage());
-        }
+    @Autowired
+    public CarCreateController(Logic logic) {
+        this.logic = logic;
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    @GetMapping("/newcar")
+    public String createCar(ModelMap model) throws StoreException {
         LOGGER.traceEntry();
 
-        User loginUser = (User) req.getSession().getAttribute("loginUser");
-        String tempFolder = getTempFolder(req);
-        String photoPath;
-        File photoFile = null;
-        String photoFileName = null;
-        Map<String, String> parameters = new HashMap<>();
-        try {
-            List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(req);
-            for (FileItem item : items) {
-                if (item.isFormField()) {
-                    parameters.put(item.getFieldName(), item.getString());
-                } else {
-                    if (photoFileName == null) {
-                        photoFileName = FilenameUtils.getName(item.getName());
-                    }
-                    if (photoFileName != null
-                            && !"".equals(photoFileName)
-                            && photoFileName.equals(FilenameUtils.getName(item.getName()))) {
-                        if (photoFile == null) {
-                            photoPath = tempFolder + File.separator
-                                    + photoFileName;
-                            photoFile = new File(photoPath);
-                        }
-                        item.write(photoFile);
-                    }
-                }
-            }
-            Car car = logic.createCarFromParameters(parameters, loginUser);
-            if (photoFile != null) {
-                Photo photo = getPhotoFromFile(car, photoFile);
-                logic.createPhoto(photo);
-                photoFile.delete();
-            }
-            resp.sendRedirect(String.format("%s/users_cars", req.getContextPath()));
-        } catch (Exception e) {
-            LOGGER.error("error", e);
-            resp.sendError(500, e.getMessage());
-        }
+        model.addAttribute("brands", logic.findBrands());
+        model.addAttribute("bodies", logic.findBodies());
+        model.addAttribute("colors", logic.findColors());
+        model.addAttribute("transmissions", logic.findTransmissions());
+        model.addAttribute("engines", logic.findEngines());
+        model.addAttribute("drives", logic.findDrives());
+        return "createcar";
     }
 
-    private Photo getPhotoFromFile(Car car, File photoFile) throws IOException {
-        LOGGER.traceEntry();
-
-        Photo photo = new Photo();
-        photo.setFileName(photoFile.getName());
-        photo.setFileData(Files.readAllBytes(photoFile.toPath()));
-        photo.setCar(car);
-        return photo;
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Body.class, new BodyEditor());
+        binder.registerCustomEditor(Color.class, new ColorEditor());
+        binder.registerCustomEditor(Model.class, new ModelEditor());
+        binder.registerCustomEditor(Transmission.class, new TransmissionEditor());
+        binder.registerCustomEditor(Engine.class, new EngineEditor());
+        binder.registerCustomEditor(Drive.class, new DriveEditor());
     }
 
-    private String getTempFolder(HttpServletRequest req) {
+    @PostMapping("/newcar")
+    public String createCar(@Validated Car car,
+                            @ModelAttribute("loginUser") User loginUser,
+                            @RequestParam("photofile") MultipartFile file) throws StoreException, IOException {
         LOGGER.traceEntry();
 
-        String tempFolderString = req.getServletContext().getRealPath("")
-                + File.separator
-                + req.getServletContext().getInitParameter("tempFolder");
-        File tempFolder = new File(tempFolderString);
-        if (!tempFolder.exists()) {
-            tempFolder.mkdir();
+        car.setOwner(loginUser);
+        logic.createCar(car);
+        if (!file.isEmpty()) {
+            Photo photo = new Photo();
+            photo.setFileName(file.getOriginalFilename());
+            photo.setFileData(file.getBytes());
+            photo.setCar(car);
+            logic.createPhoto(photo);
         }
-        String photoDirString = tempFolderString + File.separator + req.getSession().getId();
-        File photoDir = new File(photoDirString);
-        if (!photoDir.exists()) {
-            photoDir.mkdir();
-        }
-        return photoDirString;
+        return "redirect:users_cars";
     }
 }

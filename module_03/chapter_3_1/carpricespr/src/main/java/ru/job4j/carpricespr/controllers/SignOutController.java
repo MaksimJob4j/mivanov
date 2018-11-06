@@ -2,19 +2,20 @@ package ru.job4j.carpricespr.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-public class SignOutController extends HttpServlet {
+@Controller
+@RequestMapping(value = "/signout")
+public class SignOutController {
     private final static Logger LOGGER = LogManager.getLogger(SignOutController.class);
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    @GetMapping
+    protected String signout(SessionStatus status) {
         LOGGER.traceEntry();
-        req.getSession().invalidate();
-        resp.sendRedirect(String.format("%s/", req.getContextPath()));
+        status.setComplete();
+        return  "redirect:/";
     }
 }

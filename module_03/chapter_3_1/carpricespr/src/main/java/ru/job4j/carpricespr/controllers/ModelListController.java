@@ -1,41 +1,42 @@
 package ru.job4j.carpricespr.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import ru.job4j.carpricespr.dao.StoreException;
 import ru.job4j.carpricespr.items.description.Model;
 import ru.job4j.carpricespr.Logic;
-import ru.job4j.carpricespr.dao.StoreException;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Comparator;
 import java.util.List;
 
-public class ModelListController extends HttpServlet {
+@Controller
+@RequestMapping("/models")
+public class ModelListController {
     private final static Logger LOGGER = LogManager.getLogger(ModelListController.class);
-    private final Logic logic = Logic.getInstance();
+    private final Logic logic;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    @Autowired
+    public ModelListController(Logic logic) {
+        this.logic = logic;
+    }
+
+    @GetMapping
+    @ResponseBody
+    public String models(@RequestParam("brand") String brand) throws StoreException, JsonProcessingException {
         LOGGER.traceEntry();
-        resp.setContentType("text/json");
 
-        try {
-            List<Model> models = logic.findModelsByBrand(req.getParameter("brand"));
-            if (models != null) {
-                models.sort(Comparator.comparing(Model::getName));
-                PrintWriter writer = new PrintWriter(resp.getOutputStream());
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.writeValue(writer, models);
-                writer.flush();
-            }
-        } catch (StoreException e) {
-            LOGGER.error("error", e);
-            resp.sendError(500, e.getMessage());
+        String result = "";
+        List<Model> models = logic.findModelsByBrand(brand);
+        if (models != null) {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+            result = mapper.writeValueAsString(models);
         }
+        return result;
     }
 }

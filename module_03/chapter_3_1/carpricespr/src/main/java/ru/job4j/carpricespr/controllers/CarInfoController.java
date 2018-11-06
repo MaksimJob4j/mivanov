@@ -2,35 +2,38 @@ package ru.job4j.carpricespr.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.carpricespr.items.Car;
 import ru.job4j.carpricespr.Logic;
 import ru.job4j.carpricespr.dao.StoreException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
-public class CarInfoController extends HttpServlet {
+@Controller
+@RequestMapping("/car")
+public class CarInfoController {
     private final static Logger LOGGER = LogManager.getLogger(CarInfoController.class);
 
-    private final Logic logic = Logic.getInstance();
+    private final Logic logic;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @Autowired
+    public CarInfoController(Logic logic) {
+        this.logic = logic;
+    }
+
+    @GetMapping
+    public String usersCars(@RequestParam("id") int id,
+                            ModelMap model) throws StoreException {
         LOGGER.traceEntry();
 
-        try {
-            Car car = logic.findCar(req.getParameter("id"));
-            if (car == null) {
-                resp.sendRedirect(String.format("%s/", req.getContextPath()));
-            }
-            req.setAttribute("car_info", car);
-            req.getRequestDispatcher("/WEB-INF/views/car.jsp").forward(req, resp);
-        } catch (StoreException e) {
-            LOGGER.error("error", e);
-            resp.sendError(500, e.getMessage());
+        Car car = logic.findCar(id);
+        if (car == null) {
+            return "redirect:/";
         }
+        model.addAttribute("car_info", car);
+        return "car";
     }
 }

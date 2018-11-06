@@ -89,7 +89,7 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                Transmission: ${car_info.transmission.name}
+                Transmission:
                 <select class="form-control" name="transmission">
                     <option value="" selected disabled hidden>Choose transmission</option>
                     <c:forEach items = "${transmissions}" var = "transmission">
@@ -129,8 +129,8 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                Left wheel:
-                <input type="checkbox"  name="drive"/>
+                Rigt wheel:
+                <input type="checkbox"  name="rightWheel" path="rightWheel"/>
             </div>
             <div class="col-md-3">
                 Broken:

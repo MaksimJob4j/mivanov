@@ -2,33 +2,31 @@ package ru.job4j.carpricespr.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.job4j.carpricespr.items.description.Brand;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.job4j.carpricespr.Logic;
 import ru.job4j.carpricespr.dao.StoreException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-
-public class MainListController extends HttpServlet {
+@Controller
+@RequestMapping("/")
+public class MainListController {
     private final static Logger LOGGER = LogManager.getLogger(MainListController.class);
 
-    private final Logic logic = Logic.getInstance();
+    private final Logic logic;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @Autowired
+    public MainListController(Logic logic) {
+        this.logic = logic;
+    }
+
+    @GetMapping
+    public String mainList(ModelMap model) throws StoreException {
         LOGGER.traceEntry();
 
-        try {
-            List<Brand> brands = logic.findBrands();
-            req.setAttribute("brands", brands);
-            req.getRequestDispatcher("/WEB-INF/views/mainlist.jsp").forward(req, resp);
-        } catch (StoreException e) {
-            LOGGER.error("error", e);
-            resp.sendError(500, e.getMessage());
-        }
+        model.addAttribute("brands", logic.findBrands());
+        return "mainlist";
     }
 }

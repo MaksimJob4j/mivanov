@@ -3,6 +3,7 @@ package ru.job4j.carpricespr.store;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 import ru.job4j.carpricespr.dao.PhotoDAO;
 import ru.job4j.carpricespr.dao.StoreException;
 import ru.job4j.carpricespr.items.Car;
@@ -11,6 +12,7 @@ import ru.job4j.carpricespr.items.description.Photo;
 import java.util.List;
 
 
+@Component
 public class PhotoStore extends HibStore<Photo> implements PhotoDAO {
     private final static Logger LOGGER = LogManager.getLogger(PhotoStore.class);
 

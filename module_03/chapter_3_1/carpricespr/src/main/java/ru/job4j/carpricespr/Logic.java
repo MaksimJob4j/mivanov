@@ -2,6 +2,8 @@ package ru.job4j.carpricespr;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.job4j.carpricespr.dao.*;
 import ru.job4j.carpricespr.items.*;
 import ru.job4j.carpricespr.store.*;
@@ -11,21 +13,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class Logic {
     private final static Logger LOGGER = LogManager.getLogger(Logic.class);
-    private static final Logic INSTANCE = new Logic();
 
-    private final UserDAO userDAO = new UserStore();
-    private final PhotoDAO photoDAO = new PhotoStore();
-    private final ModelDAO modelDAO = new ModelStore();
-    private final CarDAO carDAO = new CarStore();
+    private final UserDAO userDAO;
+    private final PhotoDAO photoDAO;
+    private final ModelDAO modelDAO;
+    private final CarDAO carDAO;
 
-    private Logic() {
-    }
-
-    public static Logic getInstance() {
-        LOGGER.traceEntry();
-        return INSTANCE;
+    @Autowired
+    public Logic(UserDAO userDAO, PhotoDAO photoDAO, ModelDAO modelDAO, CarDAO carDAO) {
+        this.userDAO = userDAO;
+        this.photoDAO = photoDAO;
+        this.modelDAO = modelDAO;
+        this.carDAO = carDAO;
     }
 
     public Collection<Car> findCars() throws StoreException {
@@ -206,11 +208,6 @@ public class Logic {
     public void update(Car car) throws StoreException {
         LOGGER.traceEntry();
         carDAO.update(car);
-    }
-
-    public Car createCarFromParameters(Map<String, String> parameters, User loginUser) throws StoreException {
-        LOGGER.traceEntry();
-        return carDAO.createCarFromParameters(parameters, loginUser);
     }
 
     public void update(User user) throws StoreException {

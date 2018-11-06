@@ -1,6 +1,7 @@
 package ru.job4j.carpricespr.items;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import ru.job4j.carpricespr.items.description.*;
 
 import javax.persistence.*;
@@ -66,6 +67,7 @@ public class Car {
     @Column(name = "price")
     private Integer price;
     @Column(name = "date_created")
+    @CreationTimestamp
     private ZonedDateTime dateCreated;
     @Column(name = "sold")
     private Boolean sold;

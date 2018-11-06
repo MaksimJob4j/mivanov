@@ -3,6 +3,7 @@ package ru.job4j.carpricespr.store;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 import ru.job4j.carpricespr.dao.StoreException;
 import ru.job4j.carpricespr.dao.UserDAO;
 import ru.job4j.carpricespr.items.Car;
@@ -11,6 +12,7 @@ import ru.job4j.carpricespr.items.User;
 import java.util.List;
 
 
+@Component
 public class UserStore extends HibStore<User> implements UserDAO {
     private final static Logger LOGGER = LogManager.getLogger(UserStore.class);
 
@@ -35,7 +37,7 @@ public class UserStore extends HibStore<User> implements UserDAO {
         User user = find(userId);
         return HibernateUtil.tx(
                 session -> {
-                    Query query = session.createQuery("from Car where owner = :owner");
+                    Query query = session.createQuery("from Car as c where owner = :owner order by c.dateCreated desc");
                         query.setParameter("owner", user);
                     return (List<Car>) query.list();
                 }

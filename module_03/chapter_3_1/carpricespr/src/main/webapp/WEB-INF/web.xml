@@ -4,6 +4,54 @@
         <param-value>temp</param-value>
     </context-param>
 
+    <display-name>Carprice</display-name>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:spring-context.xml
+        </param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>appServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                classpath:spring-context.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>appServlet</servlet-name>
+        <!--<url-pattern>*.do</url-pattern>-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>ru.job4j.carpricespr.controllers.AuthFilter</filter-class>
@@ -12,108 +60,4 @@
         <filter-name>AuthFilter</filter-name>
         <url-pattern>*</url-pattern>
     </filter-mapping>
-
-    <listener>
-        <listener-class>
-            ru.job4j.carpricespr.controllers.HttpSessionDestroyed
-        </listener-class>
-    </listener>
-
-    <servlet>
-        <servlet-name>Main List</servlet-name>
-        <servlet-class>ru.job4j.carpricespr.controllers.MainListController</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Main List</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Users Cars</servlet-name>
-        <servlet-class>ru.job4j.carpricespr.controllers.UsersCarsController</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Users Cars</servlet-name>
-        <url-pattern>/users_cars</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Car info</servlet-name>
-        <servlet-class>ru.job4j.carpricespr.controllers.CarInfoController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Car info</servlet-name>
-        <url-pattern>/car</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Create car</servlet-name>
-        <servlet-class>ru.job4j.carpricespr.controllers.CarCreateController</servlet-class>
-        <multipart-config>
-            <location>/</location>
-            <max-file-size>20848820</max-file-size>
-            <!--<max-request-size>418018841</max-request-size>-->
-            <!--<file-size-threshold>1048576</file-size-threshold>-->
-        </multipart-config>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Create car</servlet-name>
-        <url-pattern>/newcar</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Get models</servlet-name>
-        <servlet-class>ru.job4j.carpricespr.controllers.ModelListController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Get models</servlet-name>
-        <url-pattern>/models</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Sign in</servlet-name>
-        <servlet-class>ru.job4j.carpricespr.controllers.SignInController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Sign in</servlet-name>
-        <url-pattern>/signin</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Sign out</servlet-name>
-        <servlet-class>ru.job4j.carpricespr.controllers.SignOutController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Sign out</servlet-name>
-        <url-pattern>/signout</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Photo</servlet-name>
-        <servlet-class>ru.job4j.carpricespr.controllers.PhotoController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Photo</servlet-name>
-        <url-pattern>/photo</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Car filter</servlet-name>
-        <servlet-class>ru.job4j.carpricespr.controllers.CarFilterController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Car filter</servlet-name>
-        <url-pattern>/carFilter</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>Change sold</servlet-name>
-        <servlet-class>ru.job4j.carpricespr.controllers.ChangeSoldController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Change sold</servlet-name>
-        <url-pattern>/changeSold</url-pattern>
-    </servlet-mapping>
 </web-app>
