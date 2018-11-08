@@ -19,7 +19,7 @@ public class Model {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
 }

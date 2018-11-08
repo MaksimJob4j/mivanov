@@ -1,12 +1,12 @@
 package ru.job4j.carpricespr.items;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import ru.job4j.carpricespr.items.description.*;
 
 import javax.persistence.*;
 
-import java.io.File;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
+//@ToString
 @Entity
 @Table(name = "car")
 public class Car {
@@ -59,9 +59,11 @@ public class Car {
     private Integer power;
     @Column(name = "address")
     private String address;
-    @Transient
-    private List<File> photos;
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+//    @Transient
+    @JsonIgnore
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "car")
+    private List<Photo> photos;
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
     @Column(name = "price")

@@ -1,5 +1,6 @@
 package ru.job4j.carpricespr.items.description;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import ru.job4j.carpricespr.items.Car;
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
+//@ToString
 @Entity
 @Table(name = "photo")
 public class Photo {
@@ -20,9 +21,18 @@ public class Photo {
     private Integer id;
     @Column(name = "file_name")
     private String fileName;
+    @JsonIgnore
     @Column(name = "file_data")
     private byte[] fileData;
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
+
+    @Override
+    public String toString() {
+        return "Photo{"
+                + "id=" + id
+                + ", fileName='" + fileName + '\''
+                + '}';
+    }
 }

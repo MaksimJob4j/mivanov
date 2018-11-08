@@ -1,5 +1,6 @@
 package ru.job4j.carpricespr.items.description;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
+//@ToString
 @Entity
 @Table(name = "brand")
 public class Brand {
@@ -21,9 +22,16 @@ public class Brand {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Transient
-//    @OneToMany
-//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @Transient
+    @JsonIgnore
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "brand")
     private List<Model> models;
 
+    @Override
+    public String toString() {
+        return "Brand{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + '}';
+    }
 }
