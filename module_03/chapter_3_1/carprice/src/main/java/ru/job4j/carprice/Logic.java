@@ -36,7 +36,7 @@ public class Logic {
 
     public List<Car> findCars(Integer brandFilter, Boolean dateFilter, Boolean photoFilter) throws StoreException {
         LOGGER.traceEntry();
-        return carDAO.findCars(brandFilter, dateFilter, photoFilter);
+        return carDAO.findCarsCriteria(brandFilter, dateFilter, photoFilter);
     }
 
     public Car findCar(Integer carId) throws StoreException {

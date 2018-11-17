@@ -10,5 +10,7 @@ import java.util.Map;
 public interface CarDAO extends DAO<Car> {
     List<Car> findCars(Integer brandFilter, Boolean dateFilter, Boolean photoFilter)
             throws StoreException;
+    List<Car> findCarsCriteria(Integer brandFilter, Boolean dateFilter, Boolean photoFilter)
+            throws StoreException;
     Car createCarFromParameters(Map<String, String> parameters, User loginUser) throws StoreException;
 }
