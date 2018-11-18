@@ -9,30 +9,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.carpricespr.items.Car;
-import ru.job4j.carpricespr.Logic;
-import ru.job4j.carpricespr.dao.StoreException;
+import ru.job4j.carpricespr.service.CarService;
+import ru.job4j.carpricespr.store.NoCarException;
 
 @Controller
 @RequestMapping("/car")
 public class CarInfoController {
     private final static Logger LOGGER = LogManager.getLogger(CarInfoController.class);
 
-    private final Logic logic;
+    private final CarService carService;
 
     @Autowired
-    public CarInfoController(Logic logic) {
-        this.logic = logic;
+    public CarInfoController(CarService carService) {
+        this.carService = carService;
     }
 
     @GetMapping
     public String usersCars(@RequestParam("id") int id,
-                            ModelMap model) throws StoreException {
+                            ModelMap model) throws NoCarException {
         LOGGER.traceEntry();
 
-        Car car = logic.findCar(id);
-        if (car == null) {
-            return "redirect:/";
-        }
+        Car car = carService.findNotNull(id);
         model.addAttribute("car_info", car);
         return "car";
     }

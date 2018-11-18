@@ -8,27 +8,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.carpricespr.items.Car;
-import ru.job4j.carpricespr.Logic;
-import ru.job4j.carpricespr.dao.StoreException;
+import ru.job4j.carpricespr.service.CarService;
+import ru.job4j.carpricespr.store.NoCarException;
 
 @Controller
 @RequestMapping("/changeSold")
 public class ChangeSoldController {
     private final static Logger LOGGER = LogManager.getLogger(ChangeSoldController.class);
-    private final Logic logic;
+    private final CarService carService;
 
     @Autowired
-    public ChangeSoldController(Logic logic) {
-        this.logic = logic;
+    public ChangeSoldController(CarService carService) {
+        this.carService = carService;
     }
 
     @PostMapping
     public void changeSold(@RequestParam("car_id") int carId,
-                           @RequestParam("sold") boolean sold) throws StoreException {
+                           @RequestParam("sold") boolean sold) throws NoCarException {
         LOGGER.traceEntry();
 
-        Car car = logic.findCar(carId);
+        Car car = carService.findNotNull(carId);
         car.setSold(sold);
-        logic.update(car);
+        carService.update(car);
     }
 }

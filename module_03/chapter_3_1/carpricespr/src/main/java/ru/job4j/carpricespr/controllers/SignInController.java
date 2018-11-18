@@ -7,8 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.carpricespr.items.User;
-import ru.job4j.carpricespr.Logic;
-import ru.job4j.carpricespr.dao.StoreException;
+import ru.job4j.carpricespr.service.UserService;
 
 @Controller
 @RequestMapping(value = "/signin")
@@ -16,11 +15,11 @@ import ru.job4j.carpricespr.dao.StoreException;
 public class SignInController {
     private final static Logger LOGGER = LogManager.getLogger(SignInController.class);
 
-    private final Logic logic;
+    private final UserService userService;
 
     @Autowired
-    public SignInController(Logic logic) {
-        this.logic = logic;
+    public SignInController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
@@ -33,9 +32,9 @@ public class SignInController {
     public String signInPost(@RequestParam String login,
                              @RequestParam String password,
                              @RequestParam(required = false) String newUser,
-                             ModelMap model) throws StoreException {
+                             ModelMap model) {
         LOGGER.traceEntry();
-        User loginUser = logic.findUserByLogin(login);
+        User loginUser = userService.findByLogin(login);
         if (newUser == null) {
             if (loginUser != null && loginUser.getPassword().equals(password)) {
                 model.addAttribute("loginUser", loginUser);
@@ -49,7 +48,7 @@ public class SignInController {
                 loginUser = new User();
                 loginUser.setLogin(login);
                 loginUser.setPassword(password);
-                logic.createUser(loginUser);
+                userService.create(loginUser);
                 model.addAttribute("loginUser", loginUser);
                 return "redirect:/";
             } else {

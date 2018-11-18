@@ -7,8 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.carpricespr.items.description.Photo;
-import ru.job4j.carpricespr.Logic;
-import ru.job4j.carpricespr.dao.StoreException;
+import ru.job4j.carpricespr.service.PhotoService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,11 +18,11 @@ import java.util.List;
 @Controller
 public class PhotoController {
     private final static Logger LOGGER = LogManager.getLogger(PhotoController.class);
-    private final Logic logic;
+    private final PhotoService photoService;
 
     @Autowired
-    public PhotoController(Logic logic) {
-        this.logic = logic;
+    public PhotoController(PhotoService photoService) {
+        this.photoService = photoService;
     }
 
     @GetMapping("/photo")
@@ -32,14 +31,9 @@ public class PhotoController {
         LOGGER.traceEntry();
 
         Photo photo = null;
-        try {
-            List<Photo> photoList = logic.findPhotoByCar(carID);
-            if (photoList != null && photoList.size() > 0) {
-                photo = photoList.get(0);
-            }
-        } catch (StoreException e) {
-            LOGGER.error("error", e);
-            resp.sendError(500, e.getMessage());
+        List<Photo> photoList = photoService.findByCar(Integer.parseInt(carID));
+        if (photoList != null && photoList.size() > 0) {
+            photo = photoList.get(0);
         }
         if (photo != null) {
             String imageFileName = photo.getFileName();

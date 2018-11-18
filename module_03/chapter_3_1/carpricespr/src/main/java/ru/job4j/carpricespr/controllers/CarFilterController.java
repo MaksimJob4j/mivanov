@@ -8,10 +8,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.job4j.carpricespr.items.Car;
-import ru.job4j.carpricespr.Logic;
-import ru.job4j.carpricespr.dao.StoreException;
+import ru.job4j.carpricespr.service.CarService;
 
 import java.util.List;
 
@@ -20,21 +22,21 @@ import java.util.List;
 public class CarFilterController {
     private final static Logger LOGGER = LogManager.getLogger(CarFilterController.class);
 
-    private final Logic logic;
+    private final CarService carService;
 
     @Autowired
-    public CarFilterController(Logic logic) {
-        this.logic = logic;
+    public CarFilterController(CarService carService) {
+        this.carService = carService;
     }
 
     @GetMapping
     @ResponseBody
-    public String applyCarFilter(@RequestParam("brand") Integer brand,
-                                 @RequestParam("date") boolean date,
-                                 @RequestParam("photo")boolean photo) throws JsonProcessingException, StoreException {
+    public String applyCarFilter(@RequestParam("brand") Integer brandId,
+                                 @RequestParam("date") boolean dateFilter,
+                                 @RequestParam("photo")boolean photoFilter) throws JsonProcessingException {
         LOGGER.traceEntry();
 
-        List<Car> cars =  logic.findCars(brand == null ? 0 : brand, date, photo);
+        List<Car> cars =  carService.findCars(brandId == null ? 0 : brandId, dateFilter, photoFilter);
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

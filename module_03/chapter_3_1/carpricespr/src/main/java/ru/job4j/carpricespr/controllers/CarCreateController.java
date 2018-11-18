@@ -11,34 +11,44 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.carpricespr.editors.*;
 import ru.job4j.carpricespr.items.Car;
+import ru.job4j.carpricespr.items.CarParts;
 import ru.job4j.carpricespr.items.User;
 import ru.job4j.carpricespr.items.description.*;
-import ru.job4j.carpricespr.Logic;
-import ru.job4j.carpricespr.dao.StoreException;
+import ru.job4j.carpricespr.service.CarService;
+import ru.job4j.carpricespr.service.PhotoService;
+import ru.job4j.carpricespr.service.impl.CarPartsServiceImpl;
 
-import java.io.*;
+import java.io.IOException;
 
 @Controller
 @SessionAttributes(names = "loginUser", types = User.class)
 public class CarCreateController {
     private final static Logger LOGGER = LogManager.getLogger(CarCreateController.class);
-    private final Logic logic;
+    private final CarPartsServiceImpl carPartsService;
+    private final CarService carService;
+    private final PhotoService photoService;
+
 
     @Autowired
-    public CarCreateController(Logic logic) {
-        this.logic = logic;
+    public CarCreateController(CarPartsServiceImpl carPartsService,
+                               CarService carService,
+                               PhotoService photoService) {
+
+        this.carPartsService = carPartsService;
+        this.carService = carService;
+        this.photoService = photoService;
     }
 
     @GetMapping("/newcar")
-    public String createCar(ModelMap model) throws StoreException {
+    public String createCar(ModelMap model) {
         LOGGER.traceEntry();
-
-        model.addAttribute("brands", logic.findBrands());
-        model.addAttribute("bodies", logic.findBodies());
-        model.addAttribute("colors", logic.findColors());
-        model.addAttribute("transmissions", logic.findTransmissions());
-        model.addAttribute("engines", logic.findEngines());
-        model.addAttribute("drives", logic.findDrives());
+        CarParts carParts = carPartsService.pickParts();
+        model.addAttribute("bodies", carParts.getBodies());
+        model.addAttribute("brands", carParts.getBrands());
+        model.addAttribute("colors", carParts.getColors());
+        model.addAttribute("drives", carParts.getDrives());
+        model.addAttribute("engines", carParts.getEngines());
+        model.addAttribute("transmissions", carParts.getTransmissions());
         return "createcar";
     }
 
@@ -55,17 +65,17 @@ public class CarCreateController {
     @PostMapping("/newcar")
     public String createCar(@Validated Car car,
                             @ModelAttribute("loginUser") User loginUser,
-                            @RequestParam("photofile") MultipartFile file) throws StoreException, IOException {
+                            @RequestParam("photofile") MultipartFile file) throws IOException {
         LOGGER.traceEntry();
 
         car.setOwner(loginUser);
-        logic.createCar(car);
+        carService.create(car);
         if (!file.isEmpty()) {
             Photo photo = new Photo();
             photo.setFileName(file.getOriginalFilename());
             photo.setFileData(file.getBytes());
             photo.setCar(car);
-            logic.createPhoto(photo);
+            photoService.create(photo);
         }
         return "redirect:users_cars";
     }
