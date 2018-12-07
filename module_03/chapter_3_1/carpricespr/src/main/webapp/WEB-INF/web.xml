@@ -1,8 +1,4 @@
 <web-app>
-    <context-param>
-        <param-name>tempFolder</param-name>
-        <param-value>temp</param-value>
-    </context-param>
 
     <display-name>Carprice</display-name>
 
