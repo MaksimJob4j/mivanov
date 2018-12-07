@@ -45,7 +45,7 @@
                 Brand:
                 <select class="form-control" name="brand" id="brand" onchange="findmodels()">
                     <option value="" selected disabled hidden>Choose brand</option>
-                    <c:forEach items = "${brands}" var = "brand">
+                    <c:forEach items = "${carPats.brands}" var = "brand">
                         <option value="${brand.id}">${brand.name}</option>
                     </c:forEach>
                 </select>
@@ -62,7 +62,7 @@
                 Body:
                 <select class="form-control" name="body">
                     <option value="" selected disabled hidden>Choose body</option>
-                    <c:forEach items = "${bodies}" var = "body">
+                    <c:forEach items = "${carPats.bodies}" var = "body">
                         <option value="${body.id}">${body.name}</option>
                     </c:forEach>
                 </select>
@@ -77,7 +77,7 @@
                 Engine:
                 <select class="form-control" name="engine">
                     <option value="" selected disabled hidden>Choose engine</option>
-                    <c:forEach items = "${engines}" var = "engine">
+                    <c:forEach items = "${carPats.engines}" var = "engine">
                         <option value="${engine.id}">${engine.name}</option>
                     </c:forEach>
                 </select>
@@ -92,7 +92,7 @@
                 Transmission:
                 <select class="form-control" name="transmission">
                     <option value="" selected disabled hidden>Choose transmission</option>
-                    <c:forEach items = "${transmissions}" var = "transmission">
+                    <c:forEach items = "${carPats.transmissions}" var = "transmission">
                         <option value="${transmission.id}">${transmission.name}</option>
                     </c:forEach>
                 </select>
@@ -101,7 +101,7 @@
                 Drive:
                 <select class="form-control" name="drive">
                     <option value="" selected disabled hidden>Choose drive</option>
-                    <c:forEach items = "${drives}" var = "drive">
+                    <c:forEach items = "${carPats.drives}" var = "drive">
                         <option value="${drive.id}">${drive.name}</option>
                     </c:forEach>
                 </select>

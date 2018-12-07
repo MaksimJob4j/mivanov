@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.carpricespr.editors.*;
 import ru.job4j.carpricespr.items.Car;
-import ru.job4j.carpricespr.items.CarParts;
 import ru.job4j.carpricespr.items.User;
 import ru.job4j.carpricespr.items.description.*;
 import ru.job4j.carpricespr.service.CarService;
@@ -42,13 +41,7 @@ public class CarCreateController {
     @GetMapping("/newcar")
     public String createCar(ModelMap model) {
         LOGGER.traceEntry();
-        CarParts carParts = carPartsService.pickParts();
-        model.addAttribute("bodies", carParts.getBodies());
-        model.addAttribute("brands", carParts.getBrands());
-        model.addAttribute("colors", carParts.getColors());
-        model.addAttribute("drives", carParts.getDrives());
-        model.addAttribute("engines", carParts.getEngines());
-        model.addAttribute("transmissions", carParts.getTransmissions());
+        model.addAttribute("carPats", carPartsService.pickParts());
         return "createcar";
     }
 
