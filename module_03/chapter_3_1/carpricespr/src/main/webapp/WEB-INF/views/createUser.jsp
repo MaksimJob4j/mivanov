@@ -22,7 +22,10 @@
     <br>
 </div>
 <div class="container">
-    <form class="form-horizontal" action="${pageContext.servletContext.contextPath}/signin" method="post">
+    <h4>
+        Create new user.
+    </h4>
+    <form class="form-horizontal" action="${pageContext.servletContext.contextPath}/createUser" method="post">
         <div class="form-group">
             <label class="control-label col-sm-1" for="login">Login:</label>
             <div class="col-sm-2">
@@ -37,10 +40,17 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-1 col-sm-10">
-                <button type="submit" class="btn btn-default">Login</button>
+                <button type="submit" class="btn btn-default">Create</button>
             </div>
         </div>
     </form>
+</div>
+<div class="container">
+    <div class="container, beside">
+        <form action="${pageContext.servletContext.contextPath}/">
+            <input type="submit" value="RETURN TO MAIN" class="btn btn-default">
+        </form>
+    </div>
 </div>
 <div class="container" id="error">
     <div>

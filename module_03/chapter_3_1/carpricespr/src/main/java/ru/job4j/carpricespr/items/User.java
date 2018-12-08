@@ -21,9 +21,12 @@ public class User {
     private Integer id;
     @Column(name = "login")
     private String login;
+    @JsonIgnore
     @Column(name = "password")
     private String password;
-    //    @Transient
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
     @JsonIgnore
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "owner")
     private List<Car> cars;
@@ -33,7 +36,7 @@ public class User {
         return "User{"
                 + "id=" + id
                 + ", login='" + login + '\''
-                + ", password='" + password + '\''
+                + ", role='" + role + '\''
                 + '}';
     }
 }

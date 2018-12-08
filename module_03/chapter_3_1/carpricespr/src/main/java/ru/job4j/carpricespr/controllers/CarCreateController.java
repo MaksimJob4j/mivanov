@@ -3,6 +3,7 @@ package ru.job4j.carpricespr.controllers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +16,7 @@ import ru.job4j.carpricespr.items.User;
 import ru.job4j.carpricespr.items.description.*;
 import ru.job4j.carpricespr.service.CarService;
 import ru.job4j.carpricespr.service.PhotoService;
+import ru.job4j.carpricespr.service.UserService;
 import ru.job4j.carpricespr.service.impl.CarPartsServiceImpl;
 
 import java.io.IOException;
@@ -25,16 +27,19 @@ public class CarCreateController {
     private final static Logger LOGGER = LogManager.getLogger(CarCreateController.class);
     private final CarPartsServiceImpl carPartsService;
     private final CarService carService;
+    private final UserService userService;
     private final PhotoService photoService;
 
 
     @Autowired
     public CarCreateController(CarPartsServiceImpl carPartsService,
                                CarService carService,
+                               UserService userService,
                                PhotoService photoService) {
 
         this.carPartsService = carPartsService;
         this.carService = carService;
+        this.userService = userService;
         this.photoService = photoService;
     }
 
@@ -57,10 +62,10 @@ public class CarCreateController {
 
     @PostMapping("/newcar")
     public String createCar(@Validated Car car,
-                            @ModelAttribute("loginUser") User loginUser,
                             @RequestParam("photofile") MultipartFile file) throws IOException {
         LOGGER.traceEntry();
 
+        User loginUser = userService.getLoginUserBySecurityContext(SecurityContextHolder.getContext());
         car.setOwner(loginUser);
         carService.create(car);
         if (!file.isEmpty()) {

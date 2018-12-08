@@ -2,59 +2,30 @@ package ru.job4j.carpricespr.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-import ru.job4j.carpricespr.items.User;
-import ru.job4j.carpricespr.service.UserService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "/signin")
-@SessionAttributes(names = "loginUser", types = User.class)
 public class SignInController {
     private final static Logger LOGGER = LogManager.getLogger(SignInController.class);
 
-    private final UserService userService;
-
-    @Autowired
-    public SignInController(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping
-    public String signIn() {
+    public String signIn(
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "logout", required = false) String logout,
+            ModelMap modelMap) {
         LOGGER.traceEntry();
-        return "login";
-    }
 
-    @PostMapping
-    public String signInPost(@RequestParam String login,
-                             @RequestParam String password,
-                             @RequestParam(required = false) String newUser,
-                             ModelMap model) {
-        LOGGER.traceEntry();
-        User loginUser = userService.findByLogin(login);
-        if (newUser == null) {
-            if (loginUser != null && loginUser.getPassword().equals(password)) {
-                model.addAttribute("loginUser", loginUser);
-                return "redirect:/";
-            } else {
-                model.addAttribute("error", "Invalid sign in!");
-                return "login";
-            }
-        } else {
-            if (loginUser == null) {
-                loginUser = new User();
-                loginUser.setLogin(login);
-                loginUser.setPassword(password);
-                userService.create(loginUser);
-                model.addAttribute("loginUser", loginUser);
-                return "redirect:/";
-            } else {
-                model.addAttribute("error", "Login already used!");
-                return "login";
-            }
+        if (error != null) {
+            modelMap.addAttribute("error", "Invalid username and password!");
         }
+        if (logout != null) {
+            modelMap.addAttribute("msg", "You've been logged out successfully.");
+        }
+        return "login";
     }
 }

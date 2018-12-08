@@ -74,12 +74,30 @@
         </sql>
     </changeSet>
 
+    <changeSet id="init_rile" author="max">
+        <sql>
+            INSERT INTO roles (name) VALUES
+            ('ROLE_ADMIN'), ('ROLE_USER');
+        </sql>
+    </changeSet>
+
     <changeSet id="init_users" author="max">
         <sql>
-            INSERT INTO users (login, password) VALUES
-            ('root', 'root'),
-            ('user', 'user'),
-            ('user1', 'user');
+            INSERT INTO users (login, password, role_id) VALUES
+            (
+              'root',
+              '$2a$10$ACEqlf4F9jgeuDMqsK.ifO37depwvIBCWijrMYJvioJ8Fs0JD0oWK', <!--root-->
+              (SELECT id FROM roles WHERE name = 'ROLE_ADMIN')
+            ),
+            (
+              'user',
+              '$2a$12$HIvfiOSpz18Vq/J11yK2cugslccS.5FYftAC1.S.OCxXxV.ZNvg.a', <!--user-->
+              (SELECT id FROM roles WHERE name = 'ROLE_USER')),
+            (
+              'user1',
+              '$2a$12$HIvfiOSpz18Vq/J11yK2cugslccS.5FYftAC1.S.OCxXxV.ZNvg.a', <!--user-->
+              (SELECT id FROM roles WHERE name = 'ROLE_USER')
+            );
         </sql>
     </changeSet>
 

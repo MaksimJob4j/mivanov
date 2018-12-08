@@ -88,6 +88,12 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public List<Car> findByUserLogin(String login) {
+        LOGGER.traceEntry();
+        return carRepository.findAllByOwnerLoginOrderByDateCreatedDesc(login);
+    }
+
+    @Override
     public List<Car> findCars(Integer brandId, Boolean dateFilter, Boolean photoFilter) {
         LOGGER.traceEntry();
 

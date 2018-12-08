@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Car List</title>
@@ -14,9 +15,16 @@
 <body>
 <br/>
 <div class="container">
-    <h4>Login: ${loginUser.login}</h4>
+    <sec:authorize access="isAuthenticated()">
+        <h4>Login:
+            <sec:authentication property="principal.username" />
+        </h4>
+    </sec:authorize>
+    <sec:authorize access="isAnonymous()">
+        <h4>Unregistered user.</h4>
+    </sec:authorize>
     <div class="container, beside">
-        <form action="${pageContext.servletContext.contextPath}/signout">
+        <form action="${pageContext.servletContext.contextPath}/logout">
             <input type="submit" value="SIGN OUT" class="btn btn-default">
         </form>
     </div>

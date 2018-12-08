@@ -11,6 +11,8 @@ import ru.job4j.carpricespr.items.Car;
 import ru.job4j.carpricespr.service.CarService;
 import ru.job4j.carpricespr.exceptions.NoCarException;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/changeSold")
 public class ChangeSoldController {
@@ -24,11 +26,14 @@ public class ChangeSoldController {
 
     @PostMapping
     public void changeSold(@RequestParam("car_id") int carId,
-                           @RequestParam("sold") boolean sold) throws NoCarException {
+                           @RequestParam("sold") boolean sold,
+                           Principal principal) throws NoCarException {
         LOGGER.traceEntry();
 
         Car car = carService.findNotNull(carId);
-        car.setSold(sold);
-        carService.update(car);
+        if (car.getOwner().getLogin().equals(principal.getName())) {
+            car.setSold(sold);
+            carService.update(car);
+        }
     }
 }

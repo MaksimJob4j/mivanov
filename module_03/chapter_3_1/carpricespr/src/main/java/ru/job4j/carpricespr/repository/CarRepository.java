@@ -11,5 +11,6 @@ public interface CarRepository extends CrudRepository<Car, Integer> {
 
     List<Car> findAllByOrderByDateCreatedDesc();
     List<Car> findAllByOwnerIdOrderByDateCreatedDesc(Integer useId);
+    List<Car> findAllByOwnerLoginOrderByDateCreatedDesc(String login);
     Car findTopByOrderByDateCreatedDesc();
 }
