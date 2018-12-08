@@ -2,7 +2,7 @@ package ru.job4j.carpricespr.service;
 
 import org.springframework.transaction.annotation.Transactional;
 import ru.job4j.carpricespr.items.Car;
-import ru.job4j.carpricespr.store.NoCarException;
+import ru.job4j.carpricespr.exceptions.NoCarException;
 
 import java.util.List;
 

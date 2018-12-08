@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.carpricespr.items.Car;
 import ru.job4j.carpricespr.repository.CarRepository;
 import ru.job4j.carpricespr.service.CarService;
-import ru.job4j.carpricespr.store.NoCarException;
+import ru.job4j.carpricespr.exceptions.NoCarException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

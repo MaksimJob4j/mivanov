@@ -1,4 +1,4 @@
-package ru.job4j.carpricespr.store;
+package ru.job4j.carpricespr.exceptions;
 
 public class NoEntityException extends Exception {
     private final String message;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.carpricespr.items.Car;
 import ru.job4j.carpricespr.service.CarService;
-import ru.job4j.carpricespr.store.NoCarException;
+import ru.job4j.carpricespr.exceptions.NoCarException;
 
 @Controller
 @RequestMapping("/changeSold")
