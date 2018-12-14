@@ -20,6 +20,7 @@
         <module>carprice</module>
         <module>storage</module>
         <module>carpricespr</module>
+        <module>carpricespran</module>
     </modules>
 
 </project>

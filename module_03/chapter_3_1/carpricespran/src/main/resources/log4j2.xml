@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="TRACE" name="Carprice" packages="">
+    <Properties>
+        <Property name="filename">C:/projects/mivanov/carprice_spr_log4j2.log</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%M:%L - %m%n"/>
+        </Console>
+        <File name="File" fileName="${filename}">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%M:%L - %m%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="Console" level="error"/>
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>
