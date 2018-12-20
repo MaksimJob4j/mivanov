@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>carpricespran</artifactId>
+    <artifactId>carprice_spr_an</artifactId>
 
     <version>1.0</version>
     <packaging>war</packaging>

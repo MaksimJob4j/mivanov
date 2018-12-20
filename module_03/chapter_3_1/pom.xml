@@ -19,8 +19,9 @@
         <module>todolist</module>
         <module>carprice</module>
         <module>storage</module>
-        <module>carpricespr</module>
-        <module>carpricespran</module>
+        <module>carprice_spr</module>
+        <module>carprice_spr_an</module>
+        <module>carprice_spr_boot</module>
     </modules>
 
 </project>
