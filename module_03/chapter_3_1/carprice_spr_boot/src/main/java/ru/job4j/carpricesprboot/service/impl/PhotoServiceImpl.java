@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.job4j.carpricesprboot.items.description.Photo;
+import ru.job4j.carpricesprboot.domain.description.Photo;
 import ru.job4j.carpricesprboot.repository.PhotoRepository;
 import ru.job4j.carpricesprboot.service.PhotoService;
 

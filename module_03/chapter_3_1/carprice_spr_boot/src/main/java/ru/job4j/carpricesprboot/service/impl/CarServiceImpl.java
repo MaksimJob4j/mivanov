@@ -4,8 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.job4j.carpricesprboot.exceptions.NoCarException;
-import ru.job4j.carpricesprboot.items.Car;
+import ru.job4j.carpricesprboot.repository.exceptions.NoCarException;
+import ru.job4j.carpricesprboot.domain.Car;
 import ru.job4j.carpricesprboot.repository.CarRepository;
 import ru.job4j.carpricesprboot.service.CarService;
 

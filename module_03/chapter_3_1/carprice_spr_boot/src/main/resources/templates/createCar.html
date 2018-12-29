@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>New Car</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="../static/js/findModels.js" th:src="@{/js/findModels.js}"></script>
+    <script type="text/javascript"
+            src="../static/js/carValidate.js" th:src="@{/js/carValidate.js}"></script>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{car :: cars_menu}"></div>
+</div>
+<div class="container">
+    <h3>New car:</h3>
+    <form action="/newcar" method="post"
+          enctype="multipart/form-data"
+          onsubmit="return carValidate();"
+    >
+        <div class="row">
+            <div class="col-md-3">
+                Brand:
+                <select class="form-control" name="brand" id="brand" onchange="findModels()">
+                    <option value="" selected disabled hidden>Choose brand</option>
+                    <th:block th:each="brand : ${carPats.brands}">
+                        <option th:value="${brand.id}" th:text="${brand.name}"></option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="col-md-3">
+                Model:
+                <select class="form-control" name="model" id="model">
+                    <option value="" selected disabled hidden>Choose brand first</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Body:
+                <select class="form-control" name="body">
+                    <option value="" selected disabled hidden>Choose body</option>
+                    <th:block th:each="body : ${carPats.bodies}">
+                        <option th:value="${body.id}" th:text="${body.name}">"</option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="col-md-3">
+                Year:
+                <input type="text" class="form-control" name="year">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Engine:
+                <select class="form-control" name="engine">
+                    <option value="" selected disabled hidden>Choose engine</option>
+                    <th:block th:each="engine : ${carPats.engines}">
+                        <option th:value="${engine.id}" th:text="${engine.name}">"</option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="col-md-3">
+                Volume (L):
+                <input type="text" class="form-control" name="volume">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Transmission:
+                <select class="form-control" name="transmission">
+                    <option value="" selected disabled hidden>Choose transmission</option>
+                    <th:block th:each="transmission : ${carPats.transmissions}">
+                        <option th:value="${transmission.id}" th:text="${transmission.name}"></option>
+                    </th:block>
+                </select>
+            </div>
+            <div class="col-md-3">
+                Drive:
+                <select class="form-control" name="drive">
+                    <option value="" selected disabled hidden>Choose drive</option>
+                    <th:block th:each="drive : ${carPats.drives}">
+                        <option th:value="${drive.id}" th:text="${drive.name}"></option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Power (hp):
+                <input type="text" class="form-control" name="power">
+            </div>
+            <div class="col-md-3">
+                Mileage (km):
+                <input type="text" class="form-control" name="mileage">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Owners number:
+                <input type="text" class="form-control" name="ownersNum">
+            </div>
+            <div class="col-md-3">
+                Vin:
+                <input type="text" class="form-control" name="vin">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Rigt wheel:
+                <input type="checkbox"  name="rightWheel"/>
+            </div>
+            <div class="col-md-3">
+                Broken:
+                <input type="checkbox"  name="broken"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                Address:
+                <input type="text" class="form-control" name="address">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                Color:
+                <select class="form-control" name="color">
+                    <option value="" selected disabled hidden>Choose color</option>
+                    <th:block th:each="color : ${carPats.colors}">
+                        <option th:value="${color.id}" th:text="${color.name}"></option>
+                    </th:block>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                Add photo:
+                <input class="file" type="file" name="photofile" id="photofile">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                Price (RUB):
+                <input type="text" class="form-control" name="price">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" value="CREATE CAR" class="btn btn-default">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

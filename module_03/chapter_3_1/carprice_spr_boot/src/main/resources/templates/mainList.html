@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Car List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/style.css" th:href="@{/css/style.css}" />
+    <script type="text/javascript"
+            src="../static/js/changeSold.js" th:src="@{/js/changeSold.js}"></script>
+    <script type="text/javascript"
+            src="../static/js/applyCarFilter.js" th:src="@{/js/applyCarFilter.js}"></script>
+
+    <script th:inline="javascript">
+        $(document).ready(
+            function () {
+                applyCarFilter();
+            }
+        );
+    </script>
+</head>
+<body>
+<br/>
+<div class="container">
+    <div th:fragment="auth_menu">
+        <h4 th:text="${#authorization.expression('isAuthenticated()')} ?
+        'Login: ' + ${#authentication.name} :
+        'Unregistered user.'"></h4>
+        <div class="container, beside">
+            <form sec:authorize="isAuthenticated()" action="/logout">
+                <input type="submit" value="SIGN OUT" class="btn btn-default">
+            </form>
+            <form sec:authorize="isAnonymous()" action="/list">
+                <input type="submit" value="SIGN IN" class="btn btn-default">
+            </form>
+        </div>
+    </div>
+    <input th:value="${loginUser} ? ${loginUser.id}" id="login_id" hidden></input>
+    <div class="container, beside">
+        <form action="/usersCars">
+            <input type="submit" value="USER'S CARS" class="btn btn-default">
+        </form>
+    </div>
+    <div class="container, beside">
+        <form action="/newCar">
+            <input type="submit" value="CREATE NEW CAR" class="btn btn-default">
+        </form>
+    </div>
+    <div sec:authorize="hasRole('ADMIN')" class="container, beside">
+        <form action="/createUser">
+            <input type="submit" value="CREATE NEW USER" class="btn btn-default">
+        </form>
+    </div>
+</div>
+<div class="container">
+    <h3>
+        Cars for sale:
+    </h3>
+    <form class="form-inline" onchange="applyCarFilter()" action="">
+        <select class="form-control" id="brand_filter" onchange="">
+            <option value="" selected>All brands</option>
+            <th:block th:each="brand : ${brands}">
+                <option th:value="${brand.id}" th:text="${brand.name}"></option>
+            </th:block>
+        </select>
+        <div class="checkbox">
+            <label><input type="checkbox" id="date_filter"> Last day</label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox" id="photo_filter"> Photo</label>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Id</td>
+                <td>Car</td>
+                <td>Price</td>
+                <td>Created</td>
+                <td>Sold</td>
+                <td>Owner</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody id="tbody_cars">
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

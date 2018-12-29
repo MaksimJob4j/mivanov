@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.job4j.carpricesprboot.items.Role;
+import ru.job4j.carpricesprboot.domain.Role;
 import ru.job4j.carpricesprboot.repository.RoleRepository;
 import ru.job4j.carpricesprboot.service.RoleService;
 

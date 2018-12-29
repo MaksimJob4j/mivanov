@@ -1,6 +1,6 @@
 package ru.job4j.carpricesprboot.service;
 
-import ru.job4j.carpricesprboot.items.description.Photo;
+import ru.job4j.carpricesprboot.domain.description.Photo;
 
 import java.util.List;
 

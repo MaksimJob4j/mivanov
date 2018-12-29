@@ -1,0 +1,47 @@
+thead {
+    font-weight: bold;
+}
+table {
+    /*zoom: 80%;*/
+}
+tbody tr:hover{
+    background: #ffebcd; /* Цвет фона при наведении */
+    /*color: #fff; !* Цвет текста при наведении *!*/
+}
+
+.padded-text {
+    padding: 6px;
+}
+td form {
+    margin: 0;
+}
+.beside {
+    float: left;
+    display: block;
+    margin-right: 15px;
+    /*margin-bottom: 15px;*/
+}
+.inline {
+    float: left;
+    position: relative;
+    width: 50%;
+}
+.table-responsive {
+    float: left;
+}
+.row {
+    margin-top: 10px;
+}
+.users_car {
+    background-color: floralwhite;
+}
+#error {
+    background-color: red;
+    color: yellow;
+    font-weight: bold
+}
+#msg {
+    background-color: green;
+    color: yellow;
+    font-weight: bold
+}

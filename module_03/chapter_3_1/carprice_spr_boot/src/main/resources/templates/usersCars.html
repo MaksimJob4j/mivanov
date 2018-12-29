@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>User's car List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/style.css" th:href="@{/css/style.css}" />
+    <script type="text/javascript"
+            src="../static/js/changeSold.js" th:src="@{/js/changeSold.js}"></script>
+</head>
+<body>
+<br/>
+<div class="container">
+    <div th:replace="~{mainlist :: auth_menu}"></div>
+    <div class="container, beside">
+        <form action="/newcar">
+            <input type="submit" value="CREATE NEW CAR" class="btn btn-default">
+        </form>
+    </div>
+    <div class="container, beside">
+        <form action="/">
+            <input type="submit" value="RETURN TO MAIN" class="btn btn-default">
+        </form>
+    </div>
+</div>
+<div class="container">
+    <h3>
+        Your cars for sale:
+    </h3>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Id</td>
+                <td>Car</td>
+                <td>Price</td>
+                <td>Created</td>
+                <td>Sold</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each=" car : ${users_cars}">
+                <tr>
+                    <td class="id" th:name="id" th:value="${car.id}" th:text="${car.id}"></td>
+                    <td th:text="${car.model.brand.name} + ' ' +
+                                  ${car.model.name} + ' ' +
+                                  (${car.engine} == null ? '' : (${car.engine.name} + ' ')) +
+                                  (${car.volume} == null ? '' : (${car.volume} +'L ')) +
+                                  ${car.year}  + ' ' +
+                                  (${car.color} == null ? '' : (${car.color.name} + ' ')) +
+                                  (${car.broken} ? 'broken ' : '')">
+
+                    </td>
+                    <td th:text="|${car.price} RUB|"></td>
+
+
+                    <!--<td th:value="${car.dateCreated.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a X"))}"></td>-->
+                    <td th:text="${#calendars.format(car.dateCreated,'yyyy-MM-dd hh:mm a X')}"></td>
+
+
+                    <td>
+                        <input class="check-box" type="checkbox" name="sold"
+                               th:checked="${car.sold}"
+                               th:onclick="'changeSold(' + ${car.id} + ')'"/>
+                    </td>
+                    <td>
+                        <form action="/car">
+                            <input name='id' type='hidden' th:value="${car.id}">
+                            <input type='submit' value='INFO' class="btn btn-default">
+                        </form>
+                    <td/>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

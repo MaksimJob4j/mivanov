@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ru.job4j.carpricesprboot.items.User;
+import ru.job4j.carpricesprboot.domain.User;
 import ru.job4j.carpricesprboot.repository.UserRepository;
-import ru.job4j.carpricesprboot.security.UserPrincipal;
+import ru.job4j.carpricesprboot.web.security.UserPrincipal;
 import ru.job4j.carpricesprboot.service.UserService;
 
 import java.util.List;

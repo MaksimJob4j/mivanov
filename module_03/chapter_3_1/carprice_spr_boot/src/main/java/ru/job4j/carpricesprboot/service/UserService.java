@@ -1,7 +1,7 @@
 package ru.job4j.carpricesprboot.service;
 
 import org.springframework.security.core.context.SecurityContext;
-import ru.job4j.carpricesprboot.items.User;
+import ru.job4j.carpricesprboot.domain.User;
 
 public interface UserService extends EntityService<User> {
 
