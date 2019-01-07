@@ -1,11 +1,9 @@
 package ru.job4j.carpricesprboot.web.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,18 +26,11 @@ public class ModelListController {
         this.modelService = modelService;
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String models(@RequestParam("brand") String brandId) throws JsonProcessingException {
+    public List<Model> models(@RequestParam("brand") String brandId) {
         LOGGER.traceEntry();
 
-        String result = "";
-        List<Model> models = modelService.findByBrandId(Integer.parseInt(brandId));
-        if (models.size() > 0) {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-            result = mapper.writeValueAsString(models);
-        }
-        return result;
+        return modelService.findByBrandId(Integer.parseInt(brandId));
     }
 }

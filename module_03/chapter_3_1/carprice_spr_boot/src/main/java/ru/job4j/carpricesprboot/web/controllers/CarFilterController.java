@@ -1,12 +1,9 @@
 package ru.job4j.carpricesprboot.web.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,18 +26,13 @@ public class CarFilterController {
         this.carService = carService;
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String applyCarFilter(@RequestParam("brand") Integer brandId,
+    public List<Car> applyCarFilter(@RequestParam("brand") Integer brandId,
                                  @RequestParam("date") boolean dateFilter,
-                                 @RequestParam("photo")boolean photoFilter) throws JsonProcessingException {
+                                 @RequestParam("photo")boolean photoFilter) {
         LOGGER.traceEntry();
 
-        List<Car> cars =  carService.findCars(brandId == null ? 0 : brandId, dateFilter, photoFilter);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        return mapper.writeValueAsString(cars);
+        return  carService.findCars(brandId == null ? 0 : brandId, dateFilter, photoFilter);
     }
 }

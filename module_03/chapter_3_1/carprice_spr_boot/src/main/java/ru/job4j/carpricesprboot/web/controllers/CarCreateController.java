@@ -41,7 +41,7 @@ public class CarCreateController {
         this.photoService = photoService;
     }
 
-    @GetMapping("/newcar")
+    @GetMapping("/newCar")
     public String createCar(ModelMap model) {
         LOGGER.traceEntry();
         model.addAttribute("carPats", carPartsService.pickParts());
@@ -58,7 +58,7 @@ public class CarCreateController {
         binder.registerCustomEditor(Drive.class, new DriveEditor());
     }
 
-    @PostMapping("/newcar")
+    @PostMapping("/newCar")
     public String createCar(@Validated Car car,
                             @RequestParam("photofile") MultipartFile file) throws IOException {
         LOGGER.traceEntry();
@@ -73,6 +73,6 @@ public class CarCreateController {
             photo.setCar(car);
             photoService.create(photo);
         }
-        return "redirect:usersCars";
+        return "redirect:/usersCars";
     }
 }
