@@ -1,0 +1,541 @@
+databaseChangeLog:
+- property:
+    name: dbDataType
+    value: bytea
+    dbms: postgresql
+- property:
+    name: dbDataType
+    value: binary
+    dbms: hsqldb
+- changeSet:
+    id: 1
+    author: max
+    changes:
+    - createTable:
+        tableName: body
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: name
+            type: varchar(255)
+            constraints:
+              unique: true
+              nullable: false
+
+- changeSet:
+    id: 2
+    author: max
+    changes:
+    - createTable:
+        tableName: brand
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: name
+            type: varchar(255)
+            constraints:
+              unique: true
+              nullable: false
+
+- changeSet:
+    id: 3
+    author: max
+    changes:
+    - createTable:
+        tableName: color
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: name
+            type: varchar(255)
+            constraints:
+              unique: true
+              nullable: false
+
+- changeSet:
+    id: 4
+    author: max
+    changes:
+    - createTable:
+        tableName: drive
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: name
+            type: varchar(255)
+            constraints:
+              unique: true
+              nullable: false
+
+- changeSet:
+    id: 5
+    author: max
+    changes:
+    - createTable:
+        tableName: engine
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: name
+            type: varchar(255)
+            constraints:
+              unique: true
+              nullable: false
+
+- changeSet:
+    id: 6
+    author: max
+    changes:
+    - createTable:
+        tableName: model
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: name
+            type: varchar(255)
+            constraints:
+              unique: true
+              nullable: false
+        - column:
+            name: brand_id
+            type: int
+            constraints:
+              nullable: false
+              foreignKeyName: fk_model_brand
+              references: brand(id)
+
+- changeSet:
+    id: 7
+    author: max
+    changes:
+    - createTable:
+        tableName: transmission
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: name
+            type: varchar(255)
+            constraints:
+              unique: true
+              nullable: false
+
+- changeSet:
+    id: 8
+    author: max
+    changes:
+    - createTable:
+        tableName: roles
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: name
+            type: varchar(255)
+            constraints:
+              unique: true
+              nullable: false
+
+- changeSet:
+    id: 9
+    author: max
+    changes:
+    - createTable:
+        tableName: users
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: login
+            type: varchar(255)
+            constraints:
+              unique: true
+              nullable: false
+        - column:
+            name: password
+            type: varchar(255)
+            constraints:
+              nullable: false
+        - column:
+            name: role_id
+            type: int
+            constraints:
+              nullable: false
+              foreignKeyName: fk_users_roles
+              references: roles(id)
+
+- changeSet:
+    id: 10
+    author: max
+    changes:
+    - createTable:
+        tableName: car
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: model_id
+            type: int
+            constraints:
+              nullable: false
+              foreignKeyName: fk_car_model
+              references: model(id)
+        - column:
+            name: year
+            type: int
+        - column:
+            name: mileage
+            type: int
+        - column:
+            name: body_id
+            type: int
+            constraints:
+              foreignKeyName: fk_car_body
+              references: body(id)
+        - column:
+            name: color_id
+            type: int
+            constraints:
+              foreignKeyName: fk_car_color
+              references: color(id)
+        - column:
+            name: volume
+            type: real
+        - column:
+            name: transmission_id
+            type: int
+            constraints:
+              foreignKeyName: fk_car_transmission
+              references: transmission(id)
+        - column:
+            name: engine_id
+            type: int
+            constraints:
+              foreignKeyName: fk_car_engine
+              references: engine(id)
+        - column:
+            name: drive_id
+            type: int
+            constraints:
+              foreignKeyName: fk_car_drive
+              references: drive(id)
+        - column:
+            name: right_wheel
+            type: boolean
+        - column:
+            name: broken
+            type: boolean
+        - column:
+            name: owners_num
+            type: int
+        - column:
+            name: vin
+            type: varchar(255)
+        - column:
+            name: power
+            type: int
+        - column:
+            name: address
+            type: text
+        - column:
+            name: user_id
+            type: int
+            constraints:
+              nullable: false
+              foreignKeyName: fk_users_user
+              references: users(id)
+        - column:
+            name: price
+            type: int
+        - column:
+            name: date_created
+            type: timestamp
+        - column:
+            name: sold
+            type: BOOLEAN
+
+- changeSet:
+    id: 11
+    author: max
+    changes:
+    - createTable:
+        tableName: photo
+        columns:
+        - column:
+            name: id
+            type: int
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+              nullable: false
+        - column:
+            name: file_name
+            type: varchar(255)
+        - column:
+            name: file_data
+            type: ${dbDataType}
+        - column:
+            name: car_id
+            type: int
+            constraints:
+              nullable: false
+              foreignKeyName: fk_photo_car
+              references: car(id)
+
+- changeSet:
+    id: 12
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO body (name) VALUES ('sedan'), ('hatchback'), ('station wagon'), ('off-road car'), ('cabriolet'), ('coupe'), ('limousine'), ('minivan'), ('pickup truck'), ('van'), ('minibus')
+
+- changeSet:
+    id: 13
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO brand (name) VALUES
+             ('BMW'), ('Honda'), ('Hyundai'), ('Mazda'),
+             ('Porsche'), ('ВАЗ (Lada)'), ('ГАЗ'), ('УАЗ')
+
+- changeSet:
+    id: 14
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO color (name) VALUES
+             ('white'), ('silver'), ('gray'), ('black'),
+             ('brown'), ('gold'), ('beige'), ('red'),
+             ('orange'), ('yellow'), ('green'), ('light blue'),
+             ('blue'), ('purple'), ('pink')
+
+- changeSet:
+    id: 15
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO drive (name) VALUES
+             ('front-wheel'), ('rear'), ('four-wheel')
+
+- changeSet:
+    id: 16
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO engine (name) VALUES
+            ('petrol'), ('diesel'), ('hybrid'), ('electric'), ('gas')
+
+- changeSet:
+    id: 17
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO transmission (name) VALUES
+            ('manual'), ('automatic'), ('robot'), ('variable')
+
+- changeSet:
+    id: 18
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO roles (name) VALUES
+            ('ROLE_ADMIN'), ('ROLE_USER')
+
+- changeSet:
+    id: 19
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO users (login, password, role_id) VALUES
+                 (
+                 'root',
+                 '$2a$10$ACEqlf4F9jgeuDMqsK.ifO37depwvIBCWijrMYJvioJ8Fs0JD0oWK',
+                 (SELECT id FROM roles WHERE name = 'ROLE_ADMIN')
+                 ),
+                 (
+                 'user',
+                 '$2a$12$HIvfiOSpz18Vq/J11yK2cugslccS.5FYftAC1.S.OCxXxV.ZNvg.a',
+                 (SELECT id FROM roles WHERE name = 'ROLE_USER')),
+                 (
+                 'user1',
+                 '$2a$12$HIvfiOSpz18Vq/J11yK2cugslccS.5FYftAC1.S.OCxXxV.ZNvg.a',
+                 (SELECT id FROM roles WHERE name = 'ROLE_USER')
+                 )
+
+- changeSet:
+    id: 20
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO model (name, brand_id) VALUES
+            ('X1', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('X2', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('X3', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('X4', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('X5', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('X6', (SELECT id FROM brand WHERE name = 'BMW')),
+            ('Sonata', (SELECT id FROM brand WHERE name = 'Hyundai')),
+            ('Solaris', (SELECT id FROM brand WHERE name = 'Hyundai')),
+            ('Tucson', (SELECT id FROM brand WHERE name = 'Hyundai')),
+            ('Creta', (SELECT id FROM brand WHERE name = 'Hyundai')),
+            ('Vesta', (SELECT id FROM brand WHERE name = 'ВАЗ (Lada)')),
+            ('Granta', (SELECT id FROM brand WHERE name = 'ВАЗ (Lada)')),
+            ('Kalina', (SELECT id FROM brand WHERE name = 'ВАЗ (Lada)')),
+            ('Priora', (SELECT id FROM brand WHERE name = 'ВАЗ (Lada)')),
+            ('Just a Honda model', (SELECT id FROM brand WHERE name = 'Honda')),
+            ('Just a Mazda model', (SELECT id FROM brand WHERE name = 'Mazda')),
+            ('Just a Porsche model', (SELECT id FROM brand WHERE name = 'Porsche')),
+            ('Just a ГАЗ model', (SELECT id FROM brand WHERE name = 'ГАЗ')),
+            ('Just a УАЗ model', (SELECT id FROM brand WHERE name = 'УАЗ'))
+
+- changeSet:
+    id: 21
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO car (
+                 model_id, year, mileage, body_id, color_id, volume, transmission_id,
+                 engine_id, drive_id, right_wheel, broken, owners_num, vin, power, address,
+                 user_id, price, date_created, sold
+                 )
+                 VALUES (
+                 (SELECT id FROM model WHERE name = 'X6'),
+                 2016,
+                 10000,
+                 (SELECT id FROM body WHERE name = 'hatchback'),
+                 (SELECT id FROM color WHERE name = 'silver'),
+                 3.2,
+                 (SELECT id FROM transmission WHERE name = 'automatic'),
+                 (SELECT id FROM engine WHERE name = 'diesel'),
+                 (SELECT id FROM drive WHERE name = 'four-wheel'),
+                 false,
+                 false,
+                 1,
+                 'XX215869674357474',
+                 247,
+                 'Chelyabinsk, Center',
+                 (SELECT id FROM users WHERE login = 'user1'),
+                 3350000,
+                 to_timestamp('01-08-2017 12:12:12', 'dd-mm-yyyy hh24:mi:ss'),
+                 true
+                 )
+
+- changeSet:
+    id: 22
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO car (
+                 model_id, year, mileage, body_id, color_id, volume, transmission_id,
+                 engine_id, drive_id, right_wheel, broken, owners_num, vin, power, address,
+                 user_id, price, date_created, sold
+                 )
+                 VALUES (
+                 (SELECT id FROM model WHERE name = 'X3'),
+                 2009,
+                 132000,
+                 (SELECT id FROM body WHERE name = 'off-road car'),
+                 (SELECT id FROM color WHERE name = 'blue'),
+                 2.5,
+                 (SELECT id FROM transmission WHERE name = 'automatic'),
+                 (SELECT id FROM engine WHERE name = 'petrol'),
+                 (SELECT id FROM drive WHERE name = 'four-wheel'),
+                 false,
+                 false,
+                 1,
+                 'XX11111111111111111',
+                 218,
+                 'Москва, 7км Варшавского шоссе',
+                 (SELECT id FROM users WHERE login = 'user'),
+                 635000,
+                 to_timestamp('02-08-2017 12:12:12', 'dd-mm-yyyy hh24:mi:ss'),
+                 false
+                 )
+
+- changeSet:
+    id: 23
+    author: max
+    changes:
+      - sql:
+          sql: INSERT INTO car (
+                 model_id, year, mileage, body_id, color_id, volume, transmission_id,
+                 engine_id, drive_id, right_wheel, broken, owners_num, vin, power, address,
+                 user_id, price, date_created, sold
+                 )
+                 VALUES (
+                 (SELECT id FROM model WHERE name = 'Solaris'),
+                 2016,
+                 28000,
+                 (SELECT id FROM body WHERE name = 'sedan'),
+                 (SELECT id FROM color WHERE name = 'black'),
+                 1.6,
+                 (SELECT id FROM transmission WHERE name = 'automatic'),
+                 (SELECT id FROM engine WHERE name = 'petrol'),
+                 (SELECT id FROM drive WHERE name = 'front-wheel'),
+                 false,
+                 true,
+                 3,
+                 'XX3746765485435486468',
+                 123,
+                 'Москва, Кремль',
+                 (SELECT id FROM users WHERE login = 'user'),
+                 99000,
+                 to_timestamp('01-08-2017 12:12:12', 'dd-mm-yyyy hh24:mi:ss'),
+                 false
+                 )

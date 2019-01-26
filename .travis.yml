@@ -28,3 +28,4 @@ before_install:
 - psql -c 'create database todolist;' -U postgres
 - psql -c 'create database carprice;' -U postgres
 - psql -c 'create database carprice_spr;' -U postgres
+- psql -c 'create database carprice_spring;' -U postgres
