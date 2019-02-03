@@ -3,6 +3,7 @@ package ru.job4j.inout;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 
 import static org.junit.Assert.*;
@@ -97,5 +98,47 @@ public class ExercisesTest {
         ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
         Exercises exercises = new Exercises();
         assertFalse(exercises.isNumber(stream));
+    }
+
+    @Test
+    public void whenHaveAbusesThenOutputStreamHaveNoAbuses() {
+        String inputString = "qqq ww eeee rrr qwwrr q" + System.lineSeparator() + "qqqqq ee rrr";
+        ByteArrayInputStream is = new ByteArrayInputStream(inputString.getBytes());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        Exercises exercises = new Exercises();
+        exercises.dropAbuses(is, out, new String[]{"ww", "qq"});
+        String outputString = "q  eeee rrr qrr q" + System.lineSeparator() + "q ee rrr";
+        assertEquals(out.toString(), outputString);
+    }
+
+    @Test
+    public void whenInputStreamIsAbuseThenOutputStreamIsEmpty() {
+        String inputString = "qqq ww eeee rrr qwwrr q" + System.lineSeparator() + "qqqqq ee rrr";
+        ByteArrayInputStream is = new ByteArrayInputStream(inputString.getBytes());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        Exercises exercises = new Exercises();
+        exercises.dropAbuses(is, out, new String[]{inputString});
+        String outputString = "";
+        assertEquals(out.toString(), outputString);
+    }
+
+    @Test
+    public void whenHaveNoAbusesThenInputStreamEqualOutputStream() {
+        String inputString = "qqq ww eeee rrr qwwrr q" + System.lineSeparator() + "qqqqq ee rrr";
+        ByteArrayInputStream is = new ByteArrayInputStream(inputString.getBytes());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        Exercises exercises = new Exercises();
+        exercises.dropAbuses(is, out, new String[]{});
+        assertEquals(out.toString(), inputString);
+    }
+
+    @Test
+    public void whenAbusesIsNullThenInputStreamEqualOutputStream() {
+        String inputString = "qqq ww eeee rrr qwwrr q" + System.lineSeparator() + "qqqqq ee rrr";
+        ByteArrayInputStream is = new ByteArrayInputStream(inputString.getBytes());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        Exercises exercises = new Exercises();
+        exercises.dropAbuses(is, out, null);
+        assertEquals(out.toString(), inputString);
     }
 }
