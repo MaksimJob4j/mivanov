@@ -11,6 +11,7 @@ public class ErrorCommandHandler implements CommandHandler {
 
     @Override
     public TransferObject apply(TransferObject requestObject) {
+        LOGGER.traceEntry();
         System.out.println(String.format("ERROR: %n%s", requestObject.getParameter()));
         return null;
     }

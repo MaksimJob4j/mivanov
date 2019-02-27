@@ -18,7 +18,7 @@ public enum Commands {
     MAIN("main", "спуститься в родительский каталог", "main"),
     DOWNLOAD("download", "скачать файл", "download fileName"),
     LOAD("load", "загрузить файл", "load filePath"),
-    EXIT("exit", "завершение сессии","msg");
+    EXIT("exit", "завершение сессии", "msg");
 
     private String keyWord;
     private String description;

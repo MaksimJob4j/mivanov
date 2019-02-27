@@ -6,5 +6,7 @@ package ru.job4j.sockets.filemanager;
 public interface RequestHandler {
 
     TransferObject handleRequest(TransferObject requestObject);
+    void initCommands();
+    String supportedCommands();
 
-}
+    }

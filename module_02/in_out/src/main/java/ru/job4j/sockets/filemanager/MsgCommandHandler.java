@@ -11,6 +11,7 @@ public class MsgCommandHandler implements CommandHandler {
 
     @Override
     public TransferObject apply(TransferObject requestObject) {
+        LOGGER.traceEntry();
         System.out.println(String.format("MESSAGE: %n%s", requestObject.getParameter()));
         return null;
     }
