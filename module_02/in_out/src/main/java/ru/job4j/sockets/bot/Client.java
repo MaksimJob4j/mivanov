@@ -35,16 +35,14 @@ public class Client {
         try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              Scanner console = new Scanner(System.in)) {
-            String request;
-            String response;
             boolean chatting = true;
             do {
-                request = console.nextLine();
+                String request = console.nextLine();
                 out.println(request);
                 if ("пока".equals(request)) {
                     chatting = false;
                 } else {
-
+                    String response;
                     do {
                         response = in.readLine();
                         if (!response.isEmpty()) {
@@ -54,7 +52,7 @@ public class Client {
                 }
             } while (chatting);
         } catch (IOException e) {
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage(), e);
         }
     }
 

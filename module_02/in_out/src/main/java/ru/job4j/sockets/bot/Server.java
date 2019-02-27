@@ -47,7 +47,7 @@ public class Server {
                 }
             } while (!"пока".equals(ask));
         } catch (IOException e) {
-            LOGGER.error(e);
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
