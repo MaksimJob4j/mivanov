@@ -2,7 +2,6 @@ package ru.job4j.ood.calculator;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -131,7 +130,7 @@ public class InteractCalculatorTest {
     public void whenOperationNotDefinedThenWarning() {
         List<String> in = Arrays.asList(
                 "1",
-                "sin",
+                "tang",
                 "y");
         List<String> out = Arrays.asList(
                 "Введите первое число",
@@ -149,6 +148,43 @@ public class InteractCalculatorTest {
         iCalc.init();
         iCalc.start();
         assertThat(output.getStrings(), is(out));
+
+        testThemEngineer(in, out);
+    }
+
+    private void testThemEngineer(List<String> in, List<String> out) {
+        EngineerCalculator calc = new EngineerCalculator();
+        OutputStub output = new OutputStub();
+        Input input = new InputStub(in.iterator(), output);
+        InteractEngineerCalculator iCalc = new InteractEngineerCalculator(calc, input, output);
+        iCalc.init();
+        iCalc.start();
+        assertThat(output.getStrings(), is(out));
+    }
+
+    @Test
+    public void whenEngineerOperationThenResult() {
+        List<String> in = Arrays.asList(
+                "0",
+                "sin",
+                "",
+                "",
+                "0",
+                "cos",
+                "",
+                "y");
+        List<String> out = Arrays.asList(
+                "Введите первое число",
+                "Введите операцию",
+                "Результат: 0.0",
+                "Сохранить результат? (y)",
+                "Выход? (y)",
+                "Введите первое число",
+                "Введите операцию",
+                "Результат: 1.0",
+                "Сохранить результат? (y)",
+                "Выход? (y)");
+        testThemEngineer(in, out);
     }
 
 }
