@@ -16,37 +16,38 @@ public class ControlQualityTest {
 
     @Test
     public void redistributeProductsTest() {
-        Milk milk1 = new Milk("milk-warehouse", LocalDateTime.now().minusDays(10), LocalDateTime.now().plusDays(100));
-        Milk milk2 = new Milk("milk-shop", LocalDateTime.now().minusDays(10), LocalDateTime.now().plusDays(10));
-        Milk milk3 = new Milk("milk-shop", LocalDateTime.now().minusDays(10), LocalDateTime.now().plusDays(10));
-        Milk milk4 = new Milk("milk-shop-discount", LocalDateTime.now().minusDays(10), LocalDateTime.now().plusDays(1));
-        Milk milk5 = new Milk("milk-trash", LocalDateTime.now().minusDays(10), LocalDateTime.now().minusDays(1));
-        Milk milk6 = new Milk("milk-trash", LocalDateTime.now().minusDays(10), LocalDateTime.now().minusDays(1));
-        Bread bread1 = new Bread("bread-warehouse", LocalDateTime.now().minusDays(10), LocalDateTime.now().plusDays(100));
-        Bread bread2 = new Bread("bread-shop", LocalDateTime.now().minusDays(10), LocalDateTime.now().plusDays(10));
-        Bread bread3 = new Bread("bread-shop-discount", LocalDateTime.now().minusDays(10), LocalDateTime.now().plusDays(1));
-        Bread bread4 = new Bread("bread-shop-discount", LocalDateTime.now().minusDays(10), LocalDateTime.now().plusDays(1));
-        Bread bread5 = new Bread("bread-trash", LocalDateTime.now().minusDays(10), LocalDateTime.now().minusDays(1));
-        Bread bread6 = new Bread("bread-trash", LocalDateTime.now().minusDays(10), LocalDateTime.now().minusDays(1));
+        LocalDateTime now = LocalDateTime.now();
+        Milk milk1 = new Milk("milk-warehouse", now.minusDays(10), now.plusDays(100));
+        Milk milk2 = new Milk("milk-shop", now.minusDays(10), now.plusDays(10));
+        Milk milk3 = new Milk("milk-shop", now.minusDays(10), now.plusDays(10));
+        Milk milk4 = new Milk("milk-shop-discount", now.minusDays(10), now.plusDays(1));
+        Milk milk5 = new Milk("milk-trash", now.minusDays(10), now.minusDays(1));
+        Milk milk6 = new Milk("milk-trash", now.minusDays(10), now.minusDays(1));
+        Bread bread1 = new Bread("bread-warehouse", now.minusDays(10), now.plusDays(100));
+        Bread bread2 = new Bread("bread-shop", now.minusDays(10), now.plusDays(10));
+        Bread bread3 = new Bread("bread-shop-discount", now.minusDays(10), now.plusDays(1));
+        Bread bread4 = new Bread("bread-shop-discount", now.minusDays(10), now.plusDays(1));
+        Bread bread5 = new Bread("bread-trash", now.minusDays(10), now.minusDays(1));
+        Bread bread6 = new Bread("bread-trash", now.minusDays(10), now.minusDays(1));
 
-        Warehouse warehouse = new Warehouse();
-        Shop shop = new Shop();
-        Trash trash = new Trash();
+        Trash trash = new Trash(null, 0);
+        Shop shop = new Shop(trash, 1, 0.75, 0.2);
+        Warehouse warehouse = new Warehouse(shop, 0.25);
 
-        ControlQuality controlQuality = new ControlQuality(warehouse, shop, trash);
+        ControlQuality controlQuality = new ControlQuality(warehouse);
 
-        controlQuality.redistributeProducts(milk1, LocalDateTime.now(), 0.3);
-        controlQuality.redistributeProducts(milk2, LocalDateTime.now(), 0.3);
-        controlQuality.redistributeProducts(milk3, LocalDateTime.now(), 0.3);
-        controlQuality.redistributeProducts(milk4, LocalDateTime.now(), 0.3);
-        controlQuality.redistributeProducts(milk5, LocalDateTime.now(), 0.3);
-        controlQuality.redistributeProducts(milk6, LocalDateTime.now(), 0.3);
-        controlQuality.redistributeProducts(bread1, LocalDateTime.now(), 0.2);
-        controlQuality.redistributeProducts(bread2, LocalDateTime.now(), 0.2);
-        controlQuality.redistributeProducts(bread3, LocalDateTime.now(), 0.2);
-        controlQuality.redistributeProducts(bread4, LocalDateTime.now(), 0.2);
-        controlQuality.redistributeProducts(bread5, LocalDateTime.now(), 0.2);
-        controlQuality.redistributeProducts(bread6, LocalDateTime.now(), 0.2);
+        controlQuality.redistributeProducts(milk1, now);
+        controlQuality.redistributeProducts(milk2, now);
+        controlQuality.redistributeProducts(milk3, now);
+        controlQuality.redistributeProducts(milk4, now);
+        controlQuality.redistributeProducts(milk5, now);
+        controlQuality.redistributeProducts(milk6, now);
+        controlQuality.redistributeProducts(bread1, now);
+        controlQuality.redistributeProducts(bread2, now);
+        controlQuality.redistributeProducts(bread3, now);
+        controlQuality.redistributeProducts(bread4, now);
+        controlQuality.redistributeProducts(bread5, now);
+        controlQuality.redistributeProducts(bread6, now);
 
         assertEquals(2, warehouse.getFoods().size());
         assertEquals(6, shop.getFoods().size());
@@ -55,7 +56,7 @@ public class ControlQualityTest {
         assertThat(milk1.getDiscount(), is(0.0));
         assertThat(milk2.getDiscount(), is(0.0));
         assertThat(milk3.getDiscount(), is(0.0));
-        assertThat(milk4.getDiscount(), is(0.3));
+        assertThat(milk4.getDiscount(), is(0.2));
         assertThat(milk5.getDiscount(), is(0.0));
         assertThat(milk6.getDiscount(), is(0.0));
         assertThat(bread1.getDiscount(), is(0.0));

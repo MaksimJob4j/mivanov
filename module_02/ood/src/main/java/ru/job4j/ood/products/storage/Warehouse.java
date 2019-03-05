@@ -7,4 +7,7 @@ import ru.job4j.ood.products.FoodStorage;
 public class Warehouse extends FoodStorage {
     private final static Logger LOGGER = LogManager.getLogger(Warehouse.class);
 
+    public Warehouse(Shop shop, double lifeCriteria) {
+        super(shop, lifeCriteria);
+    }
 }

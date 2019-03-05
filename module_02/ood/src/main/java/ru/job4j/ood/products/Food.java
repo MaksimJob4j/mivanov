@@ -19,12 +19,11 @@ public abstract class Food {
     private double discount;
     private FoodStorage storage;
 
-    protected Food(String name, LocalDateTime createDate, LocalDateTime expiryDate) {
+    public Food(String name, LocalDateTime createDate, LocalDateTime expiryDate) {
         this.name = name;
         this.createDate = createDate;
         this.expiryDate = expiryDate;
     }
-
 
     public double getLifePercentage(LocalDateTime date) {
         LOGGER.traceEntry();
@@ -32,14 +31,4 @@ public abstract class Food {
                 / ChronoUnit.MINUTES.between(this.createDate, this.expiryDate);
     }
 
-    public void changeStorage(FoodStorage storage) {
-        LOGGER.traceEntry();
-        if (this.storage != storage) {
-            if (this.storage != null) {
-                this.storage.removeFood(this);
-            }
-            this.storage = storage;
-            storage.addFood(this);
-        }
-    }
 }
