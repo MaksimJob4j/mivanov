@@ -2,20 +2,19 @@ package ru.job4j.ood.products;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.job4j.ood.products.storage.Warehouse;
 
 import java.time.LocalDateTime;
 
 public class ControlQuality {
     private final static Logger LOGGER = LogManager.getLogger(ControlQuality.class);
-    private final Warehouse warehouse;
+    private final FoodStorage foodStorage;
 
-    public ControlQuality(Warehouse warehouse) {
-        this.warehouse = warehouse;
+    public ControlQuality(FoodStorage foodStorage) {
+        this.foodStorage = foodStorage;
     }
 
     public void redistributeProducts(Food food, LocalDateTime checkTime) {
         LOGGER.traceEntry();
-        this.warehouse.addFood(food, checkTime);
+        this.foodStorage.addFood(food, checkTime);
     }
 }

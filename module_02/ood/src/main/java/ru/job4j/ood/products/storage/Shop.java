@@ -5,19 +5,18 @@ import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.job4j.ood.products.Food;
+import ru.job4j.ood.products.AbstractFoodStorage;
 import ru.job4j.ood.products.FoodStorage;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-public class Shop extends FoodStorage {
+public class Shop extends AbstractFoodStorage {
     private final static Logger LOGGER = LogManager.getLogger(Shop.class);
-    private double discountLifeCriteria;
-    private double finalDiscount;
+    private final double discountLifeCriteria;
+    private final double finalDiscount;
 
-    public Shop(Trash trash, double lifeCriteria, double discountLifeCriteria, double finalDiscount) {
-        super(trash, lifeCriteria);
+    public Shop(FoodStorage foodStorage, double minLifeCriteria, double discountLifeCriteria, double finalDiscount) {
+        super(foodStorage, minLifeCriteria, 1);
         this.discountLifeCriteria = discountLifeCriteria;
         this.finalDiscount = finalDiscount;
     }
@@ -29,7 +28,7 @@ public class Shop extends FoodStorage {
     }
 
     public void setDiscount(Food food, LocalDateTime checkTime) {
-        if (food.getStorage() == this
+        if (this.getFoods().contains(food)
                 && food.getLifePercentage(checkTime) > this.discountLifeCriteria) {
             food.setDiscount(this.finalDiscount);
         }

@@ -1,9 +1,7 @@
 package ru.job4j.ood.products;
 
 import org.junit.Test;
-import ru.job4j.ood.products.storage.Shop;
-import ru.job4j.ood.products.storage.Trash;
-import ru.job4j.ood.products.storage.Warehouse;
+import ru.job4j.ood.products.storage.*;
 import ru.job4j.ood.products.food.Bread;
 import ru.job4j.ood.products.food.Milk;
 
@@ -30,8 +28,8 @@ public class ControlQualityTest {
         Bread bread5 = new Bread("bread-trash", now.minusDays(10), now.minusDays(1));
         Bread bread6 = new Bread("bread-trash", now.minusDays(10), now.minusDays(1));
 
-        Trash trash = new Trash(null, 0);
-        Shop shop = new Shop(trash, 1, 0.75, 0.2);
+        Trash trash = new Trash();
+        Shop shop = new Shop(trash, 0.25, 0.75, 0.2);
         Warehouse warehouse = new Warehouse(shop, 0.25);
 
         ControlQuality controlQuality = new ControlQuality(warehouse);
