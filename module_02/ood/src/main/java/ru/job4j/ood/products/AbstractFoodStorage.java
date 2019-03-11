@@ -1,7 +1,5 @@
 package ru.job4j.ood.products;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,20 +15,21 @@ public abstract class AbstractFoodStorage implements FoodStorage {
     private final double minLifeCriteria;
     private final double maxLifeCriteria;
 
-    protected AbstractFoodStorage(FoodStorage chainStorage, double minLifeCriteria, double maxLifeCriteria) {
+    public AbstractFoodStorage(FoodStorage chainStorage, double minLifeCriteria, double maxLifeCriteria) {
         this.chainStorage = chainStorage;
         this.minLifeCriteria = minLifeCriteria;
         this.maxLifeCriteria = maxLifeCriteria;
     }
 
-    protected AbstractFoodStorage(FoodStorage chainStorage, double minLifeCriteria) {
+    public AbstractFoodStorage(FoodStorage chainStorage, double minLifeCriteria) {
         this.chainStorage = chainStorage;
         this.minLifeCriteria = minLifeCriteria;
         this.maxLifeCriteria = 0;
     }
 
     @Override
-    public boolean isFit(double lifePercentage) {
+    public boolean isFit(Food food, LocalDateTime checkTime) {
+        double lifePercentage = food.getLifePercentage(checkTime);
         if (maxLifeCriteria == 0) {
             return lifePercentage > this.minLifeCriteria;
         } else {
@@ -41,17 +40,12 @@ public abstract class AbstractFoodStorage implements FoodStorage {
     @Override
     public void addFood(Food food, LocalDateTime checkTime) {
         LOGGER.traceEntry();
-        double lifePercentage = food.getLifePercentage(checkTime);
-        if (isFit(lifePercentage)) {
-            if (!this.foods.contains(food)) {
-                if (food.getStorage() != null) {
-                    food.getStorage().removeFood(food);
-                }
-                food.setStorage(this);
-                foods.add(food);
+        if (!this.foods.contains(food)) {
+            if (food.getStorage() != null) {
+                food.getStorage().removeFood(food);
             }
-        } else {
-            this.chainStorage.addFood(food, checkTime);
+            food.setStorage(this);
+            this.foods.add(food);
         }
     }
 
@@ -65,5 +59,10 @@ public abstract class AbstractFoodStorage implements FoodStorage {
     @Override
     public Set<Food> getFoods() {
         return this.foods;
+    }
+
+    @Override
+    public FoodStorage getChainStorage() {
+        return this.chainStorage;
     }
 }

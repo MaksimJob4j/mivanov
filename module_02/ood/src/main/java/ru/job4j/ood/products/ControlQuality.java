@@ -15,6 +15,14 @@ public class ControlQuality {
 
     public void redistributeProducts(Food food, LocalDateTime checkTime) {
         LOGGER.traceEntry();
-        this.foodStorage.addFood(food, checkTime);
+        FoodStorage foodStorage = this.foodStorage;
+        while (foodStorage != null) {
+            if (foodStorage.isFit(food, checkTime)) {
+                foodStorage.addFood(food, checkTime);
+                foodStorage = null;
+            } else {
+                foodStorage = foodStorage.getChainStorage();
+            }
+        }
     }
 }
