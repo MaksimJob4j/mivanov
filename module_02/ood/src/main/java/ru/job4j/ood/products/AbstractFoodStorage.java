@@ -10,7 +10,6 @@ import java.util.Set;
 public abstract class AbstractFoodStorage implements FoodStorage {
     private final static Logger LOGGER = LogManager.getLogger(AbstractFoodStorage.class);
     private final Set<Food> foods = new HashSet<>();
-//    private String name;
     private final FoodStorage chainStorage;
     private final double minLifeCriteria;
     private final double maxLifeCriteria;

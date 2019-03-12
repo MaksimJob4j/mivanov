@@ -1,7 +1,5 @@
 package ru.job4j.ood.products.storage;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.job4j.ood.products.Food;
@@ -23,11 +21,13 @@ public class Shop extends AbstractFoodStorage {
 
     @Override
     public void addFood(Food food, LocalDateTime checkTime) {
+        LOGGER.traceEntry();
         super.addFood(food, checkTime);
         setDiscount(food, checkTime);
     }
 
     public void setDiscount(Food food, LocalDateTime checkTime) {
+        LOGGER.traceEntry();
         if (this.getFoods().contains(food)
                 && food.getLifePercentage(checkTime) > this.discountLifeCriteria) {
             food.setDiscount(this.finalDiscount);

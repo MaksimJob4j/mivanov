@@ -1,34 +1,18 @@
 package ru.job4j.ood.products;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
-@Getter
-@Setter
-public abstract class Food {
-    private final static Logger LOGGER = LogManager.getLogger(Food.class);
-    private final String name;
-    private final LocalDateTime createDate;
-    private final LocalDateTime expiryDate;
-    private double price;
-    private double discount;
-    private FoodStorage storage;
+public interface Food {
 
-    public Food(String name, LocalDateTime createDate, LocalDateTime expiryDate) {
-        this.name = name;
-        this.createDate = createDate;
-        this.expiryDate = expiryDate;
-    }
-
-    public double getLifePercentage(LocalDateTime date) {
-        LOGGER.traceEntry();
-        return (double) ChronoUnit.MINUTES.between(this.createDate, date)
-                / ChronoUnit.MINUTES.between(this.createDate, this.expiryDate);
-    }
+    String getName();
+    LocalDateTime getCreateDate();
+    LocalDateTime getExpiryDate();
+    double getPrice();
+    void setPrice(double price);
+    double getDiscount();
+    void setDiscount(double discount);
+    FoodStorage getStorage();
+    void setStorage(FoodStorage storage);
+    double getLifePercentage(LocalDateTime date);
 
 }
