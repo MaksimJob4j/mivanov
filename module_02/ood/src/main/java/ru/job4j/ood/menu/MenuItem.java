@@ -3,7 +3,6 @@ package ru.job4j.ood.menu;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -44,27 +43,25 @@ public class MenuItem implements MenuAction {
         this.items.put(menuItem.getKey(), menuItem);
     }
 
-    public MenuItem getItem(List<String> keys) throws KeyMenuException {
+    public MenuItem getItem(String key) throws KeyMenuException {
         LOGGER.traceEntry();
-        if (keys.size() == 0) {
-            return this;
-        } else {
-            MenuItem menuItem = this.items.get(keys.remove(0));
-            if (menuItem != null) {
-                return menuItem.getItem(keys);
-            } else {
-                throw new KeyMenuException("Wrong key.");
-            }
+        String currentKey = key.split("[.]")[0];
+        MenuItem menuItem = this.items.get(currentKey);
+        if (menuItem != null) {
+            return key.equals(currentKey)
+                    ? menuItem
+                    : menuItem.getItem(key.substring(currentKey.length() + 1));
         }
+        throw new KeyMenuException("Wrong key.");
     }
 
-    private String printMenu(String keySeparator, String prevKey) {
+    private String printMenu(String prevKey) {
         LOGGER.traceEntry();
         String fullKey;
         if (prevKey.isEmpty()) {
             fullKey = String.join("", " ", this.key);
         } else {
-            fullKey = String.join(keySeparator, prevKey, this.key);
+            fullKey = String.join(".", prevKey, this.key);
         }
         fullKey = String.join("", "-", fullKey);
         StringBuilder builder = new StringBuilder();
@@ -73,16 +70,16 @@ public class MenuItem implements MenuAction {
                 .append(this.name)
                 .append(System.lineSeparator());
         for (MenuItem menuItem: this.items.values()) {
-            builder.append(menuItem.printMenu(keySeparator, fullKey));
+            builder.append(menuItem.printMenu(fullKey));
         }
         return builder.toString();
     }
 
-    public String printMenu(String keySeparator) {
+    public String printMenu() {
         LOGGER.traceEntry();
         StringBuilder builder = new StringBuilder();
         for (MenuItem menuItem: this.items.values()) {
-            builder.append(menuItem.printMenu(keySeparator, ""));
+            builder.append(menuItem.printMenu(""));
         }
         return builder.toString();
     }
