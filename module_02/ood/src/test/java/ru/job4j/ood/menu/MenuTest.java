@@ -16,12 +16,12 @@ public class MenuTest {
     public void whenAddItemThenMenuHasIt() {
         Menu menu = createMenu();
         String ls = System.lineSeparator();
-        String result = "- 1 first" + ls +
-                "-- 1.a first A" + ls +
-                "-- 1.b first B" + ls +
-                "--- 1.b.AA first B AA" + ls +
-                "-- 1.c first C" + ls +
-                "- 2 second" + ls;
+        String result = "- 1 first" + ls
+                + "-- 1.a first A" + ls
+                + "-- 1.b first B" + ls
+                + "--- 1.b.AA first B AA" + ls
+                + "-- 1.c first C" + ls
+                + "- 2 second" + ls;
         assertEquals(menu.printMenu(), result);
     }
 
