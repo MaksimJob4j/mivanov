@@ -11,16 +11,15 @@ import java.util.regex.Pattern;
 
 public class SimpleGeneratorRegEx implements Template {
     private final static Logger LOGGER = LogManager.getLogger(SimpleGeneratorRegEx.class);
+    private final static Pattern KEY_PATTERN = Pattern.compile("[$][{].*?[}]");
 
     @Override
     public String generate(String template, Map<String, String> data) throws KeyTemplateException {
         LOGGER.traceEntry();
-
         Set<String> keys = new HashSet<>();
-        Pattern p = Pattern.compile("[$][{].*?[}]");
         boolean find = true;
         while (find) {
-            Matcher m = p.matcher(template);
+            Matcher m = KEY_PATTERN.matcher(template);
             if (m.find()) {
                 String key = m.group().substring(2, m.group().length() - 1);
                 String replacement = data.get(key);
@@ -34,11 +33,9 @@ public class SimpleGeneratorRegEx implements Template {
                 find = false;
             }
         }
-
         if (data.size() != keys.size()) {
             throw new KeyTemplateException("Extra key");
         }
         return template;
     }
-
 }

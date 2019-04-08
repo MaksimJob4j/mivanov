@@ -13,7 +13,6 @@ public class SimpleGenerator implements Template {
     @Override
     public String generate(String template, Map<String, String> data) throws KeyTemplateException {
         LOGGER.traceEntry();
-
         StringBuilder result = new StringBuilder();
         Set<String> keys = new HashSet<>();
         boolean isKey = false;
