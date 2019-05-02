@@ -22,6 +22,7 @@
         <module>chapter_2_4</module>
         <module>in_out</module>
         <module>ood</module>
+        <module>gc</module>
     </modules>
 
 </project>
